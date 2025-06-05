@@ -1,0 +1,29 @@
+﻿@model IEnumerable<DarkLot.Models.UserModel.ApplicationUser>
+
+@{
+    ViewData["Title"] = "Lista użytkowników";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>UserName</th>
+            <th>CreationTime</th>
+            <th>IsActive</th>
+            <th>IsDeleted</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.CreationTime</td>
+                <td>@user.IsActive</td>
+                <td>@user.IsDeleted</td>
+            </tr>
+        }
+    </tbody>
+</table>
