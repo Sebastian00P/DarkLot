@@ -2319,7 +2319,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1135"
+          "Value": "2481"
         },
         {
           "Name": "Content-Type",
@@ -2327,22 +2327,22 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"G9mdaqoF2sO+4oPFLBBI0JgCFcV1322UUwIL30ltszY=\""
+          "Value": "\"0J/DhVoks+BT2tly2Kd8xUAwWf9zy7mfBYMJ9RDZRAc=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 06 Jun 2025 07:48:11 GMT"
+          "Value": "Fri, 06 Jun 2025 08:47:59 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-G9mdaqoF2sO+4oPFLBBI0JgCFcV1322UUwIL30ltszY="
+          "Value": "sha256-0J/DhVoks+BT2tly2Kd8xUAwWf9zy7mfBYMJ9RDZRAc="
         }
       ]
     },
     {
-      "Route": "css/layout.x5pmy379lr.css",
+      "Route": "css/layout.kr76zop5nu.css",
       "AssetFile": "css/layout.css",
       "Selectors": [],
       "ResponseHeaders": [
@@ -2356,7 +2356,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1135"
+          "Value": "2481"
         },
         {
           "Name": "Content-Type",
@@ -2364,25 +2364,107 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"G9mdaqoF2sO+4oPFLBBI0JgCFcV1322UUwIL30ltszY=\""
+          "Value": "\"0J/DhVoks+BT2tly2Kd8xUAwWf9zy7mfBYMJ9RDZRAc=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 06 Jun 2025 07:48:11 GMT"
+          "Value": "Fri, 06 Jun 2025 08:47:59 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "x5pmy379lr"
+          "Value": "kr76zop5nu"
         },
         {
           "Name": "integrity",
-          "Value": "sha256-G9mdaqoF2sO+4oPFLBBI0JgCFcV1322UUwIL30ltszY="
+          "Value": "sha256-0J/DhVoks+BT2tly2Kd8xUAwWf9zy7mfBYMJ9RDZRAc="
         },
         {
           "Name": "label",
           "Value": "css/layout.css"
+        }
+      ]
+    },
+    {
+      "Route": "css/lootlog/lootlog.39tstf6eoq.css",
+      "AssetFile": "css/lootlog/lootlog.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "540"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"6cPCBYd5Jarhl3lCnKoXpu4Rdk+tntBFCYOhWjb3fPk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 06 Jun 2025 10:00:29 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "39tstf6eoq"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-6cPCBYd5Jarhl3lCnKoXpu4Rdk+tntBFCYOhWjb3fPk="
+        },
+        {
+          "Name": "label",
+          "Value": "css/lootlog/lootlog.css"
+        }
+      ]
+    },
+    {
+      "Route": "css/lootlog/lootlog.css",
+      "AssetFile": "css/lootlog/lootlog.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "540"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"6cPCBYd5Jarhl3lCnKoXpu4Rdk+tntBFCYOhWjb3fPk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 06 Jun 2025 10:00:29 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-6cPCBYd5Jarhl3lCnKoXpu4Rdk+tntBFCYOhWjb3fPk="
         }
       ]
     },

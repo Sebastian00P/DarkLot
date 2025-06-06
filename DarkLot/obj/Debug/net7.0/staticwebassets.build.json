@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ziEt9mmIsHdxU9FGG8x2rwshZq9wfE+82CgoY10JcPs=",
+  "Hash": "udnIXBbwGy676hNGw1esXUPsoaf6IcxSCk134HA32hw=",
   "Source": "DarkLot",
   "BasePath": "_content/DarkLot",
   "Mode": "Default",
@@ -1333,11 +1333,32 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "x5pmy379lr",
-      "Integrity": "G9mdaqoF2sO+4oPFLBBI0JgCFcV1322UUwIL30ltszY=",
+      "Fingerprint": "kr76zop5nu",
+      "Integrity": "0J/DhVoks+BT2tly2Kd8xUAwWf9zy7mfBYMJ9RDZRAc=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\layout.css"
+    },
+    {
+      "Identity": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\css\\lootlog\\lootlog.css",
+      "SourceId": "DarkLot",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\",
+      "BasePath": "_content/DarkLot",
+      "RelativePath": "css/lootlog/lootlog#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "39tstf6eoq",
+      "Integrity": "6cPCBYd5Jarhl3lCnKoXpu4Rdk+tntBFCYOhWjb3fPk=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\lootlog\\lootlog.css"
     },
     {
       "Identity": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\css\\site.css",
@@ -2612,7 +2633,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1135"
+          "Value": "2481"
         },
         {
           "Name": "Content-Type",
@@ -2620,11 +2641,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"G9mdaqoF2sO+4oPFLBBI0JgCFcV1322UUwIL30ltszY=\""
+          "Value": "\"0J/DhVoks+BT2tly2Kd8xUAwWf9zy7mfBYMJ9RDZRAc=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 06 Jun 2025 07:48:11 GMT"
+          "Value": "Fri, 06 Jun 2025 08:47:59 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2634,12 +2655,12 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-G9mdaqoF2sO+4oPFLBBI0JgCFcV1322UUwIL30ltszY="
+          "Value": "sha256-0J/DhVoks+BT2tly2Kd8xUAwWf9zy7mfBYMJ9RDZRAc="
         }
       ]
     },
     {
-      "Route": "css/layout.x5pmy379lr.css",
+      "Route": "css/layout.kr76zop5nu.css",
       "AssetFile": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\css\\layout.css",
       "Selectors": [],
       "ResponseHeaders": [
@@ -2649,7 +2670,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1135"
+          "Value": "2481"
         },
         {
           "Name": "Content-Type",
@@ -2657,11 +2678,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"G9mdaqoF2sO+4oPFLBBI0JgCFcV1322UUwIL30ltszY=\""
+          "Value": "\"0J/DhVoks+BT2tly2Kd8xUAwWf9zy7mfBYMJ9RDZRAc=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 06 Jun 2025 07:48:11 GMT"
+          "Value": "Fri, 06 Jun 2025 08:47:59 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2671,7 +2692,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "x5pmy379lr"
+          "Value": "kr76zop5nu"
         },
         {
           "Name": "label",
@@ -2679,7 +2700,89 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-G9mdaqoF2sO+4oPFLBBI0JgCFcV1322UUwIL30ltszY="
+          "Value": "sha256-0J/DhVoks+BT2tly2Kd8xUAwWf9zy7mfBYMJ9RDZRAc="
+        }
+      ]
+    },
+    {
+      "Route": "css/lootlog/lootlog.39tstf6eoq.css",
+      "AssetFile": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\css\\lootlog\\lootlog.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "540"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"6cPCBYd5Jarhl3lCnKoXpu4Rdk+tntBFCYOhWjb3fPk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 06 Jun 2025 10:00:29 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "39tstf6eoq"
+        },
+        {
+          "Name": "label",
+          "Value": "css/lootlog/lootlog.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-6cPCBYd5Jarhl3lCnKoXpu4Rdk+tntBFCYOhWjb3fPk="
+        }
+      ]
+    },
+    {
+      "Route": "css/lootlog/lootlog.css",
+      "AssetFile": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\css\\lootlog\\lootlog.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "540"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"6cPCBYd5Jarhl3lCnKoXpu4Rdk+tntBFCYOhWjb3fPk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 06 Jun 2025 10:00:29 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-6cPCBYd5Jarhl3lCnKoXpu4Rdk+tntBFCYOhWjb3fPk="
         }
       ]
     },

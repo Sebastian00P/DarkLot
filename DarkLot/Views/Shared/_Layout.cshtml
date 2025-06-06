@@ -20,27 +20,27 @@
                 <li class="nav-item">
                     <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
                         <span class="material-icons" style="vertical-align: middle;">home</span>
-                        Home
+                        Lootlog
                     </a>
                 </li>
-                <li class="nav-item">
+                @* <li class="nav-item">
                     <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">
                         <span class="material-icons" style="vertical-align: middle;">privacy_tip</span>
                         Privacy
                     </a>
-                </li>
+                </li> *@
                 @if (User.IsInRole("Admin"))
                 {
                     <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="Users" asp-action="Index">
                             <span class="material-icons" style="vertical-align: middle;">group</span>
-                            Users
+                            Użytkownicy
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="Roles" asp-action="Index">
                             <span class="material-icons" style="vertical-align: middle;">admin_panel_settings</span>
-                            Roles
+                            Uprawnienia
                         </a>
                     </li>
                 }

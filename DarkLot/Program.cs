@@ -12,14 +12,17 @@ namespace DarkLot
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            var corsPolicyName = "MargonemCors";
 
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("AllowEverything", policy =>
+                options.AddPolicy(corsPolicyName, policy =>
                 {
-                    policy.AllowAnyOrigin()
-                          .AllowAnyMethod()
-                          .AllowAnyHeader();
+                    policy
+                        .WithOrigins("https://lelwani.margonem.pl") // TYLKO TWOJA DOMENA!
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
                 });
             });
 
@@ -38,13 +41,21 @@ namespace DarkLot
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.SameSite = SameSiteMode.None;  // <- TO JEST KLUCZ!
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                options.LoginPath = "/Identity/Account/Login";
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+            });
+
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
             builder.Services.AddApplicationServices();
 
 
             var app = builder.Build();
-            app.UseCors("AllowEverything");
+            app.UseCors(corsPolicyName);
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

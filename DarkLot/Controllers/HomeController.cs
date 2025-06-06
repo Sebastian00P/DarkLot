@@ -1,4 +1,5 @@
-﻿using DarkLot.Models;
+﻿using DarkLot.ApplicationServices.Lootlog;
+using DarkLot.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -8,15 +9,19 @@ namespace DarkLot.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ILootlogService _lootlogService;
 
-        public HomeController(ILogger<HomeController> logger)
+
+        public HomeController(ILogger<HomeController> logger, ILootlogService lootlogService)
         {
             _logger = logger;
+            _lootlogService = lootlogService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var loots = await _lootlogService.GetLatestLootsAsync();
+            return View(loots);
         }
 
         public IActionResult Privacy()

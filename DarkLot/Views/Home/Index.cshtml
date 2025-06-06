@@ -1,4 +1,48 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-
+﻿@model List<DarkLot.Models.Lootlog.LootItem>
+<head>
+    <link rel="stylesheet" href="~/css/lootlog/lootlog.css" asp-append-version="true" />
+</head>
+<div class="container-fluid p-4">
+    @foreach (var loot in Model)
+    {
+        <div class="row align-items-center mb-3 p-2" style="background: #23272e; border-radius: 8px;">
+            <!-- Itemy po lewej -->
+            <div class="col-auto d-flex">
+                @foreach (var item in loot.Items)
+                {
+                    <div class="me-1" style="border:2px solid #2a71e7;border-radius:4px;padding:2px;background:#1c2128;">
+                        @* Jeśli trzymasz cały HTML itemu *@
+                        @Html.Raw(item.ItemHtml)
+                    </div>
+                }
+            </div>
+            <!-- Mob w środku -->
+            <div class="col text-center">
+                <span style="color:#e7eaf3;font-weight:500;font-size:1.1em;">
+                    @loot.MobName
+                    @* (np. "(63w)") jeśli masz to w nazwie lub osobnych polach *@
+                </span>
+            </div>
+            <!-- Gracze po prawej -->
+            <div class="col-auto d-flex align-items-center">
+                @for (int i = 0; i < loot.LootUsers.Count; i++)
+                {
+                    var u = loot.LootUsers[i];
+                    <div class="me-1" title="@($"{u.Nick} ({u.Level}{u.ClassAbbr})")" style="position:relative;">
+                        <img src="@u.AvatarUrl"
+                             style="width:32px;height:32px;border-radius:3px;box-shadow:0 0 2px #000;" />
+                        <div style="position:absolute;bottom:0;right:2px;font-size:0.8em;color:#9ad0ff;">@(i + 1)</div>
+                    </div>
+                }
+            </div>
+            <!-- Data, serwer po prawej -->
+            <div class="col-auto text-end" style="min-width:90px;">
+                <div style="color:#4ea6ff;font-size:1em;">@loot.ServerName</div>
+                <div style="font-size:0.95em;color:#bfc9d6;">
+                    @loot.CreationTime.ToString("d.M.yyyy")<br />
+                    @loot.CreationTime.ToString("HH:mm")
+                </div>
+            </div>
+        </div>
+    }
+</div>

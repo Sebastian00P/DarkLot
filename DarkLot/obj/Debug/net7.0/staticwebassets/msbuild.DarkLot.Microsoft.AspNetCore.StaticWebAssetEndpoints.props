@@ -3,14 +3,26 @@
     <StaticWebAssetEndpoint Include="_content/DarkLot/css/layout.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\layout.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-G9mdaqoF2sO\u002B4oPFLBBI0JgCFcV1322UUwIL30ltszY="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1135"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022G9mdaqoF2sO\u002B4oPFLBBI0JgCFcV1322UUwIL30ltszY=\u0022"},{"Name":"Last-Modified","Value":"Fri, 06 Jun 2025 07:48:11 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-0J/DhVoks\u002BBT2tly2Kd8xUAwWf9zy7mfBYMJ9RDZRAc="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"2481"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u00220J/DhVoks\u002BBT2tly2Kd8xUAwWf9zy7mfBYMJ9RDZRAc=\u0022"},{"Name":"Last-Modified","Value":"Fri, 06 Jun 2025 08:47:59 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/DarkLot/css/layout.x5pmy379lr.css">
+    <StaticWebAssetEndpoint Include="_content/DarkLot/css/layout.kr76zop5nu.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\layout.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"x5pmy379lr"},{"Name":"integrity","Value":"sha256-G9mdaqoF2sO\u002B4oPFLBBI0JgCFcV1322UUwIL30ltszY="},{"Name":"label","Value":"_content/DarkLot/css/layout.css"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1135"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022G9mdaqoF2sO\u002B4oPFLBBI0JgCFcV1322UUwIL30ltszY=\u0022"},{"Name":"Last-Modified","Value":"Fri, 06 Jun 2025 07:48:11 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"kr76zop5nu"},{"Name":"integrity","Value":"sha256-0J/DhVoks\u002BBT2tly2Kd8xUAwWf9zy7mfBYMJ9RDZRAc="},{"Name":"label","Value":"_content/DarkLot/css/layout.css"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"2481"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u00220J/DhVoks\u002BBT2tly2Kd8xUAwWf9zy7mfBYMJ9RDZRAc=\u0022"},{"Name":"Last-Modified","Value":"Fri, 06 Jun 2025 08:47:59 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/DarkLot/css/lootlog/lootlog.39tstf6eoq.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\lootlog\lootlog.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"39tstf6eoq"},{"Name":"integrity","Value":"sha256-6cPCBYd5Jarhl3lCnKoXpu4Rdk\u002BtntBFCYOhWjb3fPk="},{"Name":"label","Value":"_content/DarkLot/css/lootlog/lootlog.css"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"540"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u00226cPCBYd5Jarhl3lCnKoXpu4Rdk\u002BtntBFCYOhWjb3fPk=\u0022"},{"Name":"Last-Modified","Value":"Fri, 06 Jun 2025 10:00:29 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/DarkLot/css/lootlog/lootlog.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\lootlog\lootlog.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-6cPCBYd5Jarhl3lCnKoXpu4Rdk\u002BtntBFCYOhWjb3fPk="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"540"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u00226cPCBYd5Jarhl3lCnKoXpu4Rdk\u002BtntBFCYOhWjb3fPk=\u0022"},{"Name":"Last-Modified","Value":"Fri, 06 Jun 2025 10:00:29 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/DarkLot/css/site.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\site.css'))</AssetFile>

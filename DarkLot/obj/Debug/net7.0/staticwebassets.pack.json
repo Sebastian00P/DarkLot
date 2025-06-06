@@ -9,6 +9,10 @@
       "PackagePath": "staticwebassets\\css\\layout.css"
     },
     {
+      "Id": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\css\\lootlog\\lootlog.css",
+      "PackagePath": "staticwebassets\\css\\lootlog\\lootlog.css"
+    },
+    {
       "Id": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },

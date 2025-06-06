@@ -1,4 +1,5 @@
-﻿using DarkLot.ApplicationServices.Roles;
+﻿using DarkLot.ApplicationServices.Lootlog;
+using DarkLot.ApplicationServices.Roles;
 using DarkLot.ApplicationServices.Users;
 using Microsoft.AspNetCore.Identity.UI.Services;
 
@@ -11,6 +12,7 @@ namespace DarkLot.ServiceRegistartor
             services.AddScoped<IUserService, UserService>();
             services.AddTransient<IEmailSender, NoOpEmailSender>();
             services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<ILootlogService, LootlogService>();
             return services;
         }
     }

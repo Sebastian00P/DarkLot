@@ -1,1 +1,28 @@
-[]
+[
+  {
+    "ContainingType": "DarkLot.Controllers.LootlogController",
+    "Method": "Add",
+    "RelativePath": "api/lootlog/add",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "DarkLot.Dtos.LootlogDtos.AddLootItemDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DarkLot.Controllers.LootlogController",
+    "Method": "Check",
+    "RelativePath": "api/lootlog/check",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]

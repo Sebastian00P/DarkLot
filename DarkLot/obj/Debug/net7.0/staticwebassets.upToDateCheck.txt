@@ -1,4 +1,5 @@
 wwwroot\css\layout.css
+wwwroot\css\lootlog\lootlog.css
 wwwroot\css\site.css
 wwwroot\favicon.ico
 wwwroot\js\site.js
