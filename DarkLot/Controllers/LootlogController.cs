@@ -31,7 +31,9 @@ namespace DarkLot.Controllers
                 return BadRequest(ModelState);
 
             var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-            await _lootlogService.AddLootAsync(dto, userId);
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized(new { status = "error", message = "User not authenticated" });
+            //await _lootlogService.AddLootAsync(dto, userId);
 
             return Ok(new { status = "ok" });
         }
