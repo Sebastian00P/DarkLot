@@ -17,5 +17,27 @@ namespace DarkLot.ApplicationServices.Users
         {
             return await _userManager.Users.ToListAsync();
         }
+
+        public async Task<ApplicationUser?> GetUserByIdAsync(string id)
+        {
+            return await _userManager.Users.FirstOrDefaultAsync(u => u.Id == id);
+        }
+
+        public async Task<bool> UpdateUserAsync(EditUserViewModel model)
+        {
+            var user = await _userManager.FindByIdAsync(model.Id);
+            if (user == null)
+                return false;
+
+            user.Email = model.Email;
+            user.UserName = model.UserName;
+            user.NickName = model.NickName;
+            user.IsActive = model.IsActive;
+            user.IsDeleted = model.IsDeleted;
+
+            var result = await _userManager.UpdateAsync(user);
+            return result.Succeeded;
+        }
+
     }
 }

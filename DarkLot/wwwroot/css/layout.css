@@ -1,0 +1,137 @@
+﻿body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #161b22;
+    color: #e3e3e3;
+    }
+
+.main-content {
+    flex: 1 1 auto;
+    display: flex;
+}
+
+.sidebar {
+    min-width: 220px;
+    max-width: 260px;
+    padding: 2rem 1rem 2rem 1rem;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    background: #22272e !important;
+    border-right: 1px solid #30363d;
+    color: #e3e3e3;
+    min-height: 100vh;
+}
+
+.sidebar .navbar-brand {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    display: block;
+    color: #e3e3e3;
+    transition: background 0.2s, color 0.2s;
+}
+
+.sidebar .nav-link {
+    color: #f5f5f5 !important;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.sidebar .nav-link.active,
+.sidebar .nav-link:hover {
+    color: #58a6ff !important;
+    background: #222f3e !important;
+}
+
+.main-body {
+    flex: 1 1 auto;
+    padding: 2rem;
+    background: #fff;
+    min-height: 100vh;
+    background: #161b22;
+    color: #e3e3e3;
+}
+
+@media (max-width: 991.98px) {
+    .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        min-width: 0;
+        max-width: none;
+        border-right: none;
+        border-bottom: 1px solid #e3e3e3;
+    }
+
+    .main-body {
+        padding: 1rem;
+    }
+}
+
+footer {
+    background: #22272e;
+    color: #6e7681;
+    border-top: 1px solid #30363d;
+}
+
+.form-control, .form-select, .form-check-input {
+    background: #22272e;
+    color: #e3e3e3;
+    border: 1px solid #30363d;
+}
+
+.form-control:focus, .form-select:focus {
+    background: #161b22;
+    color: #fff;
+    border-color: #58a6ff;
+}
+
+.table {
+    background: #22272e;
+    color: #e3e3e3;
+}
+
+.table th, .table td {
+    border-color: #30363d;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background: #1c2128;
+}
+
+.btn-primary {
+    background: #238636;
+    border-color: #238636;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background: #2ea043;
+    border-color: #2ea043;
+}
+
+.btn-secondary {
+    background: #30363d;
+    border-color: #30363d;
+    color: #e3e3e3;
+}
+
+.btn-secondary:hover, .btn-secondary:focus {
+    background: #22272e;
+    border-color: #22272e;
+}
+
+.text-danger {
+    color: #ff7b72 !important;
+}
+
+.material-icons {
+    color: #e3e3e3;
+    vertical-align: middle;
+}
+
+.table th,
+.table td {
+    color: #fff !important;
+}

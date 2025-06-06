@@ -1,0 +1,49 @@
+﻿@model DarkLot.Models.UserModel.EditUserViewModel
+
+@{
+    ViewData["Title"] = "Edytuj użytkownika";
+}
+
+<h2>Edytuj użytkownika</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="UserName"></label>
+        <input asp-for="UserName" class="form-control" />
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="NickName"></label>
+        <input asp-for="NickName" class="form-control" />
+        <span asp-validation-for="NickName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label for="SelectedRole" class="form-label">Rola użytkownika</label>
+        <select asp-for="SelectedRole" asp-items="Model.AvailableRoles"
+                class="form-select" id="SelectedRole">
+            <option value="">-- Wybierz rolę --</option>
+        </select>
+        <span asp-validation-for="SelectedRole" class="text-danger"></span>
+    </div>
+
+
+    <div class="form-check mb-2">
+        <input asp-for="IsActive" class="form-check-input" type="checkbox" id="IsActiveCheck" />
+        <label class="form-check-label" for="IsActiveCheck">Użytkownik aktywny</label>
+        <span asp-validation-for="IsActive" class="text-danger"></span>
+    </div>
+    <div class="form-check mb-2">
+        <input asp-for="IsDeleted" class="form-check-input" type="checkbox" id="IsDeletedCheck" />
+        <label class="form-check-label" for="IsDeletedCheck">Konto usunięte</label>
+        <span asp-validation-for="IsDeleted" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Zapisz</button>
+    <a asp-action="Index" class="btn btn-secondary">Anuluj</a>
+</form>

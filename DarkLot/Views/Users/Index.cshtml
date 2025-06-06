@@ -9,10 +9,11 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>UserName</th>
-            <th>CreationTime</th>
-            <th>IsActive</th>
-            <th>IsDeleted</th>
+            <th>Email</th>
+            <th>Data utworzenia</th>
+            <th>Aktywny</th>
+            <th>Konto wyłączone</th>
+            <th>Akcje</th>
         </tr>
     </thead>
     <tbody>
@@ -20,9 +21,14 @@
         {
             <tr>
                 <td>@user.UserName</td>
-                <td>@user.CreationTime</td>
+                <td>@user.CreationTime.ToString("yyyy-MM-dd HH:mm")</td>
                 <td>@user.IsActive</td>
                 <td>@user.IsDeleted</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@user.Id" class="btn btn-sm btn-outline-primary" title="Edytuj">
+                        <span class="material-icons" style="vertical-align: middle;">edit</span>
+                    </a>
+                </td>
             </tr>
         }
     </tbody>
