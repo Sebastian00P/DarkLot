@@ -6,6 +6,8 @@
         public int LootItemId { get; set; }
         public virtual LootItem LootItem { get; set; }
 
+        public string ItemImgUrl { get; set; }
+
         public string ItemHtml { get; set; }
     }
 }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Ju3B+LG+B1Y=",
+  "dgSpecHash": "dp+lBGFch1TWi8ePCoz0Xna93TJphzmuTX3nyXR8lg+gxiu3hUArv8wTomxiJcFgYUC216A/yecoFPKQfF7oVA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\DarkLot.csproj",
+  "projectFilePath": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\DarkLot.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

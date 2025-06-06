@@ -20,21 +20,43 @@
             <div class="col text-center">
                 <span style="color:#e7eaf3;font-weight:500;font-size:1.1em;">
                     @loot.MobName
-                    @* (np. "(63w)") jeśli masz to w nazwie lub osobnych polach *@
                 </span>
             </div>
-            <!-- Gracze po prawej -->
+            <!-- Gracz -->
             <div class="col-auto d-flex align-items-center">
                 @for (int i = 0; i < loot.LootUsers.Count; i++)
                 {
                     var u = loot.LootUsers[i];
-                    <div class="me-1" title="@($"{u.Nick} ({u.Level}{u.ClassAbbr})")" style="position:relative;">
-                        <img src="@u.AvatarUrl"
-                             style="width:32px;height:32px;border-radius:3px;box-shadow:0 0 2px #000;" />
-                        <div style="position:absolute;bottom:0;right:2px;font-size:0.8em;color:#9ad0ff;">@(i + 1)</div>
+
+                    string gifUrl = u.AvatarUrl;
+
+                    <div class="me-1 player hastip"
+                         title="@($"{u.Nick} ({u.Level}{u.ClassAbbr})")"
+                         style="
+                 width: 32px;
+                 height: 48px; /* <- tutaj zwiększamy wysokość z 32px na 48px */
+               position: relative;
+               background: url('@gifUrl') no-repeat top left;
+               background-size: auto;      /* możemy zostawić auto, żeby nie skalować */
+               overflow: hidden;
+               border-radius: 3px;
+               box-shadow: 0 0 2px #000;
+                     ">
+                    <div class="number" style="
+                   position: absolute;
+                   bottom: 0;
+                   right: 2px;
+                   font-size: 0.8em;
+                   color: #9ad0ff;
+                        ">
+                            @(i + 1)
                     </div>
+                </div>
                 }
             </div>
+
+
+
             <!-- Data, serwer po prawej -->
             <div class="col-auto text-end" style="min-width:90px;">
                 <div style="color:#4ea6ff;font-size:1em;">@loot.ServerName</div>

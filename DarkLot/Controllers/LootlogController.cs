@@ -33,7 +33,7 @@ namespace DarkLot.Controllers
             var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(userId))
                 return Unauthorized(new { status = "error", message = "User not authenticated" });
-            //await _lootlogService.AddLootAsync(dto, userId);
+            await _lootlogService.AddLootAsync(dto, userId);
 
             return Ok(new { status = "ok" });
         }
