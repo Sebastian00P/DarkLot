@@ -21,6 +21,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\wwwroot\\js\\Home\\Index.js",
+      "PackagePath": "staticwebassets\\js\\Home\\Index.js"
+    },
+    {
       "Id": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

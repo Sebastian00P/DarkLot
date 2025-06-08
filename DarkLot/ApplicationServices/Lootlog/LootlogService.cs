@@ -1,6 +1,7 @@
 ﻿using DarkLot.Data;
 using DarkLot.Dtos.LootlogDtos;
 using DarkLot.Models.Lootlog;
+using DarkLot.ViewModeles.LootLogViewModel;
 using Humanizer;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,14 +16,43 @@ namespace DarkLot.ApplicationServices.Lootlog
             _db = db;
         }
 
-        public async Task<List<LootItem>> GetLatestLootsAsync(int count = 20)
+        public async Task<LootIndexViewModel> GetLatestLootsAsync(int count = 20)
         {
-            return await _db.LootItems
+            var data = await _db.LootItems
                 .Include(l => l.Items)
                 .Include(l => l.LootUsers)
                 .OrderByDescending(l => l.CreationTime)
                 .Take(count)
                 .ToListAsync();
+
+            var vm = new LootIndexViewModel
+            {
+                Loots = data.Select(l => new LootItemViewModel
+                {
+                    CreationTime = l.CreationTime,
+                    ServerName = l.ServerName,
+                    ClanName = l.ClanName,
+                    MapName = l.MapName,
+                    MobName = l.MobName,
+
+                    LootUsers = l.LootUsers.Select(u => new LootUserViewModel
+                    {
+                        GameUserId = u.GameUserId,
+                        Nick = u.Nick,
+                        Level = u.Level,
+                        ClassAbbr = u.ClassAbbr,
+                        AvatarUrl = u.AvatarUrl
+                    }).ToList(),
+
+                    Items = l.Items.Select(i => new LootedItemViewModel
+                    {
+                        ItemImgUrl = i.ItemImgUrl,
+                        TipJson = i.ItemHtml
+                    }).ToList()
+                }).ToList()
+            };
+
+            return vm;
         }
 
         public async Task AddLootAsync(AddLootItemDto dto, string? creatorUserId)
@@ -47,7 +77,8 @@ namespace DarkLot.ApplicationServices.Lootlog
                 }).ToList() ?? new List<LootUser>(),
                 Items = dto.Items?.Select(i => new LootedItem
                 {
-                    ItemHtml = i.ItemHtml
+                    ItemHtml = i.ItemHtml,
+                    ItemImgUrl = i.ItemImgUrl,
                 }).ToList() ?? new List<LootedItem>(),
                 Comments = new List<LootComment>() // zakładamy brak komentarzy przy dodawaniu lootu
             };

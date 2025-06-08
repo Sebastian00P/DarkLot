@@ -25,3 +25,263 @@
         font-size: 0.8em;
         color: #9ad0ff;
     }
+
+/* Podstawowe style tooltipu */
+.custom-tooltip {
+    position: absolute;
+    pointer-events: none;
+    z-index: 9999;
+    max-width: 300px;
+    background: rgba(24,28,34,0.95);
+    color: #eee;
+    border: 1px solid #18a8ff;
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 0.9em;
+    line-height: 1.3;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    transition: opacity 0.1s ease;
+    opacity: 0;
+}
+
+.custom-tooltip.visible {
+    opacity: 1;
+}
+
+.custom-tooltip h4 {
+    margin: 0 0 4px;
+    font-size: 1em;
+    font-weight: bold;
+    color: #18a8ff;
+}
+
+.custom-tooltip .stats {
+    margin-top: 4px;
+}
+
+.custom-tooltip .stats div {
+    margin: 2px 0;
+}
+/* lootlog.css */
+.tippy-box[data-theme~='light-border'] {
+    background: #181c22;
+    color: #e7eaf3;
+    border: 1px solid #18a8ff;
+    border-radius: 4px;
+}
+
+.tl-title {
+    font-weight: bold;
+    margin-bottom: 4px;
+    color: #18a8ff;
+}
+
+.tl-desc {
+    font-size: 0.9em;
+    margin-bottom: 6px;
+}
+
+.tl-stats .tl-stat-row {
+    font-size: 0.85em;
+    line-height: 1.2;
+}
+
+.loot-row {
+  display: flex;
+  align-items: center;
+  background: #23272e;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+}
+
+/* 1) Items: max 10, wrap co 5 */
+.loot-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  max-width: 200px; /* 5 × (36px+4px) ≈ 200px */
+  margin-right: 1rem;
+}
+.loot-item {
+  border: 1px solid #18a8ff;
+  border-radius: 4px;
+  padding: 2px;
+}
+.loot-item img {
+  display: block;
+  width: 36px;
+  height: 36px;
+}
+
+/* 2) Mob name centering */
+.mob-name {
+  flex: 1;
+  text-align: center;
+  color: #e7eaf3;
+  font-weight: 500;
+  font-size: 1.1em;
+}
+
+/* 3) Users avatars */
+.loot-users {
+  display: flex;
+  gap: 4px;
+  margin: 0 1rem;
+}
+.user-avatar {
+  position: relative;
+  width: 32px;
+  height: 48px;
+  background-size: cover;
+  border-radius: 3px;
+}
+.user-avatar .number {
+  position: absolute;
+  bottom: 0;
+  right: 2px;
+  font-size: 0.8em;
+  color: #9ad0ff;
+}
+
+/* 4) Meta: clan, date, time centered */
+.loot-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 90px;
+}
+.loot-meta .clan {
+  color: #4ea6ff;
+  font-size: 1em;
+  margin-bottom: 0.25rem;
+}
+.loot-meta .date,
+.loot-meta .time {
+  font-size: 0.95em;
+  color: #bfc9d6;
+  line-height: 1.2;
+}
+
+.w-30{
+    width: 45%;
+}
+
+.tip-inner.item-border-heroic {
+    border: 2px solid #3f80ff;
+    background: rgba(63,128,255,0.08);
+}
+
+.tip-inner.item-border-unique {
+    border: 2px solid #ffe44d;
+    background: rgba(255,228,77,0.07);
+}
+
+.tip-inner.item-border-legendary {
+    border: 2px solid #c70b3d;
+    background: rgba(199,11,61,0.07);
+}
+
+.tip-inner.item-border-common {
+    border: 2px solid #bbb;
+    background: rgba(180,180,180,0.06);
+}
+
+.rarity-label {
+    font-size: 0.95em;
+    opacity: 0.66;
+    margin-left: 7px;
+}
+.eq-item.item-border-legendary {
+    border: 2px solid #c70b3d;
+    background: rgba(199,11,61,0.08);
+}
+
+.eq-item.item-border-heroic {
+    border: 2px solid #3f80ff;
+    background: rgba(63,128,255,0.07);
+}
+
+.eq-item.item-border-unique {
+    border: 2px solid #ffe44d;
+    background: rgba(255,228,77,0.08);
+}
+
+.eq-item.item-border-common {
+    border: 2px solid #bbb;
+    background: rgba(180,180,180,0.04);
+}
+
+
+.tip-inner.tip-bg-legendary {
+    background: rgba(199,11,61,0.09);
+}
+
+.tip-inner.tip-bg-heroic {
+    background: rgba(63,128,255,0.10);
+}
+
+.tip-inner.tip-bg-unique {
+    background: rgba(255,228,77,0.12);
+}
+
+.tip-inner.tip-bg-common {
+    background: rgba(180,180,180,0.06);
+}
+
+.tip-inner {
+    background: #502d1b;
+    border: 2px solid #b58041;
+    color: #fff;
+    padding: 8px 10px;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 14px;
+    min-width: 240px;
+    max-width: 320px;
+}
+
+.tip-title {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 6px;
+    font-size: 1.1em;
+}
+
+.tippy-box[data-theme~='noborder'] {
+    border: none !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+
+
+.tip-rarity {
+    display: block;
+    font-weight: bold;
+    text-align: center;
+    margin: 6px 0;
+}
+
+.tip-legendary {
+    color: #ff3b3b;
+}
+
+.tip-heroic {
+    color: #3ba4ff;
+}
+
+.tip-unique {
+    color: #ffe733;
+}
+
+.tip-common {
+    color: #c0c0c0;
+}
+
+.tip-req {
+    color: #ffe733;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.tip-value {
+    color: #fff;
+}

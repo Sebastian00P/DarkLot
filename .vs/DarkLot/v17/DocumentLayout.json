@@ -3,28 +3,76 @@
   "WorkspaceRootPath": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Data\\Migrations\\20250606170042_itemUrl.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:DarkLot\\Data\\Migrations\\20250606170042_itemUrl.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|c:\\users\\admin\\desktop\\darklot\\darklot\\darklot\\wwwroot\\js\\home\\index.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|solutionrelative:darklot\\wwwroot\\js\\home\\index.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|c:\\users\\admin\\desktop\\darklot\\darklot\\darklot\\models\\lootlog\\looteditem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|solutionrelative:darklot\\models\\lootlog\\looteditem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|c:\\users\\admin\\desktop\\darklot\\darklot\\darklot\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|solutionrelative:darklot\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|c:\\users\\admin\\desktop\\darklot\\darklot\\darklot\\wwwroot\\css\\lootlog\\lootlog.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|solutionrelative:darklot\\wwwroot\\css\\lootlog\\lootlog.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|c:\\users\\admin\\desktop\\darklot\\darklot\\darklot\\temperscripts\\initserviceingame.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|solutionrelative:darklot\\temperscripts\\initserviceingame.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|c:\\users\\admin\\desktop\\darklot\\darklot\\darklot\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|solutionrelative:darklot\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|c:\\users\\admin\\desktop\\darklot\\darklot\\darklot\\controllers\\lootlogcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|solutionrelative:darklot\\controllers\\lootlogcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|c:\\users\\admin\\desktop\\darklot\\darklot\\darklot\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|solutionrelative:darklot\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|c:\\users\\admin\\desktop\\darklot\\darklot\\darklot\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|solutionrelative:darklot\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|c:\\users\\admin\\desktop\\darklot\\darklot\\darklot\\models\\lootlog\\lootitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|solutionrelative:darklot\\models\\lootlog\\lootitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|c:\\users\\admin\\desktop\\darklot\\darklot\\darklot\\viewmodeles\\lootlogviewmodel\\lootindexviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|solutionrelative:darklot\\viewmodeles\\lootlogviewmodel\\lootindexviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|c:\\users\\admin\\desktop\\darklot\\darklot\\darklot\\applicationservices\\lootlog\\ilootlogservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|solutionrelative:darklot\\applicationservices\\lootlog\\ilootlogservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|c:\\users\\admin\\desktop\\darklot\\darklot\\darklot\\applicationservices\\lootlog\\lootlogservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|solutionrelative:darklot\\applicationservices\\lootlog\\lootlogservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|c:\\users\\admin\\desktop\\darklot\\darklot\\darklot\\viewmodeles\\lootlogviewmodel\\looteditemviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|solutionrelative:darklot\\viewmodeles\\lootlogviewmodel\\looteditemviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|c:\\users\\admin\\desktop\\darklot\\darklot\\darklot\\viewmodeles\\lootlogviewmodel\\lootuserviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|solutionrelative:darklot\\viewmodeles\\lootlogviewmodel\\lootuserviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|c:\\users\\admin\\desktop\\darklot\\darklot\\darklot\\viewmodeles\\lootlogviewmodel\\lootitemviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|solutionrelative:darklot\\viewmodeles\\lootlogviewmodel\\lootitemviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|c:\\users\\admin\\desktop\\darklot\\darklot\\darklot\\models\\lootlog\\looteditem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|solutionrelative:darklot\\models\\lootlog\\looteditem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|c:\\users\\admin\\desktop\\darklot\\darklot\\darklot\\dtos\\lootlogdtos\\addlootitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|solutionrelative:darklot\\dtos\\lootlogdtos\\addlootitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|c:\\users\\admin\\desktop\\darklot\\darklot\\darklot\\dtos\\lootlogdtos\\addlooteditemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|solutionrelative:darklot\\dtos\\lootlogdtos\\addlooteditemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|c:\\users\\admin\\desktop\\darklot\\darklot\\darklot\\data\\migrations\\20250606170042_itemurl.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|solutionrelative:darklot\\data\\migrations\\20250606170042_itemurl.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|c:\\users\\admin\\desktop\\darklot\\darklot\\darklot\\controllers\\rolescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -43,24 +91,8 @@
       "RelativeMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|solutionrelative:darklot\\dtos\\lootlogdtos\\looteditemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|c:\\users\\admin\\desktop\\darklot\\darklot\\darklot\\dtos\\lootlogdtos\\addlootitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|solutionrelative:darklot\\dtos\\lootlogdtos\\addlootitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|c:\\users\\admin\\desktop\\darklot\\darklot\\darklot\\dtos\\lootlogdtos\\addlootuserdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|solutionrelative:darklot\\dtos\\lootlogdtos\\addlootuserdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|c:\\users\\admin\\desktop\\darklot\\darklot\\darklot\\dtos\\lootlogdtos\\addlooteditemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|solutionrelative:darklot\\dtos\\lootlogdtos\\addlooteditemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|c:\\users\\admin\\desktop\\darklot\\darklot\\darklot\\applicationservices\\lootlog\\ilootlogservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|solutionrelative:darklot\\applicationservices\\lootlog\\ilootlogservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|c:\\users\\admin\\desktop\\darklot\\darklot\\darklot\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|solutionrelative:darklot\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|c:\\users\\admin\\desktop\\darklot\\darklot\\darklot\\dtos\\lootlogdtos\\lootcommentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -83,16 +115,8 @@
       "RelativeMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|solutionrelative:darklot\\models\\lootlog\\lootuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|c:\\users\\admin\\desktop\\darklot\\darklot\\darklot\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|solutionrelative:darklot\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|c:\\users\\admin\\desktop\\darklot\\darklot\\darklot\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|solutionrelative:darklot\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|c:\\users\\admin\\desktop\\darklot\\darklot\\darklot\\wwwroot\\css\\lootlog\\lootlog.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|solutionrelative:darklot\\wwwroot\\css\\lootlog\\lootlog.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2DE2E35A-D745-4582-B30E-345E4E62F367}|DarkLot\\DarkLot.csproj|c:\\users\\admin\\desktop\\darklot\\darklot\\darklot\\serviceregistartor\\serviceregistration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -199,105 +223,148 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "20250606170042_itemUrl.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Data\\Migrations\\20250606170042_itemUrl.cs",
-              "RelativeDocumentMoniker": "DarkLot\\Data\\Migrations\\20250606170042_itemUrl.cs",
-              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Data\\Migrations\\20250606170042_itemUrl.cs",
-              "RelativeToolTip": "DarkLot\\Data\\Migrations\\20250606170042_itemUrl.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T17:00:42.241Z",
+              "Title": "Index.js",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\wwwroot\\js\\Home\\Index.js",
+              "RelativeDocumentMoniker": "DarkLot\\wwwroot\\js\\Home\\Index.js",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\wwwroot\\js\\Home\\Index.js",
+              "RelativeToolTip": "DarkLot\\wwwroot\\js\\Home\\Index.js",
+              "ViewState": "AQIAAGIAAAAAAAAAAAAcwIQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-06-08T15:11:35.518Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "HomeController.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Controllers\\HomeController.cs",
-              "RelativeDocumentMoniker": "DarkLot\\Controllers\\HomeController.cs",
-              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Controllers\\HomeController.cs",
-              "RelativeToolTip": "DarkLot\\Controllers\\HomeController.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAgAAAAsAAAAAAAAAA==",
+              "DocumentIndex": 13,
+              "Title": "LootItemViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\ViewModeles\\LootLogViewModel\\LootItemViewModel.cs",
+              "RelativeDocumentMoniker": "DarkLot\\ViewModeles\\LootLogViewModel\\LootItemViewModel.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\ViewModeles\\LootLogViewModel\\LootItemViewModel.cs",
+              "RelativeToolTip": "DarkLot\\ViewModeles\\LootLogViewModel\\LootItemViewModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAA8AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T09:20:26.8Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "UsersController.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Controllers\\UsersController.cs",
-              "RelativeDocumentMoniker": "DarkLot\\Controllers\\UsersController.cs",
-              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Controllers\\UsersController.cs",
-              "RelativeToolTip": "DarkLot\\Controllers\\UsersController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAOAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T07:21:15.551Z",
+              "WhenOpened": "2025-06-08T14:59:51.469Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "AddLootedItemDto.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Dtos\\LootlogDtos\\AddLootedItemDto.cs",
-              "RelativeDocumentMoniker": "DarkLot\\Dtos\\LootlogDtos\\AddLootedItemDto.cs",
-              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Dtos\\LootlogDtos\\AddLootedItemDto.cs",
-              "RelativeToolTip": "DarkLot\\Dtos\\LootlogDtos\\AddLootedItemDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 8,
+              "Title": "LootIndexViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\ViewModeles\\LootLogViewModel\\LootIndexViewModel.cs",
+              "RelativeDocumentMoniker": "DarkLot\\ViewModeles\\LootLogViewModel\\LootIndexViewModel.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\ViewModeles\\LootLogViewModel\\LootIndexViewModel.cs",
+              "RelativeToolTip": "DarkLot\\ViewModeles\\LootLogViewModel\\LootIndexViewModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAqwAIAAAAjAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T11:08:31.346Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "LootItemDto.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Dtos\\LootlogDtos\\LootItemDto.cs",
-              "RelativeDocumentMoniker": "DarkLot\\Dtos\\LootlogDtos\\LootItemDto.cs",
-              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Dtos\\LootlogDtos\\LootItemDto.cs",
-              "RelativeToolTip": "DarkLot\\Dtos\\LootlogDtos\\LootItemDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T11:13:57.049Z"
+              "WhenOpened": "2025-06-08T14:59:34.515Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "InitServiceInGame.js",
-              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\TemperScripts\\InitServiceInGame.js",
-              "RelativeDocumentMoniker": "DarkLot\\TemperScripts\\InitServiceInGame.js",
-              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\TemperScripts\\InitServiceInGame.js",
-              "RelativeToolTip": "DarkLot\\TemperScripts\\InitServiceInGame.js",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-06-06T12:48:51.473Z",
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "DarkLot\\Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "DarkLot\\Views\\Home\\Index.cshtml",
+              "ViewState": "AQIAACsAAAAAAAAAAAAcwEYAAAAZAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-06T08:11:56.189Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "DarkLot\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "DarkLot\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AQIAACcAAAAAAAAAAAAAADsAAABLAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-06T07:46:03.152Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 10,
-              "Title": "AddLootItemDto.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Dtos\\LootlogDtos\\AddLootItemDto.cs",
-              "RelativeDocumentMoniker": "DarkLot\\Dtos\\LootlogDtos\\AddLootItemDto.cs",
-              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Dtos\\LootlogDtos\\AddLootItemDto.cs",
-              "RelativeToolTip": "DarkLot\\Dtos\\LootlogDtos\\AddLootItemDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAIAAAARAAAAAAAAAA==",
+              "Title": "LootlogService.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\ApplicationServices\\Lootlog\\LootlogService.cs",
+              "RelativeDocumentMoniker": "DarkLot\\ApplicationServices\\Lootlog\\LootlogService.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\ApplicationServices\\Lootlog\\LootlogService.cs",
+              "RelativeToolTip": "DarkLot\\ApplicationServices\\Lootlog\\LootlogService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAArAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T11:07:47.031Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "LootCommentDto.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Dtos\\LootlogDtos\\LootCommentDto.cs",
-              "RelativeDocumentMoniker": "DarkLot\\Dtos\\LootlogDtos\\LootCommentDto.cs",
-              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Dtos\\LootlogDtos\\LootCommentDto.cs",
-              "RelativeToolTip": "DarkLot\\Dtos\\LootlogDtos\\LootCommentDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAzAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T11:14:48.061Z"
+              "WhenOpened": "2025-06-06T08:50:13.426Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 9,
+              "Title": "ILootlogService.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\ApplicationServices\\Lootlog\\ILootlogService.cs",
+              "RelativeDocumentMoniker": "DarkLot\\ApplicationServices\\Lootlog\\ILootlogService.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\ApplicationServices\\Lootlog\\ILootlogService.cs",
+              "RelativeToolTip": "DarkLot\\ApplicationServices\\Lootlog\\ILootlogService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAABFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T08:50:26.68Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "LootlogController.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Controllers\\LootlogController.cs",
+              "RelativeDocumentMoniker": "DarkLot\\Controllers\\LootlogController.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Controllers\\LootlogController.cs",
+              "RelativeToolTip": "DarkLot\\Controllers\\LootlogController.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAqwCMAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T10:08:41.005Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "DarkLot\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "DarkLot\\Controllers\\HomeController.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAABUAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T09:20:26.8Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "LootItem.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Models\\Lootlog\\LootItem.cs",
+              "RelativeDocumentMoniker": "DarkLot\\Models\\Lootlog\\LootItem.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Models\\Lootlog\\LootItem.cs",
+              "RelativeToolTip": "DarkLot\\Models\\Lootlog\\LootItem.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAqwAQAAAAZAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-08T14:55:49.395Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "RolesController.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Controllers\\RolesController.cs",
+              "RelativeDocumentMoniker": "DarkLot\\Controllers\\RolesController.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Controllers\\RolesController.cs",
+              "RelativeToolTip": "DarkLot\\Controllers\\RolesController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAtAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T08:07:06.318Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
               "Title": "LootedItemDto.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Dtos\\LootlogDtos\\LootedItemDto.cs",
               "RelativeDocumentMoniker": "DarkLot\\Dtos\\LootlogDtos\\LootedItemDto.cs",
@@ -309,84 +376,146 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "RolesController.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Controllers\\RolesController.cs",
-              "RelativeDocumentMoniker": "DarkLot\\Controllers\\RolesController.cs",
-              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Controllers\\RolesController.cs",
-              "RelativeToolTip": "DarkLot\\Controllers\\RolesController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAtAAAA",
+              "DocumentIndex": 23,
+              "Title": "LootCommentDto.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Dtos\\LootlogDtos\\LootCommentDto.cs",
+              "RelativeDocumentMoniker": "DarkLot\\Dtos\\LootlogDtos\\LootCommentDto.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Dtos\\LootlogDtos\\LootCommentDto.cs",
+              "RelativeToolTip": "DarkLot\\Dtos\\LootlogDtos\\LootCommentDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T08:07:06.318Z",
+              "WhenOpened": "2025-06-06T11:14:48.061Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "lootlog.css",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\wwwroot\\css\\lootlog\\lootlog.css",
+              "RelativeDocumentMoniker": "DarkLot\\wwwroot\\css\\lootlog\\lootlog.css",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\wwwroot\\css\\lootlog\\lootlog.css",
+              "RelativeToolTip": "DarkLot\\wwwroot\\css\\lootlog\\lootlog.css",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAP0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-06-06T10:00:25.221Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Views\\Home\\Index.cshtml",
-              "RelativeDocumentMoniker": "DarkLot\\Views\\Home\\Index.cshtml",
-              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Views\\Home\\Index.cshtml",
-              "RelativeToolTip": "DarkLot\\Views\\Home\\Index.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAqAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-06T08:11:56.189Z",
+              "Title": "InitServiceInGame.js",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\TemperScripts\\InitServiceInGame.js",
+              "RelativeDocumentMoniker": "DarkLot\\TemperScripts\\InitServiceInGame.js",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\TemperScripts\\InitServiceInGame.js",
+              "RelativeToolTip": "DarkLot\\TemperScripts\\InitServiceInGame.js",
+              "ViewState": "AQIAAMQAAAAAAAAAAAAgwA0BAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-06-06T12:48:51.473Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 12,
+              "Title": "LootUserViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\ViewModeles\\LootLogViewModel\\LootUserViewModel.cs",
+              "RelativeDocumentMoniker": "DarkLot\\ViewModeles\\LootLogViewModel\\LootUserViewModel.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\ViewModeles\\LootLogViewModel\\LootUserViewModel.cs",
+              "RelativeToolTip": "DarkLot\\ViewModeles\\LootLogViewModel\\LootUserViewModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAtAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-08T15:00:05.486Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "LootedItemViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\ViewModeles\\LootLogViewModel\\LootedItemViewModel.cs",
+              "RelativeDocumentMoniker": "DarkLot\\ViewModeles\\LootLogViewModel\\LootedItemViewModel.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\ViewModeles\\LootLogViewModel\\LootedItemViewModel.cs",
+              "RelativeToolTip": "DarkLot\\ViewModeles\\LootLogViewModel\\LootedItemViewModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAArAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-08T15:00:16.59Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "AddLootItemDto.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Dtos\\LootlogDtos\\AddLootItemDto.cs",
+              "RelativeDocumentMoniker": "DarkLot\\Dtos\\LootlogDtos\\AddLootItemDto.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Dtos\\LootlogDtos\\AddLootItemDto.cs",
+              "RelativeToolTip": "DarkLot\\Dtos\\LootlogDtos\\AddLootItemDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAfAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T11:07:47.031Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "AddLootedItemDto.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Dtos\\LootlogDtos\\AddLootedItemDto.cs",
+              "RelativeDocumentMoniker": "DarkLot\\Dtos\\LootlogDtos\\AddLootedItemDto.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Dtos\\LootlogDtos\\AddLootedItemDto.cs",
+              "RelativeToolTip": "DarkLot\\Dtos\\LootlogDtos\\AddLootedItemDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAADAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T11:08:31.346Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
               "Title": "LootedItem.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Models\\Lootlog\\LootedItem.cs",
               "RelativeDocumentMoniker": "DarkLot\\Models\\Lootlog\\LootedItem.cs",
               "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Models\\Lootlog\\LootedItem.cs",
               "RelativeToolTip": "DarkLot\\Models\\Lootlog\\LootedItem.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAqwAIAAAACAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-06T09:02:16.338Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "LootlogController.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Controllers\\LootlogController.cs",
-              "RelativeDocumentMoniker": "DarkLot\\Controllers\\LootlogController.cs",
-              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Controllers\\LootlogController.cs",
-              "RelativeToolTip": "DarkLot\\Controllers\\LootlogController.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAqwBwAAAAIAAAA",
+              "DocumentIndex": 25,
+              "Title": "LootItemDto.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Dtos\\LootlogDtos\\LootItemDto.cs",
+              "RelativeDocumentMoniker": "DarkLot\\Dtos\\LootlogDtos\\LootItemDto.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Dtos\\LootlogDtos\\LootItemDto.cs",
+              "RelativeToolTip": "DarkLot\\Dtos\\LootlogDtos\\LootItemDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T10:08:41.005Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-06T11:13:57.049Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "ILootlogService.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\ApplicationServices\\Lootlog\\ILootlogService.cs",
-              "RelativeDocumentMoniker": "DarkLot\\ApplicationServices\\Lootlog\\ILootlogService.cs",
-              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\ApplicationServices\\Lootlog\\ILootlogService.cs",
-              "RelativeToolTip": "DarkLot\\ApplicationServices\\Lootlog\\ILootlogService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAgAAABFAAAAAAAAAA==",
+              "DocumentIndex": 19,
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "DarkLot\\Controllers\\UsersController.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "DarkLot\\Controllers\\UsersController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAOAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T08:50:26.68Z"
+              "WhenOpened": "2025-06-06T07:21:15.551Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "LootlogService.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\ApplicationServices\\Lootlog\\LootlogService.cs",
-              "RelativeDocumentMoniker": "DarkLot\\ApplicationServices\\Lootlog\\LootlogService.cs",
-              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\ApplicationServices\\Lootlog\\LootlogService.cs",
-              "RelativeToolTip": "DarkLot\\ApplicationServices\\Lootlog\\LootlogService.cs",
-              "ViewState": "AQIAAAUAAAAAAAAAAAAswBwAAAAIAAAA",
+              "DocumentIndex": 17,
+              "Title": "20250606170042_itemUrl.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Data\\Migrations\\20250606170042_itemUrl.cs",
+              "RelativeDocumentMoniker": "DarkLot\\Data\\Migrations\\20250606170042_itemUrl.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Data\\Migrations\\20250606170042_itemUrl.cs",
+              "RelativeToolTip": "DarkLot\\Data\\Migrations\\20250606170042_itemUrl.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T08:50:13.426Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-06T17:00:42.241Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 24,
               "Title": "LootUserDto.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Dtos\\LootlogDtos\\LootUserDto.cs",
               "RelativeDocumentMoniker": "DarkLot\\Dtos\\LootlogDtos\\LootUserDto.cs",
@@ -398,7 +527,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 20,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\appsettings.json",
               "RelativeDocumentMoniker": "DarkLot\\appsettings.json",
@@ -406,12 +535,11 @@
               "RelativeToolTip": "DarkLot\\appsettings.json",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAEAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-06-06T07:29:04.859Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-06T07:29:04.859Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 22,
               "Title": "AddLootUserDto.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Dtos\\LootlogDtos\\AddLootUserDto.cs",
               "RelativeDocumentMoniker": "DarkLot\\Dtos\\LootlogDtos\\AddLootUserDto.cs",
@@ -423,7 +551,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 26,
               "Title": "LootComment.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Models\\Lootlog\\LootComment.cs",
               "RelativeDocumentMoniker": "DarkLot\\Models\\Lootlog\\LootComment.cs",
@@ -435,7 +563,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 29,
               "Title": "ServiceRegistration.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\ServiceRegistartor\\ServiceRegistration.cs",
               "RelativeDocumentMoniker": "DarkLot\\ServiceRegistartor\\ServiceRegistration.cs",
@@ -447,7 +575,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 30,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Data\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "DarkLot\\Data\\ApplicationDbContext.cs",
@@ -459,7 +587,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 27,
               "Title": "LootUser.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Models\\Lootlog\\LootUser.cs",
               "RelativeDocumentMoniker": "DarkLot\\Models\\Lootlog\\LootUser.cs",
@@ -471,7 +599,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 28,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Program.cs",
               "RelativeDocumentMoniker": "DarkLot\\Program.cs",
@@ -483,31 +611,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Views\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "DarkLot\\Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Views\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "DarkLot\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAABIAAAAAAAAAAAAAACoAAAAnAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-06T07:46:03.152Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "lootlog.css",
-              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\wwwroot\\css\\lootlog\\lootlog.css",
-              "RelativeDocumentMoniker": "DarkLot\\wwwroot\\css\\lootlog\\lootlog.css",
-              "ToolTip": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\wwwroot\\css\\lootlog\\lootlog.css",
-              "RelativeToolTip": "DarkLot\\wwwroot\\css\\lootlog\\lootlog.css",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-06-06T10:00:25.221Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 36,
               "Title": "Edit.cshtml",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Views\\Users\\Edit.cshtml",
               "RelativeDocumentMoniker": "DarkLot\\Views\\Users\\Edit.cshtml",
@@ -519,7 +623,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 43,
               "Title": "Register.cshtml.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
               "RelativeDocumentMoniker": "DarkLot\\Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
@@ -531,7 +635,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 37,
               "Title": "EditUserViewModel.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Models\\UserModel\\EditUserViewModel.cs",
               "RelativeDocumentMoniker": "DarkLot\\Models\\UserModel\\EditUserViewModel.cs",
@@ -543,7 +647,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 33,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Views\\Users\\Index.cshtml",
               "RelativeDocumentMoniker": "DarkLot\\Views\\Users\\Index.cshtml",
@@ -555,7 +659,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 34,
               "Title": "layout.css",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\wwwroot\\css\\layout.css",
               "RelativeDocumentMoniker": "DarkLot\\wwwroot\\css\\layout.css",
@@ -567,7 +671,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 35,
               "Title": "_LoginPartial.cshtml",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Views\\Shared\\_LoginPartial.cshtml",
               "RelativeDocumentMoniker": "DarkLot\\Views\\Shared\\_LoginPartial.cshtml",
@@ -579,7 +683,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 32,
               "Title": "Edit.cshtml",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Views\\Roles\\Edit.cshtml",
               "RelativeDocumentMoniker": "DarkLot\\Views\\Roles\\Edit.cshtml",
@@ -591,7 +695,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 31,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Views\\Roles\\Index.cshtml",
               "RelativeDocumentMoniker": "DarkLot\\Views\\Roles\\Index.cshtml",
@@ -603,7 +707,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 44,
               "Title": "NoOpEmailSender.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\ServiceRegistartor\\NoOpEmailSender.cs",
               "RelativeDocumentMoniker": "DarkLot\\ServiceRegistartor\\NoOpEmailSender.cs",
@@ -615,7 +719,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 41,
               "Title": "IRoleService.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\ApplicationServices\\Roles\\IRoleService.cs",
               "RelativeDocumentMoniker": "DarkLot\\ApplicationServices\\Roles\\IRoleService.cs",
@@ -627,7 +731,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 39,
               "Title": "RoleService.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\ApplicationServices\\Roles\\RoleService.cs",
               "RelativeDocumentMoniker": "DarkLot\\ApplicationServices\\Roles\\RoleService.cs",
@@ -639,7 +743,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 38,
               "Title": "Create.cshtml",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Views\\Roles\\Create.cshtml",
               "RelativeDocumentMoniker": "DarkLot\\Views\\Roles\\Create.cshtml",
@@ -651,7 +755,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 40,
               "Title": "site.css",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\wwwroot\\css\\site.css",
               "RelativeDocumentMoniker": "DarkLot\\wwwroot\\css\\site.css",
@@ -663,7 +767,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 42,
               "Title": "Register.cshtml",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
               "RelativeDocumentMoniker": "DarkLot\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
@@ -675,7 +779,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 47,
               "Title": "serviceDependencies.local.json",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Properties\\serviceDependencies.local.json",
               "RelativeDocumentMoniker": "DarkLot\\Properties\\serviceDependencies.local.json",
@@ -687,7 +791,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 46,
               "Title": "serviceDependencies.json",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Properties\\serviceDependencies.json",
               "RelativeDocumentMoniker": "DarkLot\\Properties\\serviceDependencies.json",
@@ -699,7 +803,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 48,
               "Title": "ApplicationUser.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\Models\\UserModel\\ApplicationUser.cs",
               "RelativeDocumentMoniker": "DarkLot\\Models\\UserModel\\ApplicationUser.cs",
@@ -711,7 +815,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 49,
               "Title": "IUserService.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\ApplicationServices\\Users\\IUserService.cs",
               "RelativeDocumentMoniker": "DarkLot\\ApplicationServices\\Users\\IUserService.cs",
@@ -723,7 +827,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 45,
               "Title": "UserService.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\ApplicationServices\\Users\\UserService.cs",
               "RelativeDocumentMoniker": "DarkLot\\ApplicationServices\\Users\\UserService.cs",

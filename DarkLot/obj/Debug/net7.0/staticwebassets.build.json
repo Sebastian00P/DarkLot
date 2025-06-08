@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "MRW5Wuq8SuTbHObW850p247EE2Wi0MRs5uxSq49C1N0=",
+  "Hash": "QbokC5f/pE6Yqj4m96LHdKFtuaSefMoncijxmTYTop8=",
   "Source": "DarkLot",
   "BasePath": "_content/DarkLot",
   "Mode": "Default",
@@ -1269,6 +1269,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\wwwroot\\js\\Home\\Index.js",
+      "SourceId": "DarkLot",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\wwwroot\\",
+      "BasePath": "_content/DarkLot",
+      "RelativePath": "js/Home/Index.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\Home\\Index.js"
     },
     {
       "Identity": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\wwwroot\\js\\site.js",

@@ -1,66 +1,88 @@
-﻿@model List<DarkLot.Models.Lootlog.LootItem>
+﻿@using System.Web
+@model DarkLot.ViewModeles.LootLogViewModel.LootIndexViewModel
+
 <head>
     <link rel="stylesheet" href="~/css/lootlog/lootlog.css" asp-append-version="true" />
+    <script src="~/js/Home/index.js" asp-append-version="true"></script>
+
 </head>
+@{
+    string GetRarityClass(string rarity)
+    {
+        return rarity?.ToLower() switch
+        {
+            "legendary" => "item-border-legendary",
+            "heroic" => "item-border-heroic",
+            "unique" => "item-border-unique",
+            "common" => "item-border-common",
+            _ => "item-border-common"
+        };
+    }
+}
 <div class="container-fluid p-4">
-    @foreach (var loot in Model)
+    @foreach (var loot in Model.Loots)
     {
         <div class="row align-items-center mb-3 p-2" style="background: #23272e; border-radius: 8px;">
             <!-- Itemy po lewej -->
-            <div class="col-auto d-flex">
+            <div class="col-auto d-flex w-30">
                 @foreach (var item in loot.Items)
                 {
-                    <div class="me-1" style="border:2px solid #2a71e7;border-radius:4px;padding:2px;background:#1c2128;">
-                        @* Jeśli trzymasz cały HTML itemu *@
-                        @Html.Raw(item.ItemHtml)
+                    <div class="me-1">
+                        <div class="eq-item margoitem item-container-1 highlight">
+                            <img class="item-1"
+                                 src="@item.ItemImgUrl"
+                                 tip="@(HttpUtility.HtmlAttributeEncode(item.TipJson))" />
+                        </div>
                     </div>
                 }
             </div>
             <!-- Mob w środku -->
-            <div class="col text-center">
+            <div class="col">
                 <span style="color:#e7eaf3;font-weight:500;font-size:1.1em;">
-                    @loot.MobName
+                    @(
+                        string.IsNullOrWhiteSpace(loot.MobName)
+                        ? "Loot z NPC"
+                        : loot.MobName
+                        )
                 </span>
             </div>
-            <!-- Gracz -->
-            <div class="col-auto d-flex align-items-center">
+
+            <!-- Gracze po prawej -->
+            <div class="col-auto d-flex align-items-center loot-users">
                 @for (int i = 0; i < loot.LootUsers.Count; i++)
                 {
                     var u = loot.LootUsers[i];
-
-                    string gifUrl = u.AvatarUrl;
+                    var playerTip = HttpUtility.HtmlAttributeEncode($"{u.Nick} {u.Level}{u.ClassAbbr}");
 
                     <div class="me-1 player hastip"
-                         title="@($"{u.Nick} ({u.Level}{u.ClassAbbr})")"
+                         data-tippy-content="@playerTip"
                          style="
                  width: 32px;
-                 height: 48px; /* <- tutaj zwiększamy wysokość z 32px na 48px */
-               position: relative;
-               background: url('@gifUrl') no-repeat top left;
-               background-size: auto;      /* możemy zostawić auto, żeby nie skalować */
-               overflow: hidden;
-               border-radius: 3px;
-               box-shadow: 0 0 2px #000;
-                     ">
-                    <div class="number" style="
-                   position: absolute;
-                   bottom: 0;
-                   right: 2px;
-                   font-size: 0.8em;
-                   color: #9ad0ff;
-                        ">
+                 height: 48px;
+                 position: relative;
+                 background: url('@u.AvatarUrl') no-repeat top left;
+                 background-size: auto;
+                 overflow: hidden;
+                 border-radius: 3px;
+                       ">
+                        <div class="number" style="
+              position: absolute;
+              bottom: 0;
+              right: 2px;
+              font-size: 0.8em;
+              color: #9ad0ff;
+                    ">
                             @(i + 1)
+                        </div>
                     </div>
-                </div>
                 }
             </div>
-
-
-
-            <!-- Data, serwer po prawej -->
+            <!-- Data i serwer po prawej -->
             <div class="col-auto text-end" style="min-width:90px;">
-                <div style="color:#4ea6ff;font-size:1em;">@loot.ServerName</div>
-                <div style="font-size:0.95em;color:#bfc9d6;">
+                <div style="color:#4ea6ff;font-size:1em;text-align: center;">
+                    @loot.ServerName
+                </div>
+                <div style="font-size:0.95em;color:#bfc9d6;text-align: center;">
                     @loot.CreationTime.ToString("d.M.yyyy")<br />
                     @loot.CreationTime.ToString("HH:mm")
                 </div>
