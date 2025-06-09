@@ -6,7 +6,7 @@ namespace DarkLot.Controllers
     [Authorize]
     public class FightViewController : Controller
     {
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             return View();
         }

@@ -1,5 +1,21 @@
 [
   {
+    "ContainingType": "DarkLot.Controllers.BattleController",
+    "Method": "AddBattle",
+    "RelativePath": "api/Battle/add",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "DarkLot.Dtos.BattleDtos.BattleDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "DarkLot.Controllers.LootlogController",
     "Method": "Add",
     "RelativePath": "api/lootlog/add",

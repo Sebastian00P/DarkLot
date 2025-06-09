@@ -54,22 +54,6 @@
     color: #e3e3e3;
 }
 
-@media (max-width: 991.98px) {
-    .sidebar {
-        position: static;
-        width: 100%;
-        height: auto;
-        min-width: 0;
-        max-width: none;
-        border-right: none;
-        border-bottom: 1px solid #e3e3e3;
-    }
-
-    .main-body {
-        padding: 1rem;
-    }
-}
-
 footer {
     background: #22272e;
     color: #6e7681;

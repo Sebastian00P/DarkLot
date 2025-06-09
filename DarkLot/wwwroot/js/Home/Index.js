@@ -120,11 +120,15 @@ function buildTooltipHtml(data) {
    
    
     if (stats.frost) {
-        const [min, max] = ('' + stats.frost).split(',');
-        if (min && max) {
-            html += `<div>Obrażenia od zimna <span class="tip-value">${numberWithSpaces(min)} - ${numberWithSpaces(max)}</span></div>`;
+        const [saReduce, frostDmg] = ('' + stats.frost).split(',');
+        if (frostDmg) {
+            html += `<div>Obrażenia od zimna <span class="tip-value">${numberWithSpaces(frostDmg)}</span></div>`;
+        }
+        if (saReduce && Number(saReduce) > 0) {
+            html += `<div>Zmniejsza o<span class="tip-value"> ${(Number(saReduce) / 100).toFixed(2)} </span>szybkość ataku celu</div>`;
         }
     }
+
     if (stats.fire) html += `<div>Obrażenia od ognia <span class="tip-value">~${numberWithSpaces(stats.fire)}</span></div>`;
     if (stats.light) html += `<div>Obrażenia od błyskawic <span class="tip-value">1-${escapeHtml(stats.light.replace(',', ','))}</span></div>`;
     if (stats.acdmg) {
@@ -140,8 +144,6 @@ function buildTooltipHtml(data) {
         }
     }
     if (stats.critval) html += `<div>Moc ciosku krytycznego fizycznego <span class="tip-value">+${escapeHtml(stats.critval)}%</span></div>`;
-
- 
 
     if (stats.ac) html += `<div>Pancerz: <span class="tip-value">${escapeHtml(stats.ac)}</span></div>`;
     if (stats.absorb) html += `<div>Absorbuje do <span class="tip-value">${numberWithSpaces(stats.absorb)}</span> obrażeń fizycznych</div>`;
@@ -187,7 +189,7 @@ function buildTooltipHtml(data) {
     if (stats.amount) html += `<div>Ilość: <span class="tip-value">${escapeHtml(stats.amount)}</span>${stats.cansplit ? ' (Można dzielić)' : ''}</div>`;
     if (stats.capacity) html += `<div>Maksimum <span class="tip-value">${escapeHtml(stats.capacity)}</span> sztuk razem</div>`;
     if (stats.gold && Number(stats.gold) > 0) {
-        html += `<div><span>Dodaje </span> <b class="tip-value">${formatGold(stats.gold)}</b> złota</div>`;
+        html += `<div><span>Złoto </span> <b class="tip-value">+${formatGold(stats.gold)}</b></div>`;
     }
     // Specjalne właściwości
     if (stats.teleport) html += `<div><i class="idesc">Teleportuje gracza</i></div>`;

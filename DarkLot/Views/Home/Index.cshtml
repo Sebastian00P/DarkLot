@@ -24,7 +24,7 @@
     {
         <div class="row align-items-center mb-3 p-2" style="background: #23272e; border-radius: 8px;">
             <!-- Itemy po lewej -->
-            <div class="col-auto d-flex w-30">
+            <div class="col-auto d-flex w-30 flex-wrap">
                 @foreach (var item in loot.Items)
                 {
                     <div class="me-1">
@@ -37,8 +37,8 @@
                 }
             </div>
             <!-- Mob w środku -->
-            <div class="col">
-                <span style="color:#e7eaf3;font-weight:500;font-size:1.1em;cursor: default;"
+            <div class="col d-flex flex-wrap">
+                <span style="color:#e7eaf3;font-weight:500;font-size:0.9em;cursor: default;"
                       data-tippy-content="@loot.MapName">
                     @(
                         string.IsNullOrWhiteSpace(loot.MobName)

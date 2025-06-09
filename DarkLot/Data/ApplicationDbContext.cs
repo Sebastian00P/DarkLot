@@ -1,4 +1,5 @@
-﻿using DarkLot.Models.Lootlog;
+﻿using DarkLot.Models.Battles;
+using DarkLot.Models.Lootlog;
 using DarkLot.Models.UserModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -18,6 +19,11 @@ namespace DarkLot.Data
         public DbSet<LootUser> LootUsers { get; set; }
         public DbSet<LootedItem> LootedItems { get; set; }
         public DbSet<LootComment> LootComments { get; set; }
+
+        // Nowe tabele dla logów walki:
+        public DbSet<Battle> Battles { get; set; }
+        public DbSet<Fighter> Fighters { get; set; }
+        public DbSet<BattleLogEntry> BattleLogEntries { get; set; }
 
         // Dodatkowo, jeśli chcesz modelować relacje przez FluentAPI:
         protected override void OnModelCreating(ModelBuilder builder)
@@ -39,6 +45,19 @@ namespace DarkLot.Data
                 .HasOne(lc => lc.LootItem)
                 .WithMany(li => li.Comments)
                 .HasForeignKey(lc => lc.LootItemId);
+
+            // Walki – relacje (opcjonalnie, jeśli chcesz je wymusić):
+            builder.Entity<Fighter>()
+                .HasOne<Battle>()
+                .WithMany(b => b.Fighters)
+                .HasForeignKey(f => f.BattleId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<BattleLogEntry>()
+                .HasOne<Battle>()
+                .WithMany(b => b.Logs)
+                .HasForeignKey(le => le.BattleId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

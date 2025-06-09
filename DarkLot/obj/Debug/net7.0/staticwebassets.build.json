@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "fN7ZJ8d4ODG0OE/HJY+C0jqlGI6zMi3CRIDLGSl/6Bo=",
+  "Hash": "X3HCu+6Ru996tzJH1PcZ8lOjcVXsfdp8RAxqCJITYGE=",
   "Source": "DarkLot",
   "BasePath": "_content/DarkLot",
   "Mode": "Default",
@@ -1333,8 +1333,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "kr76zop5nu",
-      "Integrity": "0J/DhVoks+BT2tly2Kd8xUAwWf9zy7mfBYMJ9RDZRAc=",
+      "Fingerprint": "ve88utgsfi",
+      "Integrity": "l05CTVkzMUkA8ulzbies6tEqBnNlk9d9VbH5ffpnjLo=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\layout.css"
@@ -1354,8 +1354,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "gg39tpe24y",
-      "Integrity": "QOWc95uxf3zdNo8EGV1XudLM85UPexvEixgcg4Ay4T8=",
+      "Fingerprint": "yurngqh3j8",
+      "Integrity": "ynR9SM1BB9Ur+XcFBiXR4Jip41bBHc8EJ+d2sZ3jVQs=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\lootlog\\lootlog.css"
@@ -1417,8 +1417,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "k24m0oygy0",
-      "Integrity": "HD4limRf0AZUDsPgwS7Qupf92SPOzg4jk8iP1LFYnyg=",
+      "Fingerprint": "bamdoxgia0",
+      "Integrity": "E25rE89sH1Y1vWhffNfyz3jS2+RMENrMU/YaViTyxtI=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\Home\\Index.js"
@@ -2654,7 +2654,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2481"
+          "Value": "2177"
         },
         {
           "Name": "Content-Type",
@@ -2662,11 +2662,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"0J/DhVoks+BT2tly2Kd8xUAwWf9zy7mfBYMJ9RDZRAc=\""
+          "Value": "\"l05CTVkzMUkA8ulzbies6tEqBnNlk9d9VbH5ffpnjLo=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 06 Jun 2025 08:47:59 GMT"
+          "Value": "Mon, 09 Jun 2025 10:50:53 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2676,12 +2676,12 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-0J/DhVoks+BT2tly2Kd8xUAwWf9zy7mfBYMJ9RDZRAc="
+          "Value": "sha256-l05CTVkzMUkA8ulzbies6tEqBnNlk9d9VbH5ffpnjLo="
         }
       ]
     },
     {
-      "Route": "css/layout.kr76zop5nu.css",
+      "Route": "css/layout.ve88utgsfi.css",
       "AssetFile": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\css\\layout.css",
       "Selectors": [],
       "ResponseHeaders": [
@@ -2691,7 +2691,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2481"
+          "Value": "2177"
         },
         {
           "Name": "Content-Type",
@@ -2699,11 +2699,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"0J/DhVoks+BT2tly2Kd8xUAwWf9zy7mfBYMJ9RDZRAc=\""
+          "Value": "\"l05CTVkzMUkA8ulzbies6tEqBnNlk9d9VbH5ffpnjLo=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 06 Jun 2025 08:47:59 GMT"
+          "Value": "Mon, 09 Jun 2025 10:50:53 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2713,7 +2713,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "kr76zop5nu"
+          "Value": "ve88utgsfi"
         },
         {
           "Name": "label",
@@ -2721,7 +2721,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-0J/DhVoks+BT2tly2Kd8xUAwWf9zy7mfBYMJ9RDZRAc="
+          "Value": "sha256-l05CTVkzMUkA8ulzbies6tEqBnNlk9d9VbH5ffpnjLo="
         }
       ]
     },
@@ -2736,7 +2736,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "5340"
+          "Value": "6723"
         },
         {
           "Name": "Content-Type",
@@ -2744,11 +2744,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"QOWc95uxf3zdNo8EGV1XudLM85UPexvEixgcg4Ay4T8=\""
+          "Value": "\"ynR9SM1BB9Ur+XcFBiXR4Jip41bBHc8EJ+d2sZ3jVQs=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 09 Jun 2025 06:42:38 GMT"
+          "Value": "Mon, 09 Jun 2025 10:51:37 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2758,12 +2758,12 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-QOWc95uxf3zdNo8EGV1XudLM85UPexvEixgcg4Ay4T8="
+          "Value": "sha256-ynR9SM1BB9Ur+XcFBiXR4Jip41bBHc8EJ+d2sZ3jVQs="
         }
       ]
     },
     {
-      "Route": "css/lootlog/lootlog.gg39tpe24y.css",
+      "Route": "css/lootlog/lootlog.yurngqh3j8.css",
       "AssetFile": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\css\\lootlog\\lootlog.css",
       "Selectors": [],
       "ResponseHeaders": [
@@ -2773,7 +2773,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "5340"
+          "Value": "6723"
         },
         {
           "Name": "Content-Type",
@@ -2781,11 +2781,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"QOWc95uxf3zdNo8EGV1XudLM85UPexvEixgcg4Ay4T8=\""
+          "Value": "\"ynR9SM1BB9Ur+XcFBiXR4Jip41bBHc8EJ+d2sZ3jVQs=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 09 Jun 2025 06:42:38 GMT"
+          "Value": "Mon, 09 Jun 2025 10:51:37 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2795,7 +2795,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "gg39tpe24y"
+          "Value": "yurngqh3j8"
         },
         {
           "Name": "label",
@@ -2803,7 +2803,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-QOWc95uxf3zdNo8EGV1XudLM85UPexvEixgcg4Ay4T8="
+          "Value": "sha256-ynR9SM1BB9Ur+XcFBiXR4Jip41bBHc8EJ+d2sZ3jVQs="
         }
       ]
     },
@@ -5356,6 +5356,51 @@
       ]
     },
     {
+      "Route": "js/Home/Index.bamdoxgia0.js",
+      "AssetFile": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\js\\Home\\Index.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "14491"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"E25rE89sH1Y1vWhffNfyz3jS2+RMENrMU/YaViTyxtI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 09 Jun 2025 10:43:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "bamdoxgia0"
+        },
+        {
+          "Name": "label",
+          "Value": "js/Home/Index.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-E25rE89sH1Y1vWhffNfyz3jS2+RMENrMU/YaViTyxtI="
+        }
+      ]
+    },
+    {
       "Route": "js/Home/Index.js",
       "AssetFile": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\js\\Home\\Index.js",
       "Selectors": [],
@@ -5366,7 +5411,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "12719"
+          "Value": "14491"
         },
         {
           "Name": "Content-Type",
@@ -5374,11 +5419,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"HD4limRf0AZUDsPgwS7Qupf92SPOzg4jk8iP1LFYnyg=\""
+          "Value": "\"E25rE89sH1Y1vWhffNfyz3jS2+RMENrMU/YaViTyxtI=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 09 Jun 2025 07:44:49 GMT"
+          "Value": "Mon, 09 Jun 2025 10:43:41 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -5388,52 +5433,7 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-HD4limRf0AZUDsPgwS7Qupf92SPOzg4jk8iP1LFYnyg="
-        }
-      ]
-    },
-    {
-      "Route": "js/Home/Index.k24m0oygy0.js",
-      "AssetFile": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\js\\Home\\Index.js",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "12719"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"HD4limRf0AZUDsPgwS7Qupf92SPOzg4jk8iP1LFYnyg=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Mon, 09 Jun 2025 07:44:49 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "k24m0oygy0"
-        },
-        {
-          "Name": "label",
-          "Value": "js/Home/Index.js"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-HD4limRf0AZUDsPgwS7Qupf92SPOzg4jk8iP1LFYnyg="
+          "Value": "sha256-E25rE89sH1Y1vWhffNfyz3jS2+RMENrMU/YaViTyxtI="
         }
       ]
     },
