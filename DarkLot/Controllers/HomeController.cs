@@ -18,10 +18,11 @@ namespace DarkLot.Controllers
             _lootlogService = lootlogService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
-            var loots = await _lootlogService.GetLatestLootsAsync();
-            return View(loots);
+            int pageSize = 10;
+            var vm = await _lootlogService.GetLootsPageAsync(page, pageSize);
+            return View(vm);
         }
 
         public IActionResult Privacy()
@@ -34,16 +35,6 @@ namespace DarkLot.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        [HttpGet("api/publicdata")]       // dostęp pod https://localhost:7238/api/publicdata
-        [AllowAnonymous]                   // wyłącza wymóg autoryzacji
-        public IActionResult PublicData()
-        {
-            var result = new
-            {
-                message = "To jest publiczny JSON z serwera",
-                serverTimeUtc = DateTime.UtcNow
-            };
-            return Json(result);
-        }
+
     }
 }

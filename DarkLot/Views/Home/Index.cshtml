@@ -38,7 +38,8 @@
             </div>
             <!-- Mob w środku -->
             <div class="col">
-                <span style="color:#e7eaf3;font-weight:500;font-size:1.1em;">
+                <span style="color:#e7eaf3;font-weight:500;font-size:1.1em;cursor: default;"
+                      data-tippy-content="@loot.MapName">
                     @(
                         string.IsNullOrWhiteSpace(loot.MobName)
                         ? "Loot z NPC"
@@ -89,4 +90,84 @@
             </div>
         </div>
     }
+    @{
+        int currentPage = Model.CurrentPage;
+        int totalPages = Model.TotalPages;
+    }
+    @if (totalPages > 1)
+    {
+        <nav class="mb-3">
+            <ul class="pagination justify-content-center">
+                <!-- Poprzednia -->
+                <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                    <a class="page-link" href="?page=@(currentPage - 1)">«</a>
+                </li>
+
+                <!-- Zawsze pierwsza -->
+                <li class="page-item @(currentPage == 1 ? "active" : "")">
+                    <a class="page-link" href="?page=1">1</a>
+                </li>
+
+                @if (currentPage <= 3)
+                {
+                    // Jeśli jesteś na 1-3, pokaż strony 2,3
+                    for (int i = 2; i <= Math.Min(3, totalPages - 1); i++)
+                    {
+                        <li class="page-item @(currentPage == i ? "active" : "")">
+                            <a class="page-link" href="?page=@i">@i</a>
+                        </li>
+                    }
+                    if (totalPages > 4)
+                    {
+                        <li class="page-item disabled"><span class="page-link">...</span></li>
+                    }
+                }
+                else if (currentPage >= totalPages - 2)
+                {
+                    if (totalPages > 4)
+                    {
+                        <li class="page-item disabled"><span class="page-link">...</span></li>
+                    }
+                    // Jeśli jesteś na końcu, pokaż trzy ostatnie (oprócz ostatniej, która jest osobno)
+                    for (int i = totalPages - 2; i < totalPages; i++)
+                    {
+                        if (i > 1)
+                        {
+                            <li class="page-item @(currentPage == i ? "active" : "")">
+                                <a class="page-link" href="?page=@i">@i</a>
+                            </li>
+                        }
+                    }
+                }
+                else
+                {
+                    // Jesteś gdzieś w środku
+                    <li class="page-item disabled"><span class="page-link">...</span></li>
+                    for (int i = currentPage - 1; i <= currentPage + 1; i++)
+                    {
+                        if (i > 1 && i < totalPages)
+                        {
+                            <li class="page-item @(currentPage == i ? "active" : "")">
+                                <a class="page-link" href="?page=@i">@i</a>
+                            </li>
+                        }
+                    }
+                    <li class="page-item disabled"><span class="page-link">...</span></li>
+                }
+
+                @if (totalPages > 1)
+                {
+                <li class="page-item @(currentPage == totalPages ? "active" : "")">
+                    <a class="page-link" href="?page=@totalPages">@totalPages</a>
+                </li>
+                }
+
+                <!-- Następna -->
+                <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                    <a class="page-link" href="?page=@(currentPage + 1)">»</a>
+                </li>
+            </ul>
+        </nav>
+    }
+
 </div>

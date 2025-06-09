@@ -16,13 +16,19 @@ namespace DarkLot.ApplicationServices.Lootlog
             _db = db;
         }
 
-        public async Task<LootIndexViewModel> GetLatestLootsAsync(int count = 20)
+        public async Task<LootIndexViewModel> GetLootsPageAsync(int page, int pageSize)
         {
+            var totalCount = await _db.LootItems.CountAsync();
+            var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+            if (page < 1) page = 1;
+            if (page > totalPages) page = totalPages;
+
             var data = await _db.LootItems
                 .Include(l => l.Items)
                 .Include(l => l.LootUsers)
                 .OrderByDescending(l => l.CreationTime)
-                .Take(count)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
 
             var vm = new LootIndexViewModel
@@ -49,7 +55,9 @@ namespace DarkLot.ApplicationServices.Lootlog
                         ItemImgUrl = i.ItemImgUrl,
                         TipJson = i.ItemHtml
                     }).ToList()
-                }).ToList()
+                }).ToList(),
+                CurrentPage = page,
+                TotalPages = totalPages
             };
 
             return vm;
@@ -57,6 +65,8 @@ namespace DarkLot.ApplicationServices.Lootlog
 
         public async Task AddLootAsync(AddLootItemDto dto, string? creatorUserId)
         {
+            DateTime polandTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time"));
+
             var loot = new LootItem
             {
                 ServerName = dto.ServerName,
@@ -66,7 +76,7 @@ namespace DarkLot.ApplicationServices.Lootlog
                 IsActive = dto.IsActive,
                 IsDeleted = dto.IsDeleted,
                 CreatorUserId = creatorUserId,
-                CreationTime = DateTime.UtcNow,
+                CreationTime = polandTime,
                 LootUsers = dto.LootUsers?.Select(u => new LootUser
                 {
                     GameUserId = u.GameUserId,

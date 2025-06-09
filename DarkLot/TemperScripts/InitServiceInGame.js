@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
-// @name         DarkLog v3.6.8
-// @version      3.6.8
-// @description  Wyślij loot natychmiast po otwarciu okna loot; pomiń, jeśli brak walczących; UI bez zmian.
+// @name         DarkLog v3.7.1
+// @version      3.7.1
+// @description  Naprawa podwójnego lootu
 // @author       Dark-Sad
 // @match        http://*.margonem.pl/
 // @match        https://*.margonem.pl/
@@ -15,8 +15,8 @@
     window._dl_teamParsedFW = null;
     window._dl_lastWarriorsListTurn = null;
     window._dl_lastLootEventId = null;
-    window._dl_lastLootItems = null;
-    window._dl_lastLootSource = null;
+    window._dl_lootCache = {};
+    window._dl_sentItemHids = window._dl_sentItemHids || new Set();
     let sessionChecked = false;
     const sentLootEvents = new Set();
 
@@ -33,9 +33,12 @@
                     window._dl_teamParsedFW = parsed.f.w;
                 }
                 if (parsed.loot && parsed.ev != null && parsed.item) {
+                    window._dl_lootCache = window._dl_lootCache || {};
+                    window._dl_lootCache[parsed.ev] = {
+                        items: { ...parsed.item },
+                        source: parsed.loot.source
+                    };
                     window._dl_lastLootEventId = parsed.ev;
-                    window._dl_lastLootItems = { ...parsed.item };
-                    window._dl_lastLootSource = parsed.loot.source;
                 }
                 return orig.apply(this, arguments);
             };
@@ -166,41 +169,76 @@
             return;
         }
 
-        // przygotuj items
+        const lootCache = window._dl_lootCache && window._dl_lootCache[window._dl_lastLootEventId];
+        if (!lootCache) {
+            console.log('[DL] Brak cache dla eventu', window._dl_lastLootEventId);
+            return;
+        }
+
+        if (lootCache.source === 'fight') {
+            try {
+                if (Engine.battle && Engine.battle.warriorsList) {
+                    window._dl_lastWarriorsListTurn = { ...Engine.battle.warriorsList };
+                }
+            } catch { }
+        }
+
+        // przygotuj items: tylko nie-wysłane dotąd hid
         const items = [];
-        const respItems = window._dl_lastLootItems;
+        const respItems = lootCache.items;
         if (respItems && typeof respItems === 'object') {
             Object.values(respItems).forEach(it => {
-                if (it.icon) {
-                    items.push({
-                        itemHtml: JSON.stringify(it),
-                        ItemImgUrl: window.CFG.a_ipath + it.icon
-                    });
-                }
+                if (window._dl_sentItemHids.has(it.hid)) return;
+                items.push({
+                    itemHtml: JSON.stringify(it),
+                    ItemImgUrl: window.CFG.a_ipath + it.icon
+                });
+                window._dl_sentItemHids.add(it.hid);
             });
         }
 
-        // zbuduj dto
-        const dto = buildDto(items);
+        const dto = buildDto(items, lootCache.source);
 
-        // jeśli brak graczy, pomiń NPC
-        if (!dto.lootUsers || dto.lootUsers.length === 0) {
-            console.log('[DL] Brak walczących, pomijam event:', window._dl_lastLootEventId);
+        if (!dto.lootUsers || dto.lootUsers.length === 0 || !dto.mobName || !dto.items || dto.items.length === 0) {
+            console.log('[DL] Brak walczących/mobName/items, pomijam event:', window._dl_lastLootEventId);
             sentLootEvents.add(window._dl_lastLootEventId);
+            delete window._dl_lootCache[window._dl_lastLootEventId];
+            window._dl_lastLootEventId = null;
             return;
         }
 
         console.log('[DL] Sending DTO via observer:', dto);
         sendLootToServer(dto);
         sentLootEvents.add(window._dl_lastLootEventId);
+        delete window._dl_lootCache[window._dl_lastLootEventId];
+        window._dl_lastLootEventId = null;
     }
 
-    // ─── BUILD DTO z filtrem NPC ────────────────────────────────────────────
-    function buildDto(items) {
+    // Najlepszy możliwy fallback dla nazw postaci i mobów
+    function getBestName(obj) {
+        if (!obj) return "";
+        // Najczęstsze pola na nicka/moba
+        let name = obj.name || obj.n || obj.nick || obj.Nick || obj.imie || "";
+        // Margonem czasem trzyma imię w dziwnych polach
+        if (!name && obj.d && (obj.d.nick || obj.d.name)) {
+            name = obj.d.nick || obj.d.name;
+        }
+        // Jeżeli to boss/heros, sprawdź custom
+        if (obj.type && typeof obj.type === "string") {
+            if (obj.type.includes("heros") || obj.type.includes("elita") || obj.type.includes("tytan")) {
+                // Możesz tu dorzucić specjalne reguły, np. "Fobos (heros)" itp.
+                name = (name || "") + " (" + obj.type + ")";
+            }
+        }
+        // Ostateczny fallback
+        if (!name) name = "[Brak nazwy]";
+        return name;
+    }
+
+    // ─── BUILD DTO z lepszym wyciąganiem nicków/nazw ─────────────────────────
+    function buildDto(items, source) {
         const mobParts = [];
         const lootUsers = [];
-        const source = window._dl_lastLootSource;
-
         const fw = (source === 'fight')
             ? (window._dl_teamParsedFW || window._dl_lastWarriorsListTurn || {})
             : {};
@@ -209,15 +247,18 @@
             const id = +k;
             if (isNaN(id)) return;
 
+            // MOBY
             if (id < 0) {
-                const name = e.name || e.n || e.nick || '';
+                const name = getBestName(e);
                 const lvl = e.lvl != null ? e.lvl : '';
                 const prof = e.prof || '';
                 mobParts.push(`${name}(${lvl}${prof})`);
-            } else {
+            }
+            // GRACZE
+            else {
                 lootUsers.push({
                     GameUserId: String(id),
-                    Nick: e.name || e.n || e.nick || '',
+                    Nick: getBestName(e),
                     Level: e.lvl || 0,
                     ClassAbbr: e.prof || '',
                     AvatarUrl: e.icon ? CFG.a_opath + e.icon.replace(/^\//, '') : ''
@@ -225,7 +266,8 @@
             }
         });
 
-        const mobName = mobParts.join('\n');
+        // Jeśli po walce z herosem/bossem masz pustą nazwę - daj fallback "[Brak nazwy]"
+        let mobName = mobParts.filter(Boolean).join('\n') || "[Brak nazwy]";
         let mapName = '';
         let serverName = '';
         let clanName = '';
@@ -264,6 +306,15 @@
                 else console.error('[DL] Error:', res);
             })
             .catch(err => console.error('[DL] Conn error:', err));
+    }
+
+    // (OPCJONALNIE) Jeśli chcesz czyścić wszystko po evencie:
+    function resetDLCache() {
+        window._dl_teamParsedFW = null;
+        window._dl_lastWarriorsListTurn = null;
+        window._dl_lastLootEventId = null;
+        window._dl_lootCache = {};
+        window._dl_sentItemHids = new Set();
     }
 
 })();

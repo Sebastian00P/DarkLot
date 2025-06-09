@@ -6,7 +6,7 @@ namespace DarkLot.ApplicationServices.Lootlog
 {
     public interface ILootlogService
     {
-        Task<LootIndexViewModel> GetLatestLootsAsync(int count = 20);
+        Task<LootIndexViewModel> GetLootsPageAsync(int page, int pageSize);
         Task AddLootAsync(AddLootItemDto dto, string? creatorUserId);
     }
 }
