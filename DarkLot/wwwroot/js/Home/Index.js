@@ -29,7 +29,6 @@
         tippy(img, {
             content: buildTooltipHtml(data, rarity),
             allowHTML: true,
-            interactive: true,
             theme: 'noborder', // custom theme
             delay: [0, 0],
             maxWidth: 450,
@@ -109,6 +108,7 @@ function buildTooltipHtml(data) {
     if (itemType) {
         html += `<div>Typ: ${escapeHtml(itemType)}</div>`;
     }
+    if (stats.ac) html += `<div>Pancerz: <span class="tip-value">${escapeHtml(stats.ac)}</span></div>`;
 
     if (stats.pdmg) {
         html += `<div>Atak fizyczny: <span class="tip-value">${numberWithSpaces(stats.pdmg)}</span></div>`;
@@ -145,7 +145,6 @@ function buildTooltipHtml(data) {
     }
     if (stats.critval) html += `<div>Moc ciosku krytycznego fizycznego <span class="tip-value">+${escapeHtml(stats.critval)}%</span></div>`;
 
-    if (stats.ac) html += `<div>Pancerz: <span class="tip-value">${escapeHtml(stats.ac)}</span></div>`;
     if (stats.absorb) html += `<div>Absorbuje do <span class="tip-value">${numberWithSpaces(stats.absorb)}</span> obrażeń fizycznych</div>`;
     if (stats.absorbm) html += `<div>Absorbuje do <span class="tip-value">${numberWithSpaces(stats.absorbm)}</span> obrażen magicznych</div>`;
     if (stats.contra) {
@@ -171,9 +170,26 @@ function buildTooltipHtml(data) {
     if (stats.reslight) html += `<div>Odporność na błyskawice <span class="tip-value">+${escapeHtml(stats.reslight)}%</span></div>`;
     if (stats.resfrost) html += `<div>Odporność na zimno <span class="tip-value">+${escapeHtml(stats.resfrost)}%</span></div>`;
     if (stats.resdmg) html += `<div>Niszczenie odporności magicznych o <span class="tip-value">${escapeHtml(stats.resdmg)}%</span> podczas ciosu</div>`;
+    if (stats.enfatig) {
+        const [chance, energy] = ('' + stats.enfatig).split(',');
+        html +=
+            `<div><span class="tip-value">+${escapeHtml(chance)}%</span>` +
+            ` szans na utratę <span class="tip-value">${escapeHtml(energy)}</span>` +
+            ` energii przez przeciwnika podczas obrony</div>`;
+    }
+    if (stats.manafatig) {
+        const [chance, mana] = ('' + stats.manafatig).split(',');
+        html +=
+            `<div><span class="tip-value">+${escapeHtml(chance)}%</span>` +
+            ` szans na zniszczenie <span class="tip-value">${escapeHtml(mana)}</span>` +
+            ` many przez przeciwnika podczas obrony</div>`;
+    }
 
     if (stats.crit) html += `<div>Cios krytyczny <span class="tip-value">+${escapeHtml(stats.crit)}%</span></div>`;
-    if (stats.critmval) html += `<div>Siła krytyka magicznego <span class="tip-value">+${escapeHtml(stats.critmval)}</span></div>`;
+    if (stats.critmval) html += `<div>Siła krytyka magicznego <span class="tip-value">+${escapeHtml(stats.critmval)}%</span></div>`;
+    if (stats.hpbon) {
+        html += `<div><span class="tip-value">+${escapeHtml(stats.hpbon)}</span> życia za 1 pkt siły</div>`;
+    }
     if (stats.sa) html += `<div>SA <span class="tip-value">+${Number(stats.sa) / 100}</span></div>`;
     if (stats.slow) html += `<div>Obniża SA przeciwnika o <span class="tip-value">${Number(stats.slow) / 100}</span></div>`;
 
@@ -191,12 +207,16 @@ function buildTooltipHtml(data) {
     if (stats.gold && Number(stats.gold) > 0) {
         html += `<div><span>Złoto </span> <b class="tip-value">+${formatGold(stats.gold)}</b></div>`;
     }
+    if (stats.bag) {
+        html += `<div>Mieści <span class="tip-value">${escapeHtml(stats.bag)}</span> przedmiotów</div>`;
+    }
     // Specjalne właściwości
     if (stats.teleport) html += `<div><i class="idesc">Teleportuje gracza</i></div>`;
     if (stats.permbound) html += `<div>Związany z właścicielem na stałe</div>`;
     if (stats.binds) html += `<div>Wiąże po założeniu</div>`;
 
     // Opis (italic)
+   
     if (stats.opis) html += `<div><i class="idesc">${escapeHtml(stats.opis)}</i></div>`;
     if (stats.legbon) {
         let bon = ('' + stats.legbon).split(',')[0];
@@ -239,12 +259,16 @@ function guessItemType(data, stats) {
     if (data.icon.startsWith("nas/")) return "Naszyjnik";
     if (data.icon.startsWith("but/")) return "Buty";
     if (data.icon.startsWith("rek/")) return "Rękawice";
-    if (data.icon.startsWith("obr/")) return "Pierścień";
+    if (data.icon.startsWith("pie/")) return "Pierścień";
     if (data.icon.startsWith("tal/")) return "Talizman";
     if (data.icon.startsWith("mie/")) return "Broń";
     if (data.icon.startsWith("bro/")) return "Broń";
     if (data.icon.startsWith("roz/")) return "Różdżka";
     if (data.icon.startsWith("arr/")) return "Strzały";
+    if (data.icon.startsWith("orb/")) return "Orb";
+    if (data.icon.startsWith("bag/")) return "Torba";
+    if (data.icon.startsWith("pap/")) return "Teleport";
+    if (data.icon.startsWith("zlo/")) return "Złoto";
     // Możesz dodać więcej własnych reguł
 
     return null;

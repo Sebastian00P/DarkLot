@@ -110,26 +110,26 @@
 
                 @if (currentPage <= 3)
                 {
-                    // Jeśli jesteś na 1-3, pokaż strony 2,3
-                    for (int i = 2; i <= Math.Min(3, totalPages - 1); i++)
+                    // Jeśli jesteś na 1-3, pokaż strony 2, 3 i 4
+                    for (int i = 2; i <= Math.Min(4, totalPages - 1); i++)
                     {
                         <li class="page-item @(currentPage == i ? "active" : "")">
                             <a class="page-link" href="?page=@i">@i</a>
                         </li>
                     }
-                    if (totalPages > 4)
+                    if (totalPages > 5)
                     {
                         <li class="page-item disabled"><span class="page-link">...</span></li>
                     }
                 }
                 else if (currentPage >= totalPages - 2)
                 {
-                    if (totalPages > 4)
+                    if (totalPages > 5)
                     {
                         <li class="page-item disabled"><span class="page-link">...</span></li>
                     }
-                    // Jeśli jesteś na końcu, pokaż trzy ostatnie (oprócz ostatniej, która jest osobno)
-                    for (int i = totalPages - 2; i < totalPages; i++)
+                    // Jeśli jesteś na końcu, pokaż trzy ostatnie (oprócz ostatniej)
+                    for (int i = totalPages - 3; i < totalPages; i++)
                     {
                         if (i > 1)
                         {
@@ -141,7 +141,7 @@
                 }
                 else
                 {
-                    // Jesteś gdzieś w środku
+                // Jesteś gdzieś w środku
                     <li class="page-item disabled"><span class="page-link">...</span></li>
                     for (int i = currentPage - 1; i <= currentPage + 1; i++)
                     {
@@ -155,12 +155,10 @@
                     <li class="page-item disabled"><span class="page-link">...</span></li>
                 }
 
-                @if (totalPages > 1)
-                {
+                @* Zawsze ostatnia *@
                 <li class="page-item @(currentPage == totalPages ? "active" : "")">
                     <a class="page-link" href="?page=@totalPages">@totalPages</a>
                 </li>
-                }
 
                 <!-- Następna -->
                 <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
