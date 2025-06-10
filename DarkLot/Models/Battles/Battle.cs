@@ -1,4 +1,6 @@
-﻿namespace DarkLot.Models.Battles
+﻿using DarkLot.Models.UserModel;
+
+namespace DarkLot.Models.Battles
 {
     public class Battle
     {
@@ -13,5 +15,9 @@
 
         public bool IsActive { get; set; }
         public bool IsDeleted { get; set; }
+        public string CreatorUserId { get; set; } // Klucz obcy do ApplicationUser
+        public virtual ApplicationUser CreatorUser { get; set; }
+        public string ServerName { get; set; }
+
     }
 }

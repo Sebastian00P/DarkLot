@@ -2,13 +2,13 @@
   {
     "ContainingType": "DarkLot.Controllers.BattleController",
     "Method": "AddBattle",
-    "RelativePath": "api/Battle/add",
+    "RelativePath": "api/Battle/addBattle",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "dto",
+        "Name": "battleDto",
         "Type": "DarkLot.Dtos.BattleDtos.BattleDto",
         "IsRequired": true
       }

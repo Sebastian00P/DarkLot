@@ -1,0 +1,53 @@
+﻿.battle-details h2 {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.battle-details .participants li {
+    margin-bottom: 4px;
+}
+
+.battle-details .team-1 {
+    color: #006400; /* dark green */
+}
+
+.battle-details .team-2 {
+    color: #8B0000; /* dark red */
+}
+#log-container .log-line {
+    padding: 6px 8px;
+    margin: 2px 0;
+    border-radius: 4px;
+    font-family: monospace;
+}
+
+.log-info {
+    background: #2f2f2f;
+    color: #e0e0e0;
+}
+
+.log-buff {
+    background: #263822;
+    color: #a8cfa1;
+}
+
+.log-damage {
+    background: #521a1a;
+    color: #f4a9a9;
+}
+
+.log-heal {
+    background: #1b2d4d;
+    color: #a9c4f4;
+}
+
+.log-miss {
+    background: #3d3322;
+    color: #e0d3b0;
+}
+
+.log-time {
+    color: #888;
+    margin-right: 6px;
+}

@@ -1,0 +1,34 @@
+﻿@model List<DarkLot.ViewModeles.BattlesViewModel.BattleViewModel>
+
+@{
+    ViewData["Title"] = "Historia Walk";
+}
+<head>
+    <link rel="stylesheet" href="~/css/FightsView/index.css" asp-append-version="true" />
+
+</head>
+<h1>@ViewData["Title"]</h1>
+
+<div class="battle-list">
+    @foreach (var battle in Model)
+    {
+        <div class="battle-card">
+            <div class="battle-header">
+                <div style="flex: 1;">
+                    <a asp-controller="FightView" asp-action="Details" asp-route-battleId="@battle.Id" class="battle-player">
+                        @battle.Fighters.FirstOrDefault()?.Name
+                    </a>
+                    &nbsp;·&nbsp;
+                    <a asp-controller="FightView" asp-action="Details" asp-route-battleId="@battle.Id" class="battle-player">
+                        zobacz log walki
+                    </a>
+                </div>
+                <div class="battle-meta">
+                    <div>@battle.ServerName</div>
+                    <div>@battle.CreationTime.ToString("HH:mm dd.MM.yyyy")</div>
+                </div>
+            </div>
+            <div class="battle-start">Start: @battle.BattleStart</div>
+        </div>
+    }
+</div>

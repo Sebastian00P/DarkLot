@@ -1,6 +1,8 @@
 ﻿using DarkLot.ApplicationServices.FightView;
 using DarkLot.Dtos.BattleDtos;
+using DarkLot.Models.UserModel;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DarkLot.Controllers
@@ -11,21 +13,30 @@ namespace DarkLot.Controllers
     public class BattleController : ControllerBase
     {
         private readonly IFightViewService _fightViewService;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public BattleController(IFightViewService fightViewService)
+        public BattleController(
+            IFightViewService fightViewService,
+            UserManager<ApplicationUser> userManager)
         {
             _fightViewService = fightViewService;
+            _userManager = userManager;
         }
 
-        [HttpPost]
-        [Route("add")]
-        public async Task<IActionResult> AddBattle([FromBody] BattleDto dto)
+        [HttpPost("addBattle")]
+        public async Task<IActionResult> AddBattle([FromBody] BattleDto battleDto)
         {
-            if (dto == null || dto.Fighters == null || dto.Logs == null)
-                return BadRequest("Niepoprawne dane");
+            // Pobierz ID zalogowanego użytkownika
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
 
-            var id = await _fightViewService.AddBattleAsync(dto);
-            return Ok(new { id });
+            if (userId == null)
+            {
+                return BadRequest("Nie udało się zaleźć użytkownika.");
+            }
+
+            var battleId = await _fightViewService.AddBattleAsync(battleDto, userId);
+
+            return Ok();
         }
     }
 }

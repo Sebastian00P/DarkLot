@@ -29,6 +29,7 @@
         tippy(img, {
             content: buildTooltipHtml(data, rarity),
             allowHTML: true,
+            interactive: true,
             theme: 'noborder', // custom theme
             delay: [0, 0],
             maxWidth: 450,
@@ -90,9 +91,9 @@ function buildTooltipHtml(data) {
     };
 
     const legBonMap = {
-        facade: 'Maska: po utracie X punktów życia maskuje postać',
+        facade: 'Fasada opieki: przyjmowane ciosy są o 13% słabsze',
         curse: 'Klątwa: po otrzymaniu obrażeń nakłada klątwę na atakującego',
-        lastheal: 'Ostatnie uzdrowienie: po otrzymaniu śmiertelnych obrażeń leczy postać o X punktów życia',
+        lastheal: 'Ostatni ratunek: kiedy po otrzymanym ataku zostanie graczowi mniej niż 18% życia, zostaje jednorazowo uleczony do 30-50% swojego życia.',
         critred: 'Redukcja krytyków: obrażenia z ciosów krytycznych zmniejszone o X%',
         holytouch: 'Święty dotyk: ataki mają szansę na dodatkowy efekt uzdrawiający',
         verycrit: 'Wielki krytyk: zwiększa szansę na cios krytyczny o X%',
@@ -190,6 +191,9 @@ function buildTooltipHtml(data) {
     if (stats.hpbon) {
         html += `<div><span class="tip-value">+${escapeHtml(stats.hpbon)}</span> życia za 1 pkt siły</div>`;
     }
+    if (stats.lowevade) {
+        html += `<div>Podczas ataku unik przeciwnika jest mniejszy o <span class="tip-value">${escapeHtml(stats.lowevade)}</span></div>`;
+    }
     if (stats.sa) html += `<div>SA <span class="tip-value">+${Number(stats.sa) / 100}</span></div>`;
     if (stats.slow) html += `<div>Obniża SA przeciwnika o <span class="tip-value">${Number(stats.slow) / 100}</span></div>`;
 
@@ -212,20 +216,20 @@ function buildTooltipHtml(data) {
     }
     // Specjalne właściwości
     if (stats.teleport) html += `<div><i class="idesc">Teleportuje gracza</i></div>`;
+    if (stats.legbon) {
+        let bon = ('' + stats.legbon).split(',')[0];
+        let value = ('' + stats.legbon).split(',')[1];
+        let desc = legBonMap[bon] || 'Nieznana właściwość legendarna';
+        html += `<div class="text-center"><i class="legbon tip-legendary">${desc.replace('X', value || '?')}</i></div>`;
+    }
+    if (stats.opis) html += `<div><i class="idesc">${escapeHtml(stats.opis)}</i></div>`;
+   
     if (stats.permbound) html += `<div>Związany z właścicielem na stałe</div>`;
     if (stats.binds) html += `<div>Wiąże po założeniu</div>`;
 
     // Opis (italic)
    
-    if (stats.opis) html += `<div><i class="idesc">${escapeHtml(stats.opis)}</i></div>`;
-    if (stats.legbon) {
-        let bon = ('' + stats.legbon).split(',')[0];
-        let value = ('' + stats.legbon).split(',')[1];
-        let desc = legBonMap[bon] || 'Nieznana właściwość legendarna';
-        // Jeśli chcesz pokazywać wartość (np. 200, 240) w opisie, możesz użyć zamiennika:
-        // desc = desc.replace('X', value || '?');
-        html += `<div><i class="legbon">${desc.replace('X', value || '?')}</i></div>`;
-    }
+   
     // Wymagania
     if (stats.lvl) html += `<div class="tip-req"><b>Wymagany poziom: <span class="tip-req">${escapeHtml(stats.lvl)}</span></b></div>`;
     if (stats.reqp) {
