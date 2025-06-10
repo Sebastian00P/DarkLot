@@ -18,16 +18,18 @@ namespace DarkLot.ApplicationServices.Lootlog
 
         public async Task<LootIndexViewModel> GetLootsPageAsync(int page, int pageSize)
         {
-            var totalCount = await _db.LootItems.CountAsync();
+            var totalCount = await _db.LootItems.Where(x => !x.IsDeleted).CountAsync();
             var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+            if(totalPages == 0) page = 1;
             if (page < 1) page = 1;
             if (page > totalPages) page = totalPages;
 
             var data = await _db.LootItems
+                .Where(x => !x.IsDeleted)
                 .Include(l => l.Items)
                 .Include(l => l.LootUsers)
                 .OrderByDescending(l => l.CreationTime)
-                .Skip((page - 1) * pageSize)
+                .Skip(((page - 1) < 0 ? 0 : (page - 1) * pageSize))
                 .Take(pageSize)
                 .ToListAsync();
 
