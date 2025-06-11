@@ -1,53 +1,136 @@
-﻿.battle-details h2 {
-    background-color: #f0f0f0;
-    padding: 10px;
-    border-radius: 4px;
+﻿.container.battle-details {
+    max-width: 900px;
+    margin: 0 auto;
+    color: #eee;
+    font-family: Arial, sans-serif;
+}
+#log-container {
+    box-shadow: 0px 0px 34px 8px rgba(0, 32, 255, 1);
+    border-radius: 10px;
+    padding: 5px;
+}
+.card {
+    border: 1px solid #444;
+    border-radius: 6px;
+    padding: 6px;
+    margin: 6px 0;
 }
 
-.battle-details .participants li {
-    margin-bottom: 4px;
+.card-gray {
+    background: #555;
 }
 
-.battle-details .team-1 {
-    color: #006400; /* dark green */
+.card-skill {
+    background: #333;
 }
 
-.battle-details .team-2 {
-    color: #8B0000; /* dark red */
+.card-attack.team-1-bg {
+    background: rgba(3,218,3,0.2);
 }
-#log-container .log-line {
-    padding: 6px 8px;
-    margin: 2px 0;
-    border-radius: 4px;
+
+.card-attack.team-2-bg {
+    background: rgba(218,3,3,0.2);
+}
+
+.card-heal {
+    background: rgba(27,45,77,0.5);
+}
+
+.card-step.team-1-bg {
+    background: rgba(3,218,3,0.2);
+}
+
+.card-step.team-2-bg {
+    background: rgba(218,3,3,0.2);
+}
+
+p.log-line {
+    margin: 0.2rem 0;
     font-family: monospace;
 }
 
-.log-info {
-    background: #2f2f2f;
-    color: #e0e0e0;
+p.log-txt {
+    font-style: italic;
+    margin: 0.2rem 0;
 }
 
-.log-buff {
-    background: #263822;
-    color: #a8cfa1;
+p.effect-crit {
+    color: orange;
+    margin: .1rem 0;
 }
 
-.log-damage {
-    background: #521a1a;
-    color: #f4a9a9;
+p.effect-vcrit {
+    color: gold;
+    margin: .1rem 0;
 }
 
-.log-heal {
-    background: #1b2d4d;
-    color: #a9c4f4;
+p.effect-wound {
+    color: red;
+    margin: .1rem 0;
 }
 
-.log-miss {
-    background: #3d3322;
-    color: #e0d3b0;
+p.effect-pierce {
+    color: yellow;
+    margin: .1rem 0;
 }
 
-.log-time {
-    color: #888;
-    margin-right: 6px;
+p.effect-dmg {
+    color: white;
+    margin: .1rem 0;
+}
+
+p.effect-block {
+    color: gray;
+    margin: .1rem 0;
+}
+
+/* Drużyny */
+.team-green {
+    color: #03da03;
+}
+
+.team-red {
+    color: #da0303;
+}
+
+/* BattleStart/Honor */
+.battle-start, .honor {
+    padding: 6px;
+    margin: 4px 0;
+    border-radius: 4px;
+    background: #777;
+    font-weight: bold;
+}
+
+.fastarrow{
+    color: dodgerblue;
+    margin-bottom: 0.2rem !important;
+}
+
+.legbon_critred {
+    font-weight: bold;
+    font-style: italic;
+    color: mediumpurple;
+    margin-bottom: 0.2rem !important;
+}
+
+.legbon_cleanse {
+    font-weight: bold;
+    font-style: italic;
+    color: #932ad4;
+    margin-bottom: 0.2rem !important;
+}
+
+.legbon_facade {
+    font-weight: bold;
+    font-style: italic;
+    color: #932ad4;
+    margin-bottom: 0.2rem !important;
+}
+
+.legbon_curse {
+    font-weight: bold;
+    font-style: italic;
+    color: greenyellow;
+    margin-bottom: 0.2rem !important;
 }

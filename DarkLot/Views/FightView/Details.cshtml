@@ -1,125 +1,39 @@
 ﻿@model DarkLot.ViewModeles.BattlesViewModel.BattleViewModel
+
 @{
     ViewData["Title"] = $"Log walki #{Model.Id}";
+    var fightersById = Model.Fighters.ToDictionary(
+        f => f.FighterId.ToString(),
+        f => new { f.Name, f.Profession, f.Team }
+    );
 }
+
 <head>
     <link rel="stylesheet" href="~/css/FightsView/Details.css" asp-append-version="true" />
+    <script src="~/js/Battle/fightLogsParser.js" asp-append-version="true"></script>
 </head>
-<h2>@ViewData["Title"]</h2>
+
+@* <h2>@ViewData["Title"]</h2>
+ *@
 <div class="container battle-details">
-    <header>
-        <div class="start-narrative">Rozpoczęła się walka pomiędzy @Model.Fighters[0].Name @if (Model.Fighters.Count > 1)
-            {
-                <text>a @Model.Fighters[1].Name</text>
-            }</div>
-        <div class="meta">
-            <span class="server">Serwer: @Model.ServerName</span>
-            <span class="date">Data: @Model.CreationTime.ToString("dd.MM.yyyy HH:mm")</span>
-        </div>
-    </header>
-
-    <section class="participants">
-        <h3>Uczestnicy</h3>
-        <ul class="list">
-            @foreach (var f in Model.Fighters)
-            {
-                var teamClass = f.Team == 1 ? "team team-1" : f.Team == 2 ? "team team-2" : "team";
-                <li class="@teamClass">
-                    <span class="name">@f.Name</span>
-                    <span class="profession">(@f.Profession)</span>
-                    <span class="badge">Drużyna @f.Team</span>
-                </li>
-            }
-        </ul>
-    </section>
-
-    <section class="stats-summary">
-        <h3>Podsumowanie walki</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Statystyka</th>
-                    <th>@Model.Fighters[0].Name</th>
-                    @if (Model.Fighters.Count > 1)
-                    {
-                        <th>@Model.Fighters[1].Name</th>
-                    }
-                </tr>
-            </thead>
-            <tbody id="stats-body">
-                <!-- wypełnione JS -->
-            </tbody>
-        </table>
-        <div class="result"><strong>Wynik:</strong> <span id="winner"></span></div>
-    </section>
-
-    <section class="logs">
-        <h3>Logi walki</h3>
-        <input type="hidden" id="logs-data" value="@Html.Raw(string.Join("|||", Model.Logs).Replace("\"","&quot;"))" />
+    <section class="fight-log">
+        <input type="hidden" id="logs-data"
+               value="@Html.Raw(string.Join("|||", Model.Logs.Select(l => l.RawLine)).Replace("\"","&quot;"))" />
         <div id="log-container"></div>
     </section>
 </div>
 
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const raw          = document.getElementById('logs-data').value;
+          const logs         = raw ? raw.split('|||') : [];
+          const fightersById = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(fightersById));
+          const battleStart  = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.BattleStart));
+          const honorText    = "Walka bez Punktów Honoru - gracze są z tego samego klanu.";
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Pobierz logi
-        const raw = document.getElementById('logs-data').value;
-        const logs = raw ? raw.split('|||') : [];
-        const pNames = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Fighters.Select(f => f.Name)));
-        // Statystyki dla każdego
-        const stats = {};
-        pNames.forEach(name => stats[name] = { turns: 0, crit: 0, vcrit: 0, touch: 0, buff: 0, miss: 0, block: 0, parry: 0, counter: 0, heal: 0, deep: 0 });
-        let winner = '-';
-
-        // Buduj logi i liczniki
-        const container = document.getElementById('log-container');
-        logs.forEach(text => {
-            if (!text) return;
-            let line = text;
-            pNames.forEach(name => { if (text.includes(name)) stats[name].turns++; });
-            if (/bardzo krytycz/i.test(text)) pNames.forEach(name => { if (text.includes(name)) stats[name].vcrit++; });
-            else if (/cios krytycz/i.test(text)) pNames.forEach(name => { if (text.includes(name)) stats[name].crit++; });
-            if (/Dotyk anioła/i.test(text)) pNames.forEach(name => { if (text.includes(name)) stats[name].touch++; });
-            if (/(emanuje|wykonuje|rzuci|czy tarcz|aura)/i.test(text)) pNames.forEach(name => { if (text.includes(name)) stats[name].buff++; });
-            if (/unik|miss|nie traf/i.test(text)) pNames.forEach(name => { if (text.includes(name)) stats[name].miss++; });
-            if (/Blok/i.test(text)) pNames.forEach(name => { if (text.includes(name)) stats[name].block++; });
-            if (/Parowanie/i.test(text)) pNames.forEach(name => { if (text.includes(name)) stats[name].parry++; });
-            if (/Kontr/i.test(text)) pNames.forEach(name => { if (text.includes(name)) stats[name].counter++; });
-            if (/Przywrócono|zregenerowano/i.test(text)) pNames.forEach(name => { if (text.includes(name)) stats[name].heal++; });
-            if (/Głebok[ea] rani?/i.test(text)) pNames.forEach(name => { if (text.includes(name)) stats[name].deep++; });
-            // Formatowanie linii: timestamp + treść + przed + łamanie linii
-            const m = line.match(/^\[(.*?)\]\s*(.*)$/);
-            let html = '';
-            if (m) {
-                html += `<span class="log-time">[${m[1]}]</span>`;
-                const rest = m[2].replace(/\+/g, '<br>+');
-                html += `<span class="log-text">${rest}</span>`;
-            } else {
-                html = line.replace(/\+/g, '<br>+');
-            }
-            // Klasy linii
-            let cls = 'log-info';
-            if (/bardzo krytycz/i.test(text)) cls = 'log-damage';
-            else if (/cios krytycz/i.test(text)) cls = 'log-damage';
-            else if (/Przywrócono|zregenerowano/i.test(text)) cls = 'log-heal';
-            else if (/(emanuje|wykonuje|rzuci|aura)/i.test(text)) cls = 'log-buff';
-            else if (/unik|miss|nie traf/i.test(text)) cls = 'log-miss';
-            container.insertAdjacentHTML('beforeend', `<div class="log-line ${cls}">${html}</div>`);
-            // Sprawdź zwycięzcę: jeśli linia z "otrzymał(.*)0 obrażeń" -> ten kto otrzymuje 0 to sprawdzić
-            if (/otrzymał.*0 obrażeń/.test(text)) {
-                pNames.forEach(name => {
-                    if (text.includes(name)) winner = name;
-                });
-            }
+          document.getElementById('log-container').innerHTML =
+            window.parseBattleLogs(logs, fightersById, battleStart, honorText);
         });
-        // Wypełnij tabelę statystyk
-        const body = document.getElementById('stats-body');
-        const keys = [['Tury w walce', 'turns'], ['Ciosy krytyczne', 'crit'], ['Ciosy bardzo krytyczne', 'vcrit'], ['Dotyki anioła', 'touch'], ['Klątwy', 'buff'], ['Bloki', 'block'], ['Parowania', 'parry'], ['Kontry', 'counter'], ['Leczenie tur', 'heal'], ['Głębokie rany', 'deep'], ['Uniki/missy', 'miss']];
-        keys.forEach(([label, key]) => {
-            const row = `<tr><td>${label}</td>` + pNames.map(n => `<td>${stats[n][key] || 0}</td>`).join('') + '</tr>';
-            body.insertAdjacentHTML('beforeend', row);
-        });
-        document.getElementById('winner').textContent = winner;
-    });
-</script>
+    </script>
+}

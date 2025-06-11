@@ -1,7 +1,10 @@
+wwwroot\css\FightsView\Details.css
+wwwroot\css\FightsView\Index.css
 wwwroot\css\layout.css
 wwwroot\css\lootlog\lootlog.css
 wwwroot\css\site.css
 wwwroot\favicon.ico
+wwwroot\js\Battle\fightLogsParser.js
 wwwroot\js\Home\Index.js
 wwwroot\js\site.js
 wwwroot\lib\bootstrap\dist\css\bootstrap.css

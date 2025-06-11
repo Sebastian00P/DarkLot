@@ -14,12 +14,30 @@ namespace DarkLot.Controllers
             _fightViewService = fightViewService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
-            var battles = await _fightViewService.GetAllBattlesAsync();
+            const int pageSize = 10;
 
-            return View(battles);
+            var allBattles = await _fightViewService.GetAllBattlesAsync();
+
+            int totalBattles = allBattles.Count;
+            int totalPages = (int)Math.Ceiling(totalBattles / (double)pageSize);
+
+            var pagedBattles = allBattles
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            var model = new BattlesListViewModel
+            {
+                Battles = pagedBattles,
+                CurrentPage = page,
+                TotalPages = totalPages
+            };
+
+            return View(model);
         }
+
 
         public async Task<IActionResult> Details(int battleId)
         {

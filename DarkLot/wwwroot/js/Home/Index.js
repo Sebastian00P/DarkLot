@@ -216,12 +216,25 @@ function buildTooltipHtml(data) {
     }
     // Specjalne właściwości
     if (stats.teleport) html += `<div><i class="idesc">Teleportuje gracza</i></div>`;
+    if (stats.afterheal) {
+        const parts = stats.afterheal.split(",");
+        if (parts.length === 2) {
+            const chance = parts[0].trim();
+            const healAmount = parts[1].trim();
+            html += `<div> <b>${chance}%</b> szans na wyleczenie <b>${healAmount}</b> obrażeń po walce</div>`;
+        }
+    }
+    if (stats.respred) {
+        html += `<div>Przyśpiesza wracanie do siebie o <b>${stats.respred}%</b></div>`;       
+    }
+
     if (stats.legbon) {
         let bon = ('' + stats.legbon).split(',')[0];
         let value = ('' + stats.legbon).split(',')[1];
         let desc = legBonMap[bon] || 'Nieznana właściwość legendarna';
         html += `<div class="text-center"><i class="legbon tip-legendary">${desc.replace('X', value || '?')}</i></div>`;
     }
+
     if (stats.opis) html += `<div><i class="idesc">${escapeHtml(stats.opis)}</i></div>`;
    
     if (stats.permbound) html += `<div>Związany z właścicielem na stałe</div>`;

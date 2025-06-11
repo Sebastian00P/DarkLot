@@ -16,3 +16,42 @@ html {
   position: relative;
   min-height: 100%;
 }
+
+/* ============ PAGINATION DARK THEME ============= */
+.pagination {
+    background: none;
+    padding: 0;
+}
+
+    .pagination .page-item {
+        margin: 0 2px;
+    }
+
+    .pagination .page-link {
+        background: #23272e;
+        color: #e7eaf3;
+        border: 1px solid #353a40;
+        border-radius: 5px;
+        padding: 6px 14px;
+        transition: background 0.15s, color 0.15s, border 0.2s;
+    }
+
+        .pagination .page-link:hover, .pagination .page-item.active .page-link {
+            background: #143957;
+            color: #fff;
+            border-color: #18a8ff;
+        }
+
+    .pagination .page-item.disabled .page-link {
+        background: #23272e;
+        color: #666;
+        cursor: not-allowed;
+        border-color: #23272e;
+    }
+
+    .pagination .page-item.active .page-link {
+        background: #18a8ff;
+        color: #111c;
+        border-color: #18a8ff;
+        font-weight: bold;
+    }
