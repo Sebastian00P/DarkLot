@@ -30,10 +30,10 @@
           const logs         = raw ? raw.split('|||') : [];
           const fightersById = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(fightersById));
           const battleStart  = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.BattleStart));
-          const honorText    = "Walka bez Punktów Honoru - gracze są z tego samego klanu.";
+          // const honorText    = "Walka bez Punktów Honoru - gracze są z tego samego klanu.";
 
           document.getElementById('log-container').innerHTML =
-            window.parseBattleLogs(logs, fightersById, battleStart, honorText);
+            window.parseBattleLogs(logs, fightersById, battleStart);
         });
     </script>
 }

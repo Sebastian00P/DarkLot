@@ -1,12 +1,13 @@
 ﻿using DarkLot.Dtos.BattleDtos;
 using DarkLot.ViewModeles.BattlesViewModel;
+using System.Threading.Tasks;
 
 namespace DarkLot.ApplicationServices.FightView
 {
     public interface IFightViewService
     {
         Task<int> AddBattleAsync(BattleDto battleDto, string creatorUserId);
-        Task<List<BattleViewModel>> GetAllBattlesAsync();
+        Task<BattlePagedResult> GetAllBattlesAsync(int page, int pageSize);
         Task<BattleViewModel> GetBattleByIdAsync(int battleId);
         Task<List<BattleViewModel>> GetBattlesByPlayerAsync(string playerName);
     }

@@ -18,6 +18,8 @@ namespace DarkLot.Models.Battles
         public string CreatorUserId { get; set; } // Klucz obcy do ApplicationUser
         public virtual ApplicationUser CreatorUser { get; set; }
         public string ServerName { get; set; }
+        public string UniqueHash { get; set; }
+
 
     }
 }

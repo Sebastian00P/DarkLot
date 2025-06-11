@@ -23,7 +23,12 @@ namespace DarkLot.ApplicationServices.FightView
         public async Task<int> AddBattleAsync(BattleDto battleDto, string creatorUserId)
         {
             DateTime polandTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time"));
-
+            var uniqueHash = GenerateBattleHash(battleDto, creatorUserId);
+            var alreadyExists = await _context.Battles.AnyAsync(b => b.UniqueHash == uniqueHash);
+            if (alreadyExists)
+            {
+                return 0;
+            }
             var battle = new Battle
             {
                 BattleStart = battleDto.BattleStart,
@@ -32,6 +37,7 @@ namespace DarkLot.ApplicationServices.FightView
                 IsDeleted = false,
                 CreatorUserId = creatorUserId,
                 ServerName = battleDto.ServerName,
+                UniqueHash = uniqueHash,
                 Fighters = battleDto.Fighters?.Select(f => new Fighter
                 {
                     FighterId = f.FighterId,
@@ -50,10 +56,17 @@ namespace DarkLot.ApplicationServices.FightView
             return battle.Id;
         }
 
-        public async Task<List<BattleViewModel>> GetAllBattlesAsync()
+        public async Task<BattlePagedResult> GetAllBattlesAsync(int page, int pageSize)
         {
+            var totalBattles = await _context.Battles.CountAsync(b => !b.IsDeleted);
+            var totalPages = (int)Math.Ceiling(totalBattles / (double)pageSize);
+
+            // Pobierz tylko te na daną stronę
             var battles = await _context.Battles
                 .Where(b => !b.IsDeleted)
+                .OrderByDescending(b => b.CreationTime)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .Select(b => new
                 {
                     b.Id,
@@ -72,7 +85,6 @@ namespace DarkLot.ApplicationServices.FightView
                     b.IsActive,
                     b.IsDeleted
                 })
-                .OrderByDescending(x => x.CreationTime)
                 .ToListAsync();
 
             var result = new List<BattleViewModel>();
@@ -82,10 +94,8 @@ namespace DarkLot.ApplicationServices.FightView
                 var user = await _userManager.FindByIdAsync(b.CreatorUserId);
 
                 var fighterMap = b.Fighters.ToDictionary(f => f.FighterId, f => f.Name);
-
                 var parsedLogs = b.Logs.Select(ParseBattleLogLine).ToList();
 
-                // Uzupełnij nazwy atakujących i broniących
                 foreach (var log in parsedLogs)
                 {
                     if (log.AttackerId != null && fighterMap.TryGetValue(log.AttackerId, out var attackerName))
@@ -109,7 +119,13 @@ namespace DarkLot.ApplicationServices.FightView
                 });
             }
 
-            return result;
+            return new BattlePagedResult
+            {
+                Battles = result,
+                TotalBattles = totalBattles,
+                TotalPages = totalPages,
+                CurrentPage = page
+            };
         }
 
         public async Task<BattleViewModel> GetBattleByIdAsync(int battleId)
@@ -282,6 +298,18 @@ namespace DarkLot.ApplicationServices.FightView
             }
 
             return result;
+        }
+
+        private string GenerateBattleHash(BattleDto battleDto, string creatorUserId)
+        {
+            var logConcat = string.Join(";", battleDto.Logs?.Take(10) ?? new List<string>());
+            var baseString = $"{battleDto.BattleStart}|{string.Join(",", battleDto.Fighters.Select(f => f.FighterId + ":" + f.Name))}|{battleDto.ServerName}|{string.Join(";", battleDto.Logs)}|{creatorUserId}";
+            using (var sha256 = System.Security.Cryptography.SHA256.Create())
+            {
+                var bytes = System.Text.Encoding.UTF8.GetBytes(baseString);
+                var hash = sha256.ComputeHash(bytes);
+                return Convert.ToBase64String(hash);
+            }
         }
 
     }

@@ -18,21 +18,13 @@ namespace DarkLot.Controllers
         {
             const int pageSize = 10;
 
-            var allBattles = await _fightViewService.GetAllBattlesAsync();
-
-            int totalBattles = allBattles.Count;
-            int totalPages = (int)Math.Ceiling(totalBattles / (double)pageSize);
-
-            var pagedBattles = allBattles
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
+            var pagedResult = await _fightViewService.GetAllBattlesAsync(page, pageSize);
 
             var model = new BattlesListViewModel
             {
-                Battles = pagedBattles,
-                CurrentPage = page,
-                TotalPages = totalPages
+                Battles = pagedResult.Battles,
+                CurrentPage = pagedResult.CurrentPage,
+                TotalPages = pagedResult.TotalPages
             };
 
             return View(model);

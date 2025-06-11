@@ -104,33 +104,68 @@ p.effect-block {
 
 .fastarrow{
     color: dodgerblue;
-    margin-bottom: 0.2rem !important;
+    margin-bottom: 0rem !important;
 }
 
 .legbon_critred {
     font-weight: bold;
     font-style: italic;
     color: mediumpurple;
-    margin-bottom: 0.2rem !important;
+    margin-bottom: 0rem !important;
 }
 
 .legbon_cleanse {
     font-weight: bold;
     font-style: italic;
     color: #932ad4;
-    margin-bottom: 0.2rem !important;
+    margin-bottom: 0rem !important;
 }
 
 .legbon_facade {
     font-weight: bold;
     font-style: italic;
     color: #932ad4;
-    margin-bottom: 0.2rem !important;
+    margin-bottom: 0rem !important;
 }
 
 .legbon_curse {
     font-weight: bold;
     font-style: italic;
     color: greenyellow;
-    margin-bottom: 0.2rem !important;
+    margin-bottom: 0rem !important;
+}
+
+.legbon_glare {
+    font-weight: bold;
+    font-style: italic;
+    color: aqua;
+    margin-bottom: 0rem !important;
+}
+
+.poison {
+    color: lightgreen;
+}
+
+.card-poison {
+    background: rgba(27,45,77,0.5);
+}
+
+.fire{
+    color: red;
+}
+
+.frozen{
+    color: dodgerblue;
+}
+
+.blysk{
+    color: yellow;
+}
+
+.effect-energy-destroy{
+    color: yellowgreen;
+}
+
+.effect-attack-boost {
+    color: yellowgreen;
 }

@@ -1,14 +1,14 @@
 ﻿// ==UserScript==
-// @name         DarkFights + DarkLog
-// @namespace    http://tampermonkey.net/
-// @version      2025-06-11.61
-// @description  Warriors, RAWLOG + lootlog: jedno miejsce, jeden patch, brak konfliktów, pełny RAWLOG, cooldown wysyłki walki
-// @author       Dark-Sad
-// @match        https://lelwani.margonem.pl/*
-// @match        http://*.margonem.pl/
-// @match        https://*.margonem.pl/
-// @grant        none
-// @run-at       document-idle
+// @name          DarkFights + DarkLog
+// @namespace     http://tampermonkey.net/
+// @version       2025-06-11.67 // Wysyłka walk działa! + logi
+// @description   Warriors, RAWLOG + lootlog: jedno miejsce, jeden patch, brak konfliktów, pełny RAWLOG, cooldown wysyłki walki
+// @author        Dark-Sad
+// @match         https://lelwani.margonem.pl/*
+// @match         http://*.margonem.pl/
+// @match         https://*.margonem.pl/
+// @grant         none
+// @run-at        document-idle
 // ==/UserScript==
 
 (function () {
@@ -16,29 +16,27 @@
 
     const API_URL_BATTLE = 'https://localhost:7238/api/Battle/addBattle';
     const API_URL_LOOT = 'https://localhost:7238/api/lootlog/add';
+
     const professionMap = { m: 'Mag', p: 'Paladyn', t: 'Tropiciel', w: 'Wojownik', b: 'Tancerz Ostrzy', h: 'Łowca' };
 
+    // --- Zmienne stanu walki ---
     let warriorsAtStart = [];
+    let lastKnownWarriors = [];
     let battleProcessed = false;
-    let battleSessionId = null;
-    let startHandled = false;
     let battleSendingInProgress = false;
+    let startHandled = false;
+    let battleSessionId = null;
     let battleStartText = '';
-
     let accumulatedLogs = [];
-
-    // Cooldown na wysyłkę walki, 3 sekundy
     let lastBattleSentTime = 0;
     const BATTLE_SEND_COOLDOWN = 3000;
 
-    // DarkLog-related state
+    // --- Zmienne stanu lootu ---
     window._dl_teamParsedFW = null;
     window._dl_lastWarriorsListTurn = null;
-    window._dl_lastLootEventId = null;
-    window._dl_lootCache = {};
     window._dl_sentItemHids = window._dl_sentItemHids || new Set();
-    let sessionChecked = false;
     const sentLootEvents = new Set();
+    let sessionChecked = false;
 
     function log(...a) { console.log('[DF+DL]', ...a); }
     function warn(...a) { console.warn('[DF+DL][WARN]', ...a); }
@@ -71,103 +69,87 @@
         return true;
     }
 
+    function resetDLCache() {
+        window._dl_teamParsedFW = null;
+        window._dl_lastWarriorsListTurn = null;
+        window._dl_sentItemHids = new Set();
+        sentLootEvents.clear();
+        log('[DL][DEBUG] Loot cache zresetowany');
+    }
+
+    // --- Patch Engine.communication.successData ---
     (function patchEngineOnce() {
         if (!window.Engine?.communication || window.Engine.communication._dfdl_patched) return;
         const orig = Engine.communication.successData;
 
         Engine.communication.successData = function (response) {
             let parsed;
-            try { parsed = JSON.parse(response); } catch { return orig.apply(this, arguments); }
+            try { parsed = JSON.parse(response); }
+            catch { return orig.apply(this, arguments); }
 
-            // Zapisujemy f.w i loot (DarkLog)
+            // Zapisujemy f.w (dane drużyny) do lootu
             if (parsed.f && parsed.f.w) {
                 window._dl_teamParsedFW = parsed.f.w;
                 log('[DEBUG] parsed.f.w', parsed.f.w);
             }
+
+            // --- Przetwarzanie lootu ---
             if (parsed.loot && parsed.ev != null && parsed.item) {
-                window._dl_lootCache[parsed.ev] = { items: { ...parsed.item }, source: parsed.loot.source };
-                window._dl_lastLootEventId = parsed.ev;
+                const lootId = parsed.ev;
+                console.log('[DL] parsed.loot=', parsed.loot, 'ev=', lootId, 'items=', parsed.item);
+                if (!sentLootEvents.has(lootId)) {
+                    const itemsToProcess = Object.values(parsed.item)
+                        .filter(it => !window._dl_sentItemHids.has(it.hid) && it.loc === 'l')
+                        .map(it => {
+                            window._dl_sentItemHids.add(it.hid);
+                            return { itemHtml: JSON.stringify(it), ItemImgUrl: window.CFG.a_ipath + it.icon };
+                        });
+                    const tempLootCache = { items: { ...parsed.item }, source: parsed.loot.source };
+                    const dto = buildLootDto(itemsToProcess, tempLootCache);
+                    if (dto.items.length) {
+                        sendLootToServer(dto);
+                        sentLootEvents.add(lootId);
+                    } else {
+                        log('[DL][DEBUG] skipping send: no items');
+                    }
+                }
             }
 
-            // Doklejamy RAWLOG fragmenty do accumulatedLogs
+            // Zbieranie RAWLOG
             if (parsed?.f?.m && Array.isArray(parsed.f.m)) {
-                const newLogs = parsed.f.m.filter(t => t && typeof t === "string");
+                const newLogs = parsed.f.m.filter(t => typeof t === "string");
                 accumulatedLogs.push(...newLogs);
             }
 
-            // Jeśli koniec walki (linia winner=)
+            // --- Koniec walki? ---
             if (parsed?.f?.m && parsed.f.m.some(line => typeof line === 'string' && line.includes("winner="))) {
-                if (!battleProcessed && !battleSendingInProgress) {
-                    battleProcessed = true;
-                    battleSendingInProgress = true;
+                // Najpierw oryginał
+                const result = orig.apply(this, arguments);
 
-                    if (!warriorsAtStart.length) {
-                        log('⚠️ Warriors empty at RAWLOG time, trying to recover...');
-                        captureWarriors(true);
-                    }
-                    if (!warriorsAtStart.length) {
-                        warn('Skipping send: no fighters captured');
-                        battleSendingInProgress = false;
-                    } else {
-                        if (!accumulatedLogs.length) {
-                            warn('No logs to send');
-                            battleSendingInProgress = false;
-                        } else {
-                            log('Logs length (accumulated):', accumulatedLogs.length);
-                            log('First log line:', accumulatedLogs[0]);
-                            log('Last log line:', accumulatedLogs[accumulatedLogs.length - 1]);
+                // --- WYSYŁKA WALKI ---
+                trySendBattle();
+                battleProcessed = true; // USTAWIAMY NATYCHMIAST!
 
-                            const dto = {
-                                BattleStart: battleStartText || (accumulatedLogs.length ? accumulatedLogs[0] : ''),
-                                Fighters: warriorsAtStart,
-                                Logs: accumulatedLogs,
-                                ServerName: window.location.hostname.split('.')[0]
-                            };
+                // Reset wszystkiego po walce
+                battleSendingInProgress = false;
+                warriorsAtStart = [];
+                lastKnownWarriors = [];
+                battleSessionId = null;
+                startHandled = false;
+                battleStartText = '';
+                accumulatedLogs = [];
+                log('[DEBUG] Wszystkie flagi i battleStartText zostały wyczyszczone po zakończeniu walki');
 
-                            if (dto.Fighters.some(f => parseInt(f.FighterId, 10) <= 0)) {
-                                warn('Skipping send: negative FighterId detected', dto.Fighters);
-                                battleSendingInProgress = false;
-                            } else {
-                                if (Date.now() - lastBattleSentTime < BATTLE_SEND_COOLDOWN) {
-                                    log('Skipping sending battle: cooldown active');
-                                    battleSendingInProgress = false;
-                                } else {
-                                    lastBattleSentTime = Date.now();
-                                    fetch(API_URL_BATTLE, {
-                                        method: 'POST',
-                                        credentials: 'include',
-                                        headers: { 'Content-Type': 'application/json' },
-                                        body: JSON.stringify(dto)
-                                    })
-                                    .then(response => response.text().then(text => {
-                                        log('fetch status:', response.status, 'body:', text);
-                                        battleSendingInProgress = false;
-                                    }))
-                                    .catch(e => {
-                                        console.error('Fetch error:', e);
-                                        battleSendingInProgress = false;
-                                    });
-                                }
-                            }
-                        }
-                    }
-
-                    battleProcessed = false;
-                    warriorsAtStart = [];
-                    battleSessionId = null;
-                    startHandled = false;
-                    battleStartText = '';
-                    accumulatedLogs = [];
-                    log('[DEBUG] Flags/sesja wyzerowane po walce (natychmiastowy reset)');
-                    return orig.apply(this, arguments);
-                }
+                return result;
             }
 
             return orig.apply(this, arguments);
         };
+
         Engine.communication._dfdl_patched = true;
     })();
 
+    // --- Patch Engine.battle.updateData (turn-by-turn) ---
     (function patchBattleUpdateDataTurn() {
         if (!window.Engine?.battle || window.Engine.battle._dfdl_patchedTurn) return;
         const orig = Engine.battle.updateData;
@@ -175,13 +157,23 @@
             const res = orig.apply(this, arguments);
             if (this.warriorsList && Object.keys(this.warriorsList).length) {
                 window._dl_lastWarriorsListTurn = { ...this.warriorsList };
-                log('[DEBUG] warriorsList', window._dl_lastWarriorsListTurn);
+                lastKnownWarriors = Object.values(this.warriorsList).map(f => ({
+                    FighterId: String(f.id),
+                    Name: getBestName(f),
+                    Profession: f.id > 0
+                        ? (professionMap[String(f.prof).toLowerCase()] || `Nieznana(${f.prof})`)
+                        : (f.prof ? `Mob(${f.prof})` : 'Mob'),
+                    Team: f.team || 0,
+                    Level: f.lvl || 0
+                }));
+                log('[DEBUG] warriorsList i lastKnownWarriors zaktualizowane');
             }
             return res;
         };
         Engine.battle._dfdl_patchedTurn = true;
     })();
 
+    // --- Obserwacja DOM pod kątem startu walki ---
     new MutationObserver(muts => {
         muts.forEach(m => {
             m.addedNodes.forEach(node => {
@@ -189,61 +181,56 @@
                 const text = node.innerText.trim();
                 if (!startHandled && text.startsWith('Rozpoczęła się walka')) {
                     battleStartText = text;
-                    log('[DEBUG] New battle detected, resetting flags');
                     startHandled = true;
                     battleProcessed = false;
                     battleSessionId = Date.now();
-                    warriorsAtStart = [];
+                    resetDLCache();  // <<< resetujemy cache lootów przy starcie walki
                     log(`🔔 Battle START (session ${battleSessionId}):`, text);
+                    warriorsAtStart = [];
+                    lastKnownWarriors = [];
 
                     let tries = 0;
                     const timer = setInterval(() => {
-                        if (captureWarriors() || ++tries >= 10) clearInterval(timer);
+                        if (captureWarriors() || ++tries >= 10) {
+                            clearInterval(timer);
+                            if (!warriorsAtStart.length && lastKnownWarriors.length) {
+                                warriorsAtStart = [...lastKnownWarriors];
+                                log('✅ Odtworzono warriorsAtStart z lastKnownWarriors:', warriorsAtStart);
+                            }
+                        }
                     }, 100);
                 }
             });
         });
     }).observe(document.body, { childList: true, subtree: true });
 
-    // Pozostała część DarkLog z lootem (bez zmian)...
+    // --- Funkcje dla DarkLog (loot) ---
+    function buildLootDto(items, lootCache) {
+        log('[DEBUG] buildLootDto items=', items);
+        const mobParts = [], lootUsers = [];
+        let participants = {};
 
-    function getCombinedName(nameObj, statObj) {
-        return getBestName(nameObj) || getBestName(statObj) || '';
-    }
+        if (lootCache.source?.includes('fight') && Engine.battle?.warriorsList && Object.keys(Engine.battle.warriorsList).length) {
+            participants = { ...Engine.battle.warriorsList };
+        } else {
+            participants = { ...window._dl_lastWarriorsListTurn, ...window._dl_teamParsedFW };
+        }
 
-    function buildLootDto(items) {
-        log('[DEBUG] buildDto items=', items);
-        const mobParts = [];
-        const lootUsers = [];
-        const fastNames = window._dl_teamParsedFW || {};
-        const turnStats = window._dl_lastWarriorsListTurn || {};
-        const hasTurn = Object.keys(turnStats).some(k => +k > 0);
-        const hasFast = !hasTurn && Object.keys(fastNames).length > 0;
-        const fwNames = hasFast ? fastNames : {};
-        const fwStats = hasTurn ? turnStats : {};
-
-        const allKeys = Array.from(new Set([...Object.keys(fwNames), ...Object.keys(fwStats)]));
-        allKeys.forEach(k => {
+        Object.keys(participants).forEach(k => {
             const id = +k;
             if (isNaN(id)) return;
-            const nameObj = fwNames[k] || {};
-            const statObj = fwStats[k] || {};
-            const name = getCombinedName(nameObj, statObj);
+            const f = participants[k];
+            const name = getBestName(f);
             if (!name) return;
             if (id < 0) {
-                const lvl = statObj.lvl || nameObj.lvl || '';
-                const prof = statObj.prof || nameObj.prof || '';
-                mobParts.push(`${name}(${lvl}${prof})`);
+                mobParts.push(`${name}(${f.lvl || ''}${f.prof || ''})`);
             } else {
-                const lvl = statObj.lvl || nameObj.lvl || 0;
-                const prof = statObj.prof || nameObj.prof || '';
-                const icon = nameObj.icon || statObj.icon || '';
-                const avatar = icon ? window.CFG.a_opath + icon.replace(/^\//, '') : '';
-                lootUsers.push({ GameUserId: String(id), Nick: name, Level: lvl, ClassAbbr: prof, AvatarUrl: avatar });
+                const icon = f.icon ? window.CFG.a_opath + f.icon.replace(/^\//, '') : '';
+                lootUsers.push({ GameUserId: String(id), Nick: name, Level: f.lvl || 0, ClassAbbr: f.prof || '', AvatarUrl: icon });
             }
         });
 
-        const dto = {
+        return {
             creationTime: new Date().toISOString(),
             serverName: (location.hostname.match(/^([\w\d]+)\.margonem\.pl$/) || [])[1] || '',
             clanName: (() => { try { const c = Engine.hero.d.clan; return typeof c === 'object' ? c.name : c || ''; } catch { return ''; } })(),
@@ -254,8 +241,6 @@
             lootUsers,
             items
         };
-        log('[DEBUG] DTO:', dto);
-        return dto;
     }
 
     function sendLootToServer(dto) {
@@ -270,55 +255,86 @@
             .catch(err => console.error('[DL] Conn error', err));
     }
 
-    function sendCachedLoot() {
-        if (!sessionChecked) return log('[DL][DEBUG] session not checked');
-        if (!window._dl_lastLootEventId) return log('[DL][DEBUG] no lastLootEventId');
-        if (sentLootEvents.has(window._dl_lastLootEventId)) return log('[DL][DEBUG] already sent');
+    // --- NOWA CZĘŚĆ: WYSYŁKA WALKI ---
+    function buildBattleDto() {
+        const fighters = (warriorsAtStart || []).map(f => ({
+            FighterId: String(f.FighterId),
+            Name: f.Name,
+            Profession: f.Profession,
+            Team: f.Team
+        }));
+        return {
+            BattleStart: battleStartText,
+            Fighters: fighters,
+            Logs: accumulatedLogs,
+            ServerName: (location.hostname.match(/^([\w\d]+)\.margonem\.pl$/) || [])[1] || ''
+        };
+    }
 
-        const lootCache = window._dl_lootCache[window._dl_lastLootEventId];
-        if (!lootCache) return log('[DL][DEBUG] missing cache entry');
-        if (lootCache.source.includes('fight') && Engine.battle && Object.keys(Engine.battle.warriorsList || {}).length) {
-            window._dl_lastWarriorsListTurn = { ...Engine.battle.warriorsList };
+    function getBattleUniqueId() {
+        // Możesz wziąć kawałek battleStartText + składy graczy + “winner” z logu
+        const hashInput = [
+            battleStartText,
+            (warriorsAtStart || []).map(w => w.FighterId + ':' + w.Name).join('|'),
+            (accumulatedLogs.find(l => l.includes('winner=')) || '')
+        ].join('|');
+        return hashInput.length > 0 ? btoa(unescape(encodeURIComponent(hashInput))).substring(0, 64) : '';
+    }
+
+
+    function trySendBattle(attempt = 0) {
+        if (battleProcessed) return;
+        const now = Date.now();
+        if (battleSendingInProgress || now - lastBattleSentTime < BATTLE_SEND_COOLDOWN) return;
+
+        if (!warriorsAtStart.length && lastKnownWarriors.length) {
+            warriorsAtStart = [...lastKnownWarriors];
         }
-
-        const items = Object.values(lootCache.items)
-            .filter(it => !window._dl_sentItemHids.has(it.hid) && it.loc === 'l')
-            .map(it => { window._dl_sentItemHids.add(it.hid); return { itemHtml: JSON.stringify(it), ItemImgUrl: window.CFG.a_ipath + it.icon }; });
-
-        const dto = buildLootDto(items);
-
-        if (!dto.lootUsers.length || !dto.mobName || !dto.items.length) {
-            log('[DL][DEBUG] skipping send: insufficient data');
-            sentLootEvents.add(window._dl_lastLootEventId);
-            delete window._dl_lootCache[window._dl_lastLootEventId];
-            window._dl_lastLootEventId = null;
-            resetDLCache();
+        if ((!battleStartText || !warriorsAtStart.length || !accumulatedLogs.some(l => l.includes('winner='))) && attempt < 5) {
+            setTimeout(() => trySendBattle(attempt + 1), 300);
+            return;
+        }
+        if (!battleStartText || !warriorsAtStart.length || !accumulatedLogs.some(l => l.includes('winner='))) {
+            warn('[BATTLE] Nie można wysłać walki – brakuje danych nawet po powtórkach!', { battleStartText, warriorsAtStart, accumulatedLogs });
             return;
         }
 
-        sendLootToServer(dto);
-        sentLootEvents.add(window._dl_lastLootEventId);
-        delete window._dl_lootCache[window._dl_lastLootEventId];
-        window._dl_lastLootEventId = null;
-        resetDLCache();
+        battleSendingInProgress = true;
+        const dto = buildBattleDto();
+        fetch(API_URL_BATTLE, {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dto) // <-- wysyłaj bez wrappera
+        })
+            .then(r => r.json())
+            .then(res => {
+                if (res.status === 'ok') {
+                    log('[BATTLE] Walka wysłana!');
+                    battleProcessed = true;
+                } else {
+                    warn('[BATTLE] Błąd przy wysyłce walki', res);
+                }
+                lastBattleSentTime = Date.now();
+                battleSendingInProgress = false;
+            })
+            .catch(err => {
+                warn('[BATTLE] Błąd połączenia', err);
+                battleSendingInProgress = false;
+            });
     }
 
-    function resetDLCache() {
-        window._dl_teamParsedFW = null;
-        window._dl_lastWarriorsListTurn = null;
-        window._dl_lastLootEventId = null;
-        window._dl_lootCache = {};
-        window._dl_sentItemHids = new Set();
-    }
 
+    // --- UI przycisku DL ---
     const btn = document.createElement('button');
     btn.id = 'dl-lootlog-btn';
     btn.innerHTML = '<b style="font-size:22px;letter-spacing:2px;">DL</b>';
     Object.assign(btn.style, {
-        position: 'fixed', bottom: '30px', left: '30px', zIndex: '10000', background: '#23272e', color: 'white',
-        border: '2px solid #18a8ff', borderRadius: '42px', padding: '10px 24px', cursor: 'pointer',
-        boxShadow: '0 2px 12px #0006', fontWeight: 'bold', fontFamily: 'Arial,sans-serif', fontSize: '21px',
-        transition: 'transform 0.1s,border 0.2s'
+        position: 'fixed', bottom: '30px', left: '30px', zIndex: '10000',
+        background: '#23272e', color: 'white', border: '2px solid #18a8ff',
+        borderRadius: '42px', padding: '10px 24px', cursor: 'pointer',
+        boxShadow: '0 2px 12px #0006', fontWeight: 'bold', fontFamily: 'Arial,sans-serif',
+        fontSize: '21px', transition: 'transform 0.1s,border 0.2s'
     });
     btn.onmouseover = () => { btn.style.transform = 'scale(1.08)'; btn.style.borderColor = '#31c6ff'; };
     btn.onmouseleave = () => { btn.style.transform = 'scale(1)'; btn.style.borderColor = '#18a8ff'; };
@@ -328,7 +344,9 @@
         if (document.getElementById('dl-lootlog-window')) return;
         const win = document.createElement('div');
         win.id = 'dl-lootlog-window';
-        win.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#181c22;color:white;border:2.5px solid #18a8ff;border-radius:18px;z-index:10001;padding:38px 28px 24px 28px;box-shadow:0 4px 32px #000b;';
+        win.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);'
+            + 'background:#181c22;color:white;border:2.5px solid #18a8ff;border-radius:18px;'
+            + 'z-index:10001;padding:38px 28px 24px 28px;box-shadow:0 4px 32px #000b;';
         win.innerHTML = `
             <div style="display:flex;align-items:center;gap:16px;">
                 <span style="font-size:30px;width:38px;height:38px;border-radius:50%;background:#23272e;border:2.5px solid #18a8ff;text-align:center;line-height:36px;box-shadow:0 0 16px #31c6ff55;">
@@ -347,25 +365,24 @@
     btn.onclick = showDLWindow;
 
     function checkSession() {
-        const status = document.getElementById('dl-status'), sessBtn = document.getElementById('dl-session-btn');
+        const status = document.getElementById('dl-status'),
+            sessBtn = document.getElementById('dl-session-btn');
         if (status) status.textContent = 'Sprawdzanie sesji...';
-        fetch('https://localhost:7238/api/lootlog/check', { credentials: 'include' }).then(r => r.json()).then(r => {
-            sessionChecked = true;
-            if (r.status === 'ok') {
-                status.innerHTML = '<span style="color:#24e000;font-weight:bold;">Jesteś zalogowany!</span>';
-                sessBtn.style.display = 'none';
-            } else {
-                status.innerHTML = '<span style="color:#ff5555;font-weight:bold;">Nie jesteś zalogowany!</span><br><a href="https://localhost:7238/Identity/Account/Login" target="_blank" style="color:#18a8ff;">Kliknij, aby się zalogować</a>';
-                sessBtn.style.display = 'inline-block';
-            }
-        }).catch(() => { if (status) status.innerHTML = '<span style="color:#ff5555;">Błąd połączenia!</span>' });
+        fetch('https://localhost:7238/api/lootlog/check', { credentials: 'include' })
+            .then(r => r.json()).then(r => {
+                sessionChecked = true;
+                if (r.status === 'ok') {
+                    status.innerHTML = '<span style="color:#24e000;font-weight:bold;">Jesteś zalogowany!</span>';
+                    sessBtn.style.display = 'none';
+                } else {
+                    status.innerHTML = '<span style="color:#ff5555;font-weight:bold;">Nie jesteś zalogowany!</span>'
+                        + '<br><a href="https://localhost:7238/Identity/Account/Login" target="_blank" style="color:#18a8ff;">Kliknij, aby się zalogować</a>';
+                    sessBtn.style.display = 'inline-block';
+                }
+            })
+            .catch(() => { if (status) status.innerHTML = '<span style="color:#ff5555;">Błąd połączenia!</span>'; });
     }
     checkSession();
-
-    const observer = new MutationObserver(muts => muts.forEach(m => m.addedNodes.forEach(node => {
-        if (node.nodeType === 1 && node.classList.contains('loot-wnd')) setTimeout(sendCachedLoot, 100);
-    })));
-    observer.observe(document.body, { childList: true, subtree: true });
 
     log('Script loaded: RAWLOG/lootlog merged. Patch only ONCE.');
 })();
