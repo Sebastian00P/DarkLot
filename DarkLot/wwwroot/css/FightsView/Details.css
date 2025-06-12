@@ -35,6 +35,13 @@
 .card-heal {
     background: rgba(27,45,77,0.5);
 }
+.card-light {
+    background-color: #561313;
+}
+
+.card-anguish {
+    background-color: cornflowerblue;
+}
 
 .card-step.team-1-bg {
     background: rgba(3,218,3,0.2);
@@ -142,6 +149,12 @@ p.effect-block {
     margin-bottom: 0rem !important;
 }
 
+.legbon_anguish {
+    font-weight: bold;
+    font-style: italic;
+    color: aqua;
+    margin-bottom: 0rem !important;
+}
 .poison {
     color: lightgreen;
 }

@@ -311,8 +311,8 @@ namespace DarkLot.ApplicationServices.FightView
 
         private string GenerateBattleHash(BattleDto battleDto, string creatorUserId)
         {
-            var logConcat = string.Join(";", battleDto.Logs?.Take(10) ?? new List<string>());
-            var baseString = $"{battleDto.BattleStart}|{string.Join(",", battleDto.Fighters.Select(f => f.FighterId + ":" + f.Name))}|{battleDto.ServerName}|{string.Join(";", battleDto.Logs)}|{creatorUserId}";
+            var logConcat = string.Join(";", battleDto.Logs?.Take(3) ?? new List<string>());
+            var baseString = $"{battleDto.BattleStart}|{string.Join(",", battleDto.Fighters.Select(f => f.FighterId + ":" + f.Name))}|{battleDto.ServerName}|{logConcat}|{creatorUserId}";
             using (var sha256 = System.Security.Cryptography.SHA256.Create())
             {
                 var bytes = System.Text.Encoding.UTF8.GetBytes(baseString);

@@ -33,6 +33,11 @@ namespace DarkLot.Controllers
             {
                 return BadRequest("Nie udało się zaleźć użytkownika.");
             }
+            var fighterId = battleDto.Fighters.Where(x => Convert.ToInt32(x.FighterId) < 0).FirstOrDefault();
+            if (fighterId != null)
+            {
+                return Ok();
+            }
 
             var battleId = await _fightViewService.AddBattleAsync(battleDto, userId);
 

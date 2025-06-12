@@ -29,7 +29,8 @@ namespace DarkLot.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-
+            //if (!dto.LootUsers.Any())
+            //    return Ok(new { status = "ok" });
             var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(userId))
                 return Unauthorized(new { status = "error", message = "User not authenticated" });

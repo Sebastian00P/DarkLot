@@ -22,6 +22,8 @@ window.parseBattleLogs = function (logs, fightersById, battleStartText) {
         legbon_critred: { txt: "Krytyczna osłona", cls: "legbon_critred" },
         legbon_facade: { txt: "Fasada opieki", cls: "legbon_facade" },
         legbon_glare: { txt: "Oślepienie", cls: "legbon_glare" },
+        legbon_anguish: { txt: "Krwawa udręka", cls: "legbon_anguish" },
+        legbon_puncture: { txt: "Przeszywająca skuteczność", cls: "legbon_puncture" },
         "combo-max": { txt: "Kombinacja", cls: "effect-crit" },
         oth_dmg: { txt: "obrażeń otrzymał(a)", cls: "effect-dmg" }
     };
@@ -128,12 +130,27 @@ window.parseBattleLogs = function (logs, fightersById, battleStartText) {
             flush();
             const atk = getF(parts[0].split("=")[0]);
             cls = `card-attack team-${atk.Team}-bg`;
-
+            const bandageVal = parts.find(x => x.startsWith("bandage="))?.split("=")[1];
+            const energyRaw = parts.find(x => x.startsWith("energy="))?.split("=")[1];
+            const medytacjaVal = energyRaw
+                ? energyRaw.startsWith("-")
+                    ? energyRaw.slice(1)
+                    : energyRaw
+                : null;
             const rawSkill = sp.split("=")[1];
             const sk = skillMap[rawSkill] || {};
+            let skillText = "";
+
+            if (bandageVal && bandageVal !== "0") {
+                skillText = ` +${esc(bandageVal)} punktów życia`;
+            }
+            if (medytacjaVal) {
+                skillText = ` +${esc(medytacjaVal)} energii`;
+            }
             card.push(`<p class="log-line ${sk.cls || "skill-default"}" data-raw="${esc(line)}">
-                    <b>${atk.Name}</b> wykonuje <b>${esc(sk.txt || rawSkill)}</b>.
+                    <b>${atk.Name}</b> wykonuje <b>${esc(sk.txt || rawSkill)}</b>${skillText}.
                </p>`);
+
             if (rawSkill === "Opatrywanie ran") {
                 // wyciągamy wartości z data-raw
                 const bandage = parts.find(x => x.startsWith("bandage="))?.split("=")[1] || "0";
@@ -313,8 +330,21 @@ window.parseBattleLogs = function (logs, fightersById, battleStartText) {
         // 2c) -endest: zniszczenie energii
         const energyDestroyPart = parts.find(p => p.startsWith("-endest="));
         if (energyDestroyPart) {
-            const val = energyDestroyPart.split("=")[1];
-            card.push(`<p class="log-line effect-energy-destroy" data-raw="${esc(energyDestroyPart)}">+Zniszczono ${esc(val)} energii</p>`);
+            let val = energyDestroyPart.split("=")[1];
+            let mainValue = val;
+            let weakenText = "";
+
+            if (val.includes(",")) {
+                const [destroyed, weakened] = val.split(",");
+                mainValue = destroyed;                        // np. "8"
+                weakenText = ` (<span class="weakened">osłabione o ${esc(weakened)}</span>)`;
+            }
+
+            card.push(
+                `<p class="log-line effect-energy-destroy" data-raw="${esc(energyDestroyPart)}">` +
+                `+Zniszczono ${esc(mainValue)} energii${weakenText}` +
+                `</p>`
+            );
         }
         // 3) Ciężka rana (+critwound)
         if (parts.includes("+critwound")) {
@@ -336,7 +366,11 @@ window.parseBattleLogs = function (logs, fightersById, battleStartText) {
             const lb = mapLegbon("legbon_glare");
             card.push(`<p class="${lb.cls}" data-raw="-legbon_glare">+${lb.txt}</p>`);
         }
-       
+        // Krwawa udręka
+        if (parts.some(p => p === "+legbon_anguish")) {
+            const lb = mapLegbon("legbon_anguish");
+            card.push(`<p class="${lb.cls}" data-raw="+legbon_anguish">+${lb.txt}</p>`);
+        }
         // Osłabienie przez truciznę zadawanych obrażeń
         const poisonLowDmg = parts.find(p => p.startsWith("-poison_lowdmg_per="));
         if (poisonLowDmg) {
@@ -466,6 +500,13 @@ window.parseBattleLogs = function (logs, fightersById, battleStartText) {
                     -${lb.txt}
                </p>`);
         }
+        // legbon_facade
+        if (parts.some(p => p.startsWith("-legbon_facade"))) {
+            const lb = mapLegbon("legbon_facade");
+            card.push(`<p class="log-line ${lb.cls}" data-raw="-legbon_facade">
+                    -${lb.txt}
+               </p>`);
+        }
 
         // legbon_critred
         if (parts.some(p => p.startsWith("-legbon_critred"))) {
@@ -475,10 +516,11 @@ window.parseBattleLogs = function (logs, fightersById, battleStartText) {
                </p>`);
         }
 
-        // legbon_facade
-        if (parts.some(p => p.startsWith("-legbon_facade"))) {
-            const lb = mapLegbon("legbon_facade");
-            card.push(`<p class="log-line ${lb.cls}" data-raw="-legbon_facade">
+        
+        // legbon_puncture
+        if (parts.some(p => p.startsWith("+legbon_puncture"))) {
+            const lb = mapLegbon("legbon_puncture");
+            card.push(`<p class="log-line ${lb.cls}" data-raw="+legbon_puncture">
                     -${lb.txt}
                </p>`);
         }
@@ -557,7 +599,9 @@ window.parseBattleLogs = function (logs, fightersById, battleStartText) {
         }
         const poi = parts.find(p => p.startsWith("poison="));
         const inj_dmg = parts.find(p => p.startsWith("injure="));
-
+        const light_dmg = parts.find(p => p.startsWith("light="));
+        const fire_dmg = parts.find(p => p.startsWith("fire="));
+        const anguish_dmg = parts.find(p => p.startsWith("anguish="))
         if (poi || inj_dmg) {
             // Wypuść wszystko co było przed nową kartą
             flush();
@@ -581,15 +625,93 @@ window.parseBattleLogs = function (logs, fightersById, battleStartText) {
 
             // Linijka 2: obrażenia z trucizny
             if (poi) {
-                const [dmgP, pctP] = poi.split("=")[1].split(",");
+                console.log(poi);
+                const [dmgP] = poi.split("=")[1].split(",");
+                const [, healthPct] = parts[0].split("=");
                 card.push(`
                   <p class="log-line effect-poison" data-raw="${esc(line)}">
-                    ${tgt.Name}(${pctP}%): ${dmgP} obrażeń z trucizny.
+                    ${tgt.Name}(${esc(healthPct)}%): ${esc(dmgP)} obrażeń z trucizny.
                   </p>
                 `);
             }
 
+
             // Wypuść jedną kartę zawierającą obie linijki
+            flush();
+        }
+        // obrazenia od błyskawic
+        if (light_dmg) {
+            flush();
+            cls = "card-light";
+
+            const [tgtKey, healthPct] = parts[0].split("=");
+            const tgt = getF(tgtKey);
+
+            const raw = light_dmg.split("=")[1];
+
+            let dmg;
+            if (raw.includes(",")) {
+                dmg = Math.floor(parseFloat(raw.replace(",", ".")));
+            } else {
+                dmg = parseInt(raw, 10);
+            }
+
+            card.push(`
+              <p class="log-line effect-light" data-raw="${esc(line)}">
+                ${tgt.Name}(${esc(healthPct)}%): otrzymał ${esc(dmg.toString())} obrażeń od błyskawic.
+              </p>
+            `);
+
+            flush();
+        }
+        // obrazenia od ognia
+        if (fire_dmg) {
+            flush();
+            cls = "card-light";
+
+            const [tgtKey, healthPct] = parts[0].split("=");
+            const tgt = getF(tgtKey);
+
+            const raw = fire_dmg.split("=")[1];
+
+            let dmg;
+            if (raw.includes(",")) {
+                dmg = Math.floor(parseFloat(raw.replace(",", ".")));
+            } else {
+                dmg = parseInt(raw, 10);
+            }
+
+            card.push(`
+              <p class="log-line effect-fire" data-raw="${esc(line)}">
+                ${tgt.Name}(${esc(healthPct)}%): otrzymał ${esc(dmg.toString())} obrażeń od ognia.
+              </p>
+            `);
+
+            flush();
+        }
+        // krwawa udreka
+        if (anguish_dmg) {
+            flush();
+            cls = "card-anguish";
+
+            const [tgtKey, healthPct] = parts[0].split("=");
+            const tgt = getF(tgtKey);
+
+            const raw = anguish_dmg.split("=")[1];
+            console.log(raw)
+            let dmg;
+            if (raw.includes(",")) {
+                dmg = Math.floor(parseFloat(raw.replace(",", ".")));
+            } else {
+                dmg = raw;
+            }
+
+            card.push(`
+              <p class="log-line effect-anguish" data-raw="${esc(line)}">
+                ${tgt.Name}(${esc(healthPct)}%): otrzymał ${esc(dmg.toString())} od krwawej udręki.
+              </p>
+            `);
+
             flush();
         }
 
