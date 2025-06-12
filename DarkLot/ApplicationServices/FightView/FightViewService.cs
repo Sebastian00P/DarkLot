@@ -61,7 +61,6 @@ namespace DarkLot.ApplicationServices.FightView
             var totalBattles = await _context.Battles.CountAsync(b => !b.IsDeleted);
             var totalPages = (int)Math.Ceiling(totalBattles / (double)pageSize);
 
-            // Pobierz tylko te na daną stronę
             var battles = await _context.Battles
                 .Where(b => !b.IsDeleted)
                 .OrderByDescending(b => b.CreationTime)
@@ -78,7 +77,13 @@ namespace DarkLot.ApplicationServices.FightView
                         Profession = f.Profession,
                         Team = f.Team
                     }).ToList(),
-                    Logs = b.Logs.Select(l => l.LogLine).ToList(),
+
+                    WinnerLogLine = b.Logs
+                        .Where(l => !string.IsNullOrEmpty(l.LogLine) && l.LogLine.ToLower().Contains("winner="))
+                        .OrderBy(l => l.Id)
+                        .Select(l => l.LogLine)
+                        .FirstOrDefault(),
+
                     b.ServerName,
                     b.CreationTime,
                     b.CreatorUserId,
@@ -93,15 +98,15 @@ namespace DarkLot.ApplicationServices.FightView
             {
                 var user = await _userManager.FindByIdAsync(b.CreatorUserId);
 
-                var fighterMap = b.Fighters.ToDictionary(f => f.FighterId, f => f.Name);
-                var parsedLogs = b.Logs.Select(ParseBattleLogLine).ToList();
-
-                foreach (var log in parsedLogs)
+                // wyciągnij nazwę zwycięzcy z WinnerLogLine
+                string winnerName = null;
+                if (!string.IsNullOrEmpty(b.WinnerLogLine))
                 {
-                    if (log.AttackerId != null && fighterMap.TryGetValue(log.AttackerId, out var attackerName))
-                        log.AttackerName = attackerName;
-                    if (log.DefenderId != null && fighterMap.TryGetValue(log.DefenderId, out var defenderName))
-                        log.DefenderName = defenderName;
+                    var idx = b.WinnerLogLine.IndexOf("winner=", StringComparison.OrdinalIgnoreCase);
+                    if (idx >= 0)
+                    {
+                        winnerName = b.WinnerLogLine.Substring(idx + "winner=".Length).Trim();
+                    }
                 }
 
                 result.Add(new BattleViewModel
@@ -109,13 +114,17 @@ namespace DarkLot.ApplicationServices.FightView
                     Id = b.Id,
                     BattleStart = b.BattleStart,
                     Fighters = b.Fighters,
-                    Logs = parsedLogs,
+                    Logs = b.WinnerLogLine != null
+                        ? new List<BattleLogLineDto> { new BattleLogLineDto { RawLine = b.WinnerLogLine } }
+                        : new List<BattleLogLineDto>(),
                     ServerName = b.ServerName,
                     CreationTime = b.CreationTime,
                     CreatorUserId = b.CreatorUserId,
                     IsActive = b.IsActive,
                     IsDeleted = b.IsDeleted,
-                    CreatorNickName = user?.NickName ?? "[Nieznany]"
+                    CreatorNickName = user?.NickName ?? "[Nieznany]",
+
+                    WinnerName = winnerName
                 });
             }
 

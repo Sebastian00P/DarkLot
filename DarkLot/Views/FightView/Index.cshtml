@@ -13,7 +13,7 @@
 <div class="battle-list">
     @foreach (var battle in Model.Battles)
     {
-        var winnerLine = battle.Logs.FirstOrDefault(l =>
+       @*  var winnerLine = battle.Logs.FirstOrDefault(l =>
         !string.IsNullOrEmpty(l.RawLine) &&
         l.RawLine.IndexOf("winner=", StringComparison.OrdinalIgnoreCase) >= 0);
 
@@ -23,7 +23,7 @@
             var idx = winnerLine.RawLine.IndexOf("winner=", StringComparison.OrdinalIgnoreCase);
             winnerName = winnerLine.RawLine.Substring(idx + "winner=".Length).Trim();
         }
-
+ *@
         <div class="battle-card">
             <div class="battle-header">
                 <div style="flex: 1; display: flex; align-items: center; gap: 10px;">
@@ -35,10 +35,10 @@
                         zobacz log walki
                     </a>
 
-                    @if (!string.IsNullOrEmpty(winnerName))
+                    @if (!string.IsNullOrEmpty(battle.WinnerName))
                     {
                         <span class="battle-winner" style="margin-left: 10px; font-weight: bold; color: green;">
-                            @winnerName
+                            @battle.WinnerName
                         </span>
                     }
                 </div>

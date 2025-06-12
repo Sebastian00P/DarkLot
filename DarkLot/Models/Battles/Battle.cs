@@ -20,6 +20,5 @@ namespace DarkLot.Models.Battles
         public string ServerName { get; set; }
         public string UniqueHash { get; set; }
 
-
     }
 }

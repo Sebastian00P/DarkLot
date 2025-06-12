@@ -3,14 +3,14 @@
     <StaticWebAssetEndpoint Include="_content/DarkLot/css/FightsView/Details.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\FightsView\Details.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-gtVHdvy4iv\u002B3ALNDfZHeMbtcU8qQn3C/G6Vj4WN6NDQ="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"2161"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022gtVHdvy4iv\u002B3ALNDfZHeMbtcU8qQn3C/G6Vj4WN6NDQ=\u0022"},{"Name":"Last-Modified","Value":"Wed, 11 Jun 2025 11:55:39 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-\u002Bt22Rdpq11tFCULEr6iyfN0QvdUetkUpRMgPO7V5gig="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"2587"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022\u002Bt22Rdpq11tFCULEr6iyfN0QvdUetkUpRMgPO7V5gig=\u0022"},{"Name":"Last-Modified","Value":"Thu, 12 Jun 2025 05:31:23 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/DarkLot/css/FightsView/Details.e42z1t4f33.css">
+    <StaticWebAssetEndpoint Include="_content/DarkLot/css/FightsView/Details.e3winty58y.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\FightsView\Details.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"e42z1t4f33"},{"Name":"integrity","Value":"sha256-gtVHdvy4iv\u002B3ALNDfZHeMbtcU8qQn3C/G6Vj4WN6NDQ="},{"Name":"label","Value":"_content/DarkLot/css/FightsView/Details.css"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"2161"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022gtVHdvy4iv\u002B3ALNDfZHeMbtcU8qQn3C/G6Vj4WN6NDQ=\u0022"},{"Name":"Last-Modified","Value":"Wed, 11 Jun 2025 11:55:39 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"e3winty58y"},{"Name":"integrity","Value":"sha256-\u002Bt22Rdpq11tFCULEr6iyfN0QvdUetkUpRMgPO7V5gig="},{"Name":"label","Value":"_content/DarkLot/css/FightsView/Details.css"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"2587"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022\u002Bt22Rdpq11tFCULEr6iyfN0QvdUetkUpRMgPO7V5gig=\u0022"},{"Name":"Last-Modified","Value":"Thu, 12 Jun 2025 05:31:23 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/DarkLot/css/FightsView/Index.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\FightsView\Index.css'))</AssetFile>
@@ -84,29 +84,29 @@
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-Jtxf9L\u002B5ITKRc1gIRl4VbUpGkRNfOBXjYTdhJD4facM="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"5430"},{"Name":"Content-Type","Value":"image/x-icon"},{"Name":"ETag","Value":"\u0022Jtxf9L\u002B5ITKRc1gIRl4VbUpGkRNfOBXjYTdhJD4facM=\u0022"},{"Name":"Last-Modified","Value":"Fri, 06 Jun 2025 07:20:24 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/DarkLot/js/Battle/fightLogsParser.0yf2ayfn3k.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\Battle\fightLogsParser.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"0yf2ayfn3k"},{"Name":"integrity","Value":"sha256-OH8YeY42PtABNy5KOQqhFpgB3dNYjSMbpof96bnyI5s="},{"Name":"label","Value":"_content/DarkLot/js/Battle/fightLogsParser.js"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"34516"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022OH8YeY42PtABNy5KOQqhFpgB3dNYjSMbpof96bnyI5s=\u0022"},{"Name":"Last-Modified","Value":"Thu, 12 Jun 2025 05:31:23 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/DarkLot/js/Battle/fightLogsParser.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\Battle\fightLogsParser.js'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-tPwXVHJTmG7ycj/tfoeyfoIYIHytJL5W5HTMb/Nrj2o="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"22145"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022tPwXVHJTmG7ycj/tfoeyfoIYIHytJL5W5HTMb/Nrj2o=\u0022"},{"Name":"Last-Modified","Value":"Wed, 11 Jun 2025 11:48:17 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-OH8YeY42PtABNy5KOQqhFpgB3dNYjSMbpof96bnyI5s="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"34516"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022OH8YeY42PtABNy5KOQqhFpgB3dNYjSMbpof96bnyI5s=\u0022"},{"Name":"Last-Modified","Value":"Thu, 12 Jun 2025 05:31:23 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/DarkLot/js/Battle/fightLogsParser.otmrrzzrcs.js">
-      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\Battle\fightLogsParser.js'))</AssetFile>
-      <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"otmrrzzrcs"},{"Name":"integrity","Value":"sha256-tPwXVHJTmG7ycj/tfoeyfoIYIHytJL5W5HTMb/Nrj2o="},{"Name":"label","Value":"_content/DarkLot/js/Battle/fightLogsParser.js"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"22145"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022tPwXVHJTmG7ycj/tfoeyfoIYIHytJL5W5HTMb/Nrj2o=\u0022"},{"Name":"Last-Modified","Value":"Wed, 11 Jun 2025 11:48:17 GMT"}]]]></ResponseHeaders>
-    </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/DarkLot/js/Home/Index.8v951w1del.js">
+    <StaticWebAssetEndpoint Include="_content/DarkLot/js/Home/Index.6f66c4ena0.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\Home\Index.js'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"8v951w1del"},{"Name":"integrity","Value":"sha256-NDIMP1E733ZhAeyf7t5ychIlg8BVmtqH9PDXOLEI\u002BRs="},{"Name":"label","Value":"_content/DarkLot/js/Home/Index.js"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"15803"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022NDIMP1E733ZhAeyf7t5ychIlg8BVmtqH9PDXOLEI\u002BRs=\u0022"},{"Name":"Last-Modified","Value":"Wed, 11 Jun 2025 05:26:43 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"6f66c4ena0"},{"Name":"integrity","Value":"sha256-/t348H0mmtCRcVs5MNVMtioeQe6IOY5ALHBZpQBjnIs="},{"Name":"label","Value":"_content/DarkLot/js/Home/Index.js"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"16277"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022/t348H0mmtCRcVs5MNVMtioeQe6IOY5ALHBZpQBjnIs=\u0022"},{"Name":"Last-Modified","Value":"Wed, 11 Jun 2025 12:34:15 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/DarkLot/js/Home/Index.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\Home\Index.js'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-NDIMP1E733ZhAeyf7t5ychIlg8BVmtqH9PDXOLEI\u002BRs="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"15803"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022NDIMP1E733ZhAeyf7t5ychIlg8BVmtqH9PDXOLEI\u002BRs=\u0022"},{"Name":"Last-Modified","Value":"Wed, 11 Jun 2025 05:26:43 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-/t348H0mmtCRcVs5MNVMtioeQe6IOY5ALHBZpQBjnIs="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"16277"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022/t348H0mmtCRcVs5MNVMtioeQe6IOY5ALHBZpQBjnIs=\u0022"},{"Name":"Last-Modified","Value":"Wed, 11 Jun 2025 12:34:15 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/DarkLot/js/site.6b9nfc4n3r.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\site.js'))</AssetFile>
