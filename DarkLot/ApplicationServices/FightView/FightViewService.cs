@@ -38,6 +38,8 @@ namespace DarkLot.ApplicationServices.FightView
                 CreatorUserId = creatorUserId,
                 ServerName = battleDto.ServerName,
                 UniqueHash = uniqueHash,
+                IsFavorite = false,
+                IsShared = false,
                 Fighters = battleDto.Fighters?.Select(f => new Fighter
                 {
                     FighterId = f.FighterId,
@@ -58,7 +60,7 @@ namespace DarkLot.ApplicationServices.FightView
 
         public async Task<BattlePagedResult> GetAllBattlesAsync(int page, int pageSize, string userId)
         {
-            var totalBattles = await _context.Battles.CountAsync(b => !b.IsDeleted);
+            var totalBattles = await _context.Battles.CountAsync(b => !b.IsDeleted && b.CreatorUserId == userId);
             var totalPages = (int)Math.Ceiling(totalBattles / (double)pageSize);
 
             var battles = await _context.Battles
@@ -88,7 +90,9 @@ namespace DarkLot.ApplicationServices.FightView
                     b.CreationTime,
                     b.CreatorUserId,
                     b.IsActive,
-                    b.IsDeleted
+                    b.IsDeleted,
+                    b.IsFavorite,
+                    b.IsShared
                 })
                 .ToListAsync();
 
@@ -123,7 +127,8 @@ namespace DarkLot.ApplicationServices.FightView
                     IsActive = b.IsActive,
                     IsDeleted = b.IsDeleted,
                     CreatorNickName = user?.NickName ?? "[Nieznany]",
-
+                    IsShared = b.IsShared,
+                    IsFavorite = b.IsFavorite,
                     WinnerName = winnerName
                 });
             }
@@ -199,14 +204,8 @@ namespace DarkLot.ApplicationServices.FightView
         {
             var lineDto = new BattleLogLineDto { RawLine = rawLine };
 
-            // Przykładowa linia: "775075=1;1276819=0;+wound;+pierce;+dmgd=9099;+acdmg=162"
-            // lub "0;0;winner=yii"
-            // lub "775075=1;1276819=5;tspell=Wyniszczające rany;skillId=96;+oth_dmg=2545, ,Firexus(5%);combo-max=1"
-
             var parts = rawLine.Split(';', StringSplitOptions.RemoveEmptyEntries);
 
-            // Identyfikacja atakującego i obrońcy: dwa pierwsze elementy są najczęściej "attackerId=xxx" i "defenderId=xxx"
-            // lub "0;0" jeśli brak
             if (parts.Length >= 2)
             {
                 var first = parts[0];
@@ -238,12 +237,10 @@ namespace DarkLot.ApplicationServices.FightView
                 }
                 else if (p.Contains("="))
                 {
-                    // inne parametry - możesz rozbudować jeśli potrzeba
                     lineDto.Effects.Add(p);
                 }
                 else
                 {
-                    // Cokolwiek innego, traktuj jako tekst
                     lineDto.Text += (lineDto.Text.Length > 0 ? "; " : "") + p;
                 }
             }
@@ -348,9 +345,215 @@ namespace DarkLot.ApplicationServices.FightView
         public async Task DeleteBattleById(int battleId)
         {
             var battle = await _context.Battles.Where(x => x.Id == battleId).FirstOrDefaultAsync();
-            if(battle != null)
+            if (battle != null)
+            {
                 battle.IsDeleted = true;
-            await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<bool?> TogleBattleFavoriteState(int battleId, string userId)
+        {
+            var battle = await _context.Battles.Where(x => x.Id == battleId && x.CreatorUserId == userId).FirstOrDefaultAsync();
+            if (battle != null)
+            {
+                if(battle.IsFavorite)
+                    battle.IsFavorite = false;
+                else
+                    battle.IsFavorite = true;
+                await _context.SaveChangesAsync();
+                return battle.IsFavorite;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public async Task<bool?> TogleBattleSharedState(int battleId, string userId)
+        {
+            var battle = await _context.Battles.Where(x => x.Id == battleId && x.CreatorUserId == userId).FirstOrDefaultAsync();
+            if (battle != null)
+            {
+                if(battle.IsShared)
+                    battle.IsShared = false;
+                else 
+                    battle.IsShared = true;
+                await _context.SaveChangesAsync();
+                return battle.IsShared;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public async Task<BattlePagedResult> GetAllFavoriteBattlesAsync(int page, int pageSize, string userId)
+        {
+            var totalBattles = await _context.Battles.CountAsync(b => !b.IsDeleted && b.CreatorUserId == userId && b.IsFavorite);
+            var totalPages = (int)Math.Ceiling(totalBattles / (double)pageSize);
+
+            var battles = await _context.Battles
+                .Where(b => !b.IsDeleted && b.CreatorUserId == userId && b.IsFavorite)
+                .OrderByDescending(b => b.CreationTime)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(b => new
+                {
+                    b.Id,
+                    b.BattleStart,
+                    Fighters = b.Fighters.Select(f => new FighterDto
+                    {
+                        FighterId = f.FighterId,
+                        Name = f.Name,
+                        Profession = f.Profession,
+                        Team = f.Team
+                    }).ToList(),
+
+                    WinnerLogLine = b.Logs
+                        .Where(l => !string.IsNullOrEmpty(l.LogLine) && l.LogLine.ToLower().Contains("winner="))
+                        .OrderBy(l => l.Id)
+                        .Select(l => l.LogLine)
+                        .FirstOrDefault(),
+
+                    b.ServerName,
+                    b.CreationTime,
+                    b.CreatorUserId,
+                    b.IsActive,
+                    b.IsDeleted,
+                    b.IsFavorite,
+                    b.IsShared
+                })
+                .ToListAsync();
+
+            var result = new List<BattleViewModel>();
+
+            foreach (var b in battles)
+            {
+                var user = await _userManager.FindByIdAsync(b.CreatorUserId);
+
+                // wyciągnij nazwę zwycięzcy z WinnerLogLine
+                string winnerName = null;
+                if (!string.IsNullOrEmpty(b.WinnerLogLine))
+                {
+                    var idx = b.WinnerLogLine.IndexOf("winner=", StringComparison.OrdinalIgnoreCase);
+                    if (idx >= 0)
+                    {
+                        winnerName = b.WinnerLogLine.Substring(idx + "winner=".Length).Trim();
+                    }
+                }
+
+                result.Add(new BattleViewModel
+                {
+                    Id = b.Id,
+                    BattleStart = b.BattleStart,
+                    Fighters = b.Fighters,
+                    Logs = b.WinnerLogLine != null
+                        ? new List<BattleLogLineDto> { new BattleLogLineDto { RawLine = b.WinnerLogLine } }
+                        : new List<BattleLogLineDto>(),
+                    ServerName = b.ServerName,
+                    CreationTime = b.CreationTime,
+                    CreatorUserId = b.CreatorUserId,
+                    IsActive = b.IsActive,
+                    IsDeleted = b.IsDeleted,
+                    CreatorNickName = user?.NickName ?? "[Nieznany]",
+                    IsShared = b.IsShared,
+                    IsFavorite = b.IsFavorite,
+                    WinnerName = winnerName
+                });
+            }
+
+            return new BattlePagedResult
+            {
+                Battles = result,
+                TotalBattles = totalBattles,
+                TotalPages = totalPages,
+                CurrentPage = page
+            };
+        }
+
+        public async Task<BattlePagedResult> GetAllSharedBattlesAsync(int page, int pageSize, string userId)
+        {
+            var totalBattles = await _context.Battles.CountAsync(b => !b.IsDeleted && b.CreatorUserId == userId && b.IsShared);
+            var totalPages = (int)Math.Ceiling(totalBattles / (double)pageSize);
+
+            var battles = await _context.Battles
+                .Where(b => !b.IsDeleted && b.CreatorUserId == userId && b.IsShared)
+                .OrderByDescending(b => b.CreationTime)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(b => new
+                {
+                    b.Id,
+                    b.BattleStart,
+                    Fighters = b.Fighters.Select(f => new FighterDto
+                    {
+                        FighterId = f.FighterId,
+                        Name = f.Name,
+                        Profession = f.Profession,
+                        Team = f.Team
+                    }).ToList(),
+
+                    WinnerLogLine = b.Logs
+                        .Where(l => !string.IsNullOrEmpty(l.LogLine) && l.LogLine.ToLower().Contains("winner="))
+                        .OrderBy(l => l.Id)
+                        .Select(l => l.LogLine)
+                        .FirstOrDefault(),
+
+                    b.ServerName,
+                    b.CreationTime,
+                    b.CreatorUserId,
+                    b.IsActive,
+                    b.IsDeleted,
+                    b.IsFavorite,
+                    b.IsShared
+                })
+                .ToListAsync();
+
+            var result = new List<BattleViewModel>();
+
+            foreach (var b in battles)
+            {
+                var user = await _userManager.FindByIdAsync(b.CreatorUserId);
+
+                // wyciągnij nazwę zwycięzcy z WinnerLogLine
+                string winnerName = null;
+                if (!string.IsNullOrEmpty(b.WinnerLogLine))
+                {
+                    var idx = b.WinnerLogLine.IndexOf("winner=", StringComparison.OrdinalIgnoreCase);
+                    if (idx >= 0)
+                    {
+                        winnerName = b.WinnerLogLine.Substring(idx + "winner=".Length).Trim();
+                    }
+                }
+
+                result.Add(new BattleViewModel
+                {
+                    Id = b.Id,
+                    BattleStart = b.BattleStart,
+                    Fighters = b.Fighters,
+                    Logs = b.WinnerLogLine != null
+                        ? new List<BattleLogLineDto> { new BattleLogLineDto { RawLine = b.WinnerLogLine } }
+                        : new List<BattleLogLineDto>(),
+                    ServerName = b.ServerName,
+                    CreationTime = b.CreationTime,
+                    CreatorUserId = b.CreatorUserId,
+                    IsActive = b.IsActive,
+                    IsDeleted = b.IsDeleted,
+                    CreatorNickName = user?.NickName ?? "[Nieznany]",
+                    IsShared = b.IsShared,
+                    IsFavorite = b.IsFavorite,
+                    WinnerName = winnerName
+                });
+            }
+
+            return new BattlePagedResult
+            {
+                Battles = result,
+                TotalBattles = totalBattles,
+                TotalPages = totalPages,
+                CurrentPage = page
+            };
         }
 
     }

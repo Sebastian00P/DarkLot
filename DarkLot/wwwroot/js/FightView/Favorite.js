@@ -139,7 +139,7 @@
 
             // 4.4) Odświeżenie paginacji / ewentualne przejście na poprzednią stronę
             try {
-                const infoRes = await fetch(`/FightView/GetPagingInfo?page=${currentPage}&pageSize=${pageSize}`);
+                const infoRes = await fetch(`/FightView/GetPagingFavoriteInfo?page=${currentPage}&pageSize=${pageSize}`);
                 if (!infoRes.ok) throw new Error(infoRes.statusText);
                 const { currentPage: newPage, totalPages: newTotal } = await infoRes.json();
 
@@ -180,9 +180,39 @@
             .catch(err => console.error('Toggle error:', err));
     }
 
+    // 1) Pomocnicza funkcja do usuwania karty z animacją
+    function removeCardWithAnimation(card) {
+        card.classList.add('exit');
+        card.addEventListener('animationend', () => {
+            card.remove();
+            // tutaj możesz w razie potrzeby dorzucić fetchFill() i/lub odświeżenie paginacji
+        }, { once: true });
+    }
+
+    // 2) Nowy listener dla .favorite-btn
     document.querySelectorAll('.favorite-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            toggleState(`/FightView/ChangeBattleToFavorite?battleId=${btn.dataset.id}`, btn);
+        btn.addEventListener('click', async () => {
+            const battleId = btn.dataset.id;
+            const card = btn.closest('.battle-card');
+            const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+            try {
+                const res = await fetch(`/FightView/ChangeBattleToFavorite?battleId=${battleId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': token
+                    }
+                });
+                if (!res.ok) {
+                    console.error('Favorite toggle failed', await res.text());
+                    return;
+                }
+                // zamiast dodawać/usuwać klasę active, usuwamy od razu kartę
+                removeCardWithAnimation(card);
+            } catch (err) {
+                console.error('Error toggling favorite:', err);
+            }
         });
     });
 

@@ -98,6 +98,14 @@
         return html;
     }
 
+    function removeCardWithAnimation(card) {
+        card.classList.add('exit');
+        card.addEventListener('animationend', () => {
+            card.remove();
+            // tutaj możesz w razie potrzeby dorzucić fetchFill() i/lub odświeżenie paginacji
+        }, { once: true });
+    }
+
 
     // 4) Obsługa kliknięcia delete
     container.addEventListener('click', async e => {
@@ -139,7 +147,7 @@
 
             // 4.4) Odświeżenie paginacji / ewentualne przejście na poprzednią stronę
             try {
-                const infoRes = await fetch(`/FightView/GetPagingInfo?page=${currentPage}&pageSize=${pageSize}`);
+                const infoRes = await fetch(`/FightView/GetPagingSharedInfo?page=${currentPage}&pageSize=${pageSize}`);
                 if (!infoRes.ok) throw new Error(infoRes.statusText);
                 const { currentPage: newPage, totalPages: newTotal } = await infoRes.json();
 
@@ -187,8 +195,31 @@
     });
 
     document.querySelectorAll('.share-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            toggleState(`/FightView/ChangeBattleToShared?battleId=${btn.dataset.id}`, btn);
+        btn.addEventListener('click', async () => {
+            const battleId = btn.dataset.id;
+            const card = btn.closest('.battle-card');
+            const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+            try {
+                const res = await fetch(
+                    `/FightView/ChangeBattleToShared?battleId=${battleId}`,
+                    {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'RequestVerificationToken': token
+                        }
+                    }
+                );
+                if (!res.ok) {
+                    console.error('Share toggle failed', await res.text());
+                    return;
+                }
+                // usuń kartę z animacją
+                removeCardWithAnimation(card);
+            } catch (err) {
+                console.error('Error toggling share:', err);
+            }
         });
     });
 });

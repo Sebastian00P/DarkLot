@@ -237,15 +237,36 @@ window.parseBattleLogs = function (logs, fightersById, battleStartText) {
 
         // --- Głęboka rana jako osobna karta ---
         const w = parts.find(p => p.startsWith("wound="));
+        const ostatni = parts.find(p => p.startsWith("legbon_lastheal="));
+
         if (w && parts[0].includes("=")) {
             flush();
+
             const atk = getF(parts[0].split("=")[0]);
             cls = `card-attack team-${atk.Team}-bg`;
+
+            // jeśli jest ostatni heal, dorzuć linijkę o ratunku
+            if (ostatni) {
+                const [healValue, healTarget] = ostatni
+                    .split("=")[1]
+                    .split(",");
+                card.push(
+                    `<p class="log-line effect-heal" data-raw="${esc(line)}">` +
+                    `<span class="legbon_lastheal">&nbsp;${esc(healTarget)}: ` +
+                    `Ostatni ratunek, +<b class="Dd">${esc(healValue)}</b> pkt. życia.</span>` +
+                    `</p>`
+                );
+            }
+
+            // teraz głęboka rana
             const hp = parts[0].split("=")[1];
             const dmg = w.split("=")[1].split(",")[0];
-            card.push(`<p class="log-line" data-raw="${esc(line)}">
-                                ${atk.Name}(${hp}%) otrzymał ${esc(dmg)} obrażeń z głębokiej rany.
-                               </p>`);
+            card.push(
+                `<p class="log-line" data-raw="${esc(line)}">` +
+                `${atk.Name} (${hp}%) otrzymał ${esc(dmg)} obrażeń z głębokiej rany.` +
+                `</p>`
+            );
+
             flush();
             return;
         }

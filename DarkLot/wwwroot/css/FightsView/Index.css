@@ -100,3 +100,17 @@
 .battle-card.enter {
     animation: slide-in 0.3s ease-in-out forwards;
 }
+
+.favorite-btn, .share-btn {
+    cursor: pointer;
+    color: white; /* domyślnie białe */
+    transition: color .2s;
+}
+
+.favorite-btn.active {
+    color: darkorange; /* ciemny pomarańcz */
+}
+
+.share-btn.active {
+    color: yellow; /* żółty */
+}
