@@ -357,7 +357,7 @@ namespace DarkLot.ApplicationServices.FightView
             var battle = await _context.Battles.Where(x => x.Id == battleId && x.CreatorUserId == userId).FirstOrDefaultAsync();
             if (battle != null)
             {
-                if(battle.IsFavorite)
+                if (battle.IsFavorite)
                     battle.IsFavorite = false;
                 else
                     battle.IsFavorite = true;
@@ -375,9 +375,9 @@ namespace DarkLot.ApplicationServices.FightView
             var battle = await _context.Battles.Where(x => x.Id == battleId && x.CreatorUserId == userId).FirstOrDefaultAsync();
             if (battle != null)
             {
-                if(battle.IsShared)
+                if (battle.IsShared)
                     battle.IsShared = false;
-                else 
+                else
                     battle.IsShared = true;
                 await _context.SaveChangesAsync();
                 return battle.IsShared;
@@ -510,6 +510,53 @@ namespace DarkLot.ApplicationServices.FightView
                 })
                 .ToListAsync();
 
+            return await GetBattleDetails(battles, totalBattles, totalPages, page);
+
+        }
+        public async Task<BattlePagedResult> GetAllSharedBattlesAsync(int page, int pageSize)
+        {
+            var totalBattles = await _context.Battles.CountAsync(b => !b.IsDeleted && b.IsShared);
+            var totalPages = (int)Math.Ceiling(totalBattles / (double)pageSize);
+
+            var battles = await _context.Battles
+                .Where(b => !b.IsDeleted && b.IsShared)
+                .OrderByDescending(b => b.CreationTime)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(b => new
+                {
+                    b.Id,
+                    b.BattleStart,
+                    Fighters = b.Fighters.Select(f => new FighterDto
+                    {
+                        FighterId = f.FighterId,
+                        Name = f.Name,
+                        Profession = f.Profession,
+                        Team = f.Team
+                    }).ToList(),
+
+                    WinnerLogLine = b.Logs
+                        .Where(l => !string.IsNullOrEmpty(l.LogLine) && l.LogLine.ToLower().Contains("winner="))
+                        .OrderBy(l => l.Id)
+                        .Select(l => l.LogLine)
+                        .FirstOrDefault(),
+
+                    b.ServerName,
+                    b.CreationTime,
+                    b.CreatorUserId,
+                    b.IsActive,
+                    b.IsDeleted,
+                    b.IsFavorite,
+                    b.IsShared
+                })
+                .ToListAsync();
+
+            return await GetBattleDetails(battles, totalBattles, totalPages, page);
+
+        }
+
+        public async Task<BattlePagedResult> GetBattleDetails(dynamic battles, int totalBattles, int totalPages, int page)
+        {
             var result = new List<BattleViewModel>();
 
             foreach (var b in battles)

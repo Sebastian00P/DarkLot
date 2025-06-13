@@ -82,6 +82,22 @@ namespace DarkLot.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> SharedBattles(int page = 1)
+        {
+            const int pageSize = 10;
+
+            var pagedResult = await _fightViewService.GetAllSharedBattlesAsync(page, pageSize);
+
+            var model = new BattlesListViewModel
+            {
+                Battles = pagedResult.Battles,
+                CurrentPage = pagedResult.CurrentPage,
+                TotalPages = pagedResult.TotalPages
+            };
+
+            return View(model);
+        }
+
         [HttpDelete]
         public async Task<IActionResult> Delete(int battleId)
         {

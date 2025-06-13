@@ -15,6 +15,7 @@ namespace DarkLot.ApplicationServices.FightView
         Task<bool?> TogleBattleSharedState(int battleId, string userId);
         Task<BattlePagedResult> GetAllFavoriteBattlesAsync(int page, int pageSize, string userId);
         Task<BattlePagedResult> GetAllSharedBattlesAsync(int page, int pageSize, string userId);
+        Task<BattlePagedResult> GetAllSharedBattlesAsync(int page, int pageSize);
     }
 
 }
