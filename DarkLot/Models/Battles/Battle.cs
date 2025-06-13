@@ -19,6 +19,8 @@ namespace DarkLot.Models.Battles
         public virtual ApplicationUser CreatorUser { get; set; }
         public string ServerName { get; set; }
         public string UniqueHash { get; set; }
+        public bool IsFavorite { get; set; }
+        public bool IsShared { get; set; }
 
     }
 }

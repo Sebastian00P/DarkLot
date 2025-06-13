@@ -15,5 +15,7 @@ namespace DarkLot.ViewModeles.BattlesViewModel
         public bool IsDeleted { get; set; }
         public string CreatorNickName { get; set; }
         public string WinnerName { get; set; }
+        public bool IsFavorite { get; set; }
+        public bool IsShared { get; set; }
     }
 }

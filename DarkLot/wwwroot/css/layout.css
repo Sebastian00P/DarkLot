@@ -4,7 +4,8 @@
     flex-direction: column;
     background: #161b22;
     color: #e3e3e3;
-    }
+    overflow-x: hidden;
+}
 
 .main-content {
     flex: 1 1 auto;

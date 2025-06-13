@@ -6,24 +6,14 @@
 }
 <head>
     <link rel="stylesheet" href="~/css/FightsView/index.css" asp-append-version="true" />
+    <script src="~/js/FightView/Index.js" asp-append-version="true"></script>
 </head>
 
 <h1>@ViewData["Title"]</h1>
 
-<div class="battle-list">
+<div class="battle-list" id="battles-container" data-page="@Model.CurrentPage">
     @foreach (var battle in Model.Battles)
     {
-       @*  var winnerLine = battle.Logs.FirstOrDefault(l =>
-        !string.IsNullOrEmpty(l.RawLine) &&
-        l.RawLine.IndexOf("winner=", StringComparison.OrdinalIgnoreCase) >= 0);
-
-        string winnerName = null;
-        if (winnerLine != null)
-        {
-            var idx = winnerLine.RawLine.IndexOf("winner=", StringComparison.OrdinalIgnoreCase);
-            winnerName = winnerLine.RawLine.Substring(idx + "winner=".Length).Trim();
-        }
- *@
         <div class="battle-card">
             <div class="battle-header">
                 <div style="flex: 1; display: flex; align-items: center; gap: 10px;">
@@ -45,6 +35,15 @@
                 <div class="battle-meta">
                     <div>@battle.ServerName</div>
                     <div>@battle.CreationTime.ToString("HH:mm dd.MM.yyyy")</div>
+                    <span class="material-icons delete-btn" id="delete-btn" data-id="@battle.Id">
+                        delete
+                    </span>
+                    <span class="material-icons favorite-btn" id="delete-btn" data-id="@battle.Id">
+                        favorite
+                    </span>
+                    <span class="material-icons share-btn" id="delete-btn" data-id="@battle.Id">
+                        share
+                    </span>
                 </div>
             </div>
             <div class="battle-start">@battle.BattleStart</div>
@@ -54,7 +53,7 @@
 
 @if (Model.TotalPages > 1)
 {
-    <nav class="mb-3">
+    <nav class="mb-3" id="battles-pagination">
         <ul class="pagination justify-content-center">
             <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
                 <a class="page-link" href="@Url.Action("Index", new { page = Model.CurrentPage - 1 })">«</a>

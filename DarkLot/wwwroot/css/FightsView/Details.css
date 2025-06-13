@@ -155,6 +155,28 @@ p.effect-block {
     color: aqua;
     margin-bottom: 0rem !important;
 }
+
+.legbon_lastheal {
+    font-weight: bold;
+    font-style: italic;
+    color: aqua;
+    margin-bottom: 0rem !important;
+}
+
+.legbon_puncture {
+    font-weight: bold;
+    font-style: italic;
+    color: darksalmon;
+    margin-bottom: 0rem !important;
+}
+
+.legbon_holytouch {
+    font-weight: bold;
+    font-style: italic;
+    color: #932ad4;
+    margin-bottom: 0rem !important;
+}
+
 .poison {
     color: lightgreen;
 }
@@ -181,4 +203,13 @@ p.effect-block {
 
 .effect-attack-boost {
     color: yellowgreen;
+}
+
+.effect-third-att{
+    color: white;
+    font-weight: bold;
+}
+
+.hloytouch_line {
+    color: #932ad4;
 }

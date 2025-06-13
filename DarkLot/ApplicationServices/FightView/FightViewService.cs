@@ -56,13 +56,13 @@ namespace DarkLot.ApplicationServices.FightView
             return battle.Id;
         }
 
-        public async Task<BattlePagedResult> GetAllBattlesAsync(int page, int pageSize)
+        public async Task<BattlePagedResult> GetAllBattlesAsync(int page, int pageSize, string userId)
         {
             var totalBattles = await _context.Battles.CountAsync(b => !b.IsDeleted);
             var totalPages = (int)Math.Ceiling(totalBattles / (double)pageSize);
 
             var battles = await _context.Battles
-                .Where(b => !b.IsDeleted)
+                .Where(b => !b.IsDeleted && b.CreatorUserId == userId)
                 .OrderByDescending(b => b.CreationTime)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
@@ -311,14 +311,46 @@ namespace DarkLot.ApplicationServices.FightView
 
         private string GenerateBattleHash(BattleDto battleDto, string creatorUserId)
         {
-            var logConcat = string.Join(";", battleDto.Logs?.Take(3) ?? new List<string>());
-            var baseString = $"{battleDto.BattleStart}|{string.Join(",", battleDto.Fighters.Select(f => f.FighterId + ":" + f.Name))}|{battleDto.ServerName}|{logConcat}|{creatorUserId}";
-            using (var sha256 = System.Security.Cryptography.SHA256.Create())
-            {
-                var bytes = System.Text.Encoding.UTF8.GetBytes(baseString);
-                var hash = sha256.ComputeHash(bytes);
-                return Convert.ToBase64String(hash);
-            }
+            // 1) Tekst startu walki
+            var startPart = battleDto.BattleStart?.Trim() ?? "";
+
+            // 2) Posortowani fighterzy
+            var fightersPart = string.Join(",",
+                battleDto.Fighters
+                    .OrderBy(f => f.FighterId)
+                    .Select(f => $"{f.FighterId}:{f.Name.Trim()}")
+            );
+
+            // 3) Logi od początku do linii ze "winner="
+            var idx = battleDto.Logs.FindIndex(l => l.Contains("winner="));
+            var relevantLogs = idx >= 0
+                ? battleDto.Logs.Take(idx + 1)
+                : battleDto.Logs;
+            var logPart = string.Join(";", relevantLogs).Trim();
+
+            // 4) Nazwa serwera
+            var serverPart = battleDto.ServerName?.Trim() ?? "";
+
+            // 5) ID twórcy (dodajemy na końcu)
+            var userPart = creatorUserId.Trim();
+
+            // 6) Sklej wszystko w jeden string
+            var baseString = $"{startPart}|{fightersPart}|{serverPart}|{logPart}|{userPart}";
+
+            // 7) SHA-256 → Base64
+            using var sha256 = System.Security.Cryptography.SHA256.Create();
+            var bytes = System.Text.Encoding.UTF8.GetBytes(baseString);
+            var hash = sha256.ComputeHash(bytes);
+            return Convert.ToBase64String(hash);
+        }
+
+
+        public async Task DeleteBattleById(int battleId)
+        {
+            var battle = await _context.Battles.Where(x => x.Id == battleId).FirstOrDefaultAsync();
+            if(battle != null)
+                battle.IsDeleted = true;
+            await _context.SaveChangesAsync();
         }
 
     }

@@ -24,6 +24,7 @@ window.parseBattleLogs = function (logs, fightersById, battleStartText) {
         legbon_glare: { txt: "Oślepienie", cls: "legbon_glare" },
         legbon_anguish: { txt: "Krwawa udręka", cls: "legbon_anguish" },
         legbon_puncture: { txt: "Przeszywająca skuteczność", cls: "legbon_puncture" },
+        legbon_holytouch: { txt: "Dotyk anioła", cls: "legbon_holytouch" },
         "combo-max": { txt: "Kombinacja", cls: "effect-crit" },
         oth_dmg: { txt: "obrażeń otrzymał(a)", cls: "effect-dmg" }
     };
@@ -184,14 +185,32 @@ window.parseBattleLogs = function (logs, fightersById, battleStartText) {
 
             // Obsługa otrzymanych obrażeń oth_dmg
             const oth = parts.find(p => p.startsWith("+oth_dmg="));
+            const ostatni = parts.find(p => p.startsWith("legbon_lastheal="));
+
             if (oth) {
+                if (ostatni) {
+                    const [healValue, healTarget] = ostatni
+                        .split("=")[1]
+                        .split(",");
+
+                    card.push(
+                        `<p class="log-line effect-heal" data-raw="${esc(line)}">` +
+                        `<span class="legbon_lastheal">&nbsp${esc(healTarget)}: Ostatni ratunek, +<b class="Dd">${esc(healValue)}</b> punktów życia.</span>` +
+                        `</p>`
+                    );
+                }
+
                 const othVal = oth.split("=")[1];
                 const dmg = othVal.split(",")[0];
                 const targetStr = othVal.split(",")[2];
-                card.push(`<p class="log-line effect-dmg" data-raw="${esc(line)}">
-                        -<b class="Dd">${esc(dmg)}</b> obrażeń otrzymał(a) ${esc(targetStr)}.
-                       </p>`);
+
+                card.push(
+                    `<p class="log-line effect-dmg" data-raw="${esc(line)}">` +
+                    `-<b class="Dd">${esc(dmg)}</b> obrażeń otrzymał(a) ${esc(targetStr)}.` +
+                    `</p>`
+                );
             }
+
 
             // Obsługa heal_target
             const heal = parts.find(p => p.startsWith("heal_target="));
@@ -240,6 +259,7 @@ window.parseBattleLogs = function (logs, fightersById, battleStartText) {
         const firePart = parts.find(p => p.startsWith("+dmgf="));
         const frozenPart = parts.find(p => p.startsWith("+dmgc="));
         const dmgoPart = parts.find(p => p.startsWith("+dmgo="));
+        const thirdAttackPart = parts.find(p => p.startsWith("+thirdatt="));
         const blyskPart = parts.find(p => p.startsWith("+dmgl="));
         if (dmgPart || dmgoPart || firePart || frozenPart || blyskPart) {
             // wyciągamy procent życia z pierwszego elementu parts
@@ -278,6 +298,12 @@ window.parseBattleLogs = function (logs, fightersById, battleStartText) {
                 pieces.push(`<span class="blysk">+${esc(v)}</span>`);
             }
 
+            // trzeci cios
+            if (thirdAttackPart) {
+                const v = thirdAttackPart.split("=")[1];
+                pieces.push(`<span class="Dd">+${esc(v)}</span>`);
+            }
+
             // łączymy wszystkie części w jeden string
             const attackStrength = pieces.join(" ");
 
@@ -288,16 +314,6 @@ window.parseBattleLogs = function (logs, fightersById, battleStartText) {
             `);
         }
 
-        // 2) +rage
-        const ragePart = parts.find(p => p.startsWith("+rage="));
-        if (ragePart) {
-            const val = ragePart.split("=")[1];
-            card.push(`<p class="log-line effect-rage" data-raw="${esc(ragePart)}">
-                                +Wściekłość: atak +${esc(val)}
-                               </p>`);
-        }
-
-        
         // 3) kolejne efekty w ustalonej kolejności
         // Cios krytyczny
         if (parts.some(p => p === "+crit")) {
@@ -321,6 +337,7 @@ window.parseBattleLogs = function (logs, fightersById, battleStartText) {
             const e = mapEffect("critslow_per", val);
             card.push(`<p class="${e.cls}" data-raw="${esc(slow)}">+${e.txt}</p>`);
         }
+       
         // 2b) +engback
         const engPart = parts.find(p => p.startsWith("+engback="));
         if (engPart) {
@@ -343,6 +360,40 @@ window.parseBattleLogs = function (logs, fightersById, battleStartText) {
             card.push(
                 `<p class="log-line effect-energy-destroy" data-raw="${esc(energyDestroyPart)}">` +
                 `+Zniszczono ${esc(mainValue)} energii${weakenText}` +
+                `</p>`
+            );
+        }
+        // 2d) -tirdatt: Trzeci cios
+        if (thirdAttackPart) {
+            card.push(
+                `<p class="log-line effect-third-att" data-raw="${esc(thirdAttackPart)}">` +
+                `+Trzeci cios` +
+                `</p>`
+            );
+        }
+       
+        //2d) Obnizanie odpornosci na trucizne
+        const reduceActDmg = parts.find(p => p.startsWith("+actdmg="));
+        if (reduceActDmg) {
+            let val = reduceActDmg.split("=")[1];
+            let mainValue = val;
+
+
+            card.push(
+                `<p class="log-line effect-energy-destroy" data-raw="${esc(reduceActDmg)}">` +
+                `+Obniżenie odporności na truciznę o ${esc(mainValue)}%` +
+                `</p>`
+            );
+        }
+        //2c) Czarna krew
+        const blackBloodEffect = parts.find(p => p.startsWith("+critpoison_per="));
+        if (blackBloodEffect) {
+            let val = blackBloodEffect.split("=")[1];
+            let mainValue = val;
+
+            card.push(
+                `<p class="log-line" data-raw="${esc(blackBloodEffect)}">` +
+                `+Czarna krew: ${esc(mainValue)}%` +
                 `</p>`
             );
         }
@@ -385,17 +436,46 @@ window.parseBattleLogs = function (logs, fightersById, battleStartText) {
             const e = mapEffect("injure");
             card.push(`<p class=\"log-line ${e.cls}\" data-raw=\"${esc(inj)}\">+${e.txt} (${esc(val)})</p>`);
         }
+        // 2) +rage
+        const ragePart = parts.find(p => p.startsWith("+rage="));
+        if (ragePart) {
+            const val = ragePart.split("=")[1];
+            card.push(`<p class="log-line effect-rage" data-raw="${esc(ragePart)}">
+                                +Wściekłość: atak +${esc(val)}
+                               </p>`);
+        }
         // 8) +taken_dmg: wzmocnienie ataku
         const attackBoostPart = parts.find(p => p.startsWith("+taken_dmg="));
         if (attackBoostPart) {
             const val = attackBoostPart.split("=")[1];
             card.push(`<p class="log-line effect-attack-boost" data-raw="${esc(attackBoostPart)}">+Wzmocnienie ataku o ${esc(val)}</p>`);
         }
+        //2c) Redukcja niszczenia pancerza
+        const reducArmor = parts.find(p => p.startsWith("-redacdmg_per="));
+        if (reducArmor) {
+            let val = reducArmor.split("=")[1];
+            let mainValue = val;
+
+
+            card.push(
+                `<p class="log-line effect-energy-destroy" data-raw="${esc(reducArmor)}">` +
+                `-Redukcja niszczenia pancerza o ${esc(mainValue)}%` +
+                `</p>`
+            );
+        }
         // 4) +acdmg
         const ac = parts.find(p => p.startsWith("+acdmg="));
         if (ac) {
             const v = ac.split("=")[1];
             card.push(`<p class="log-line" data-raw="${esc(ac)}">+Obniżenie pancerza o ${esc(v)}</p>`);
+        }
+
+        // 4a) -fastarrow (Szybka strzała)
+        if (parts.some(p => p === "+fastarrow")) {
+            const e = mapEffect("fastarrow");
+            card.push(`
+                <p class="${e.cls}" data-raw="+fastarrow">+${e.txt}</p>
+            `);
         }
 
         // 5) -blok (Zablokowanie)
@@ -416,6 +496,25 @@ window.parseBattleLogs = function (logs, fightersById, battleStartText) {
                 `);
             }
         }
+        const lastHeal = parts.find(p => p.startsWith("legbon_lastheal="));
+        if (lastHeal) {
+            const lb = mapLegbon("legbon_lastheal");
+            const [, data] = lastHeal.split("=");
+            const [amount, player] = data.split(",");
+            card.push(
+                `<p class="log-line ${lb.cls}" data-raw="${esc(lastHeal)}">` +
+                `${esc(player)}: ${lb.txt}, +${esc(amount)} punktów życia.` +
+                `</p>`
+            );
+        }
+
+        // legbon_curse
+        if (parts.some(p => p.startsWith("+legbon_curse"))) {
+            const lb = mapLegbon("legbon_curse");
+            card.push(`<p class="log-line ${lb.cls}" data-raw="legbon_curse">
+                    +${lb.txt}
+               </p>`);
+        }
 
         // absorption
         const absM = parts.find(p => p.startsWith("-absorbm="));
@@ -429,14 +528,7 @@ window.parseBattleLogs = function (logs, fightersById, battleStartText) {
             card.push(`<p class=\"log-line\">-Absorpcja ${val} obrażeń fizycznych</p>`);
         }
 
-
-        // 6a) -fastarrow (Szybka strzała)
-        if (parts.some(p => p === "+fastarrow")) {
-            const e = mapEffect("fastarrow");
-            card.push(`
-                <p class="${e.cls}" data-raw="+fastarrow">+${e.txt}</p>
-            `);
-        }
+        
         // 6b) -arrowblock (Blok strzały)
         if (parts.some(p => p === "-arrowblock")) {
             const e = mapEffect("arrowblock");
@@ -444,6 +536,7 @@ window.parseBattleLogs = function (logs, fightersById, battleStartText) {
                 <p class="${e.cls}" data-raw="-arrowblock">+${e.txt}</p>
             `);
         }
+     
         // 6c) -evade (Unik)
         if (parts.some(p => p === "-evade")) {
             const e = mapEffect("evade");
@@ -485,11 +578,11 @@ window.parseBattleLogs = function (logs, fightersById, battleStartText) {
                </p>`);
         }
 
-        // legbon_curse
-        if (parts.some(p => p.startsWith("+legbon_curse"))) {
-            const lb = mapLegbon("legbon_curse");
-            card.push(`<p class="log-line ${lb.cls}" data-raw="legbon_curse">
-                    +${lb.txt}
+        // legbon_holytouch
+        if (parts.some(p => p.startsWith("+legbon_holytouch"))) {
+            const lb = mapLegbon("legbon_holytouch");
+            card.push(`<p class="log-line ${lb.cls}" data-raw="+legbon_holytouch">
+                    &nbsp+${lb.txt}
                </p>`);
         }
 
@@ -529,9 +622,10 @@ window.parseBattleLogs = function (logs, fightersById, battleStartText) {
         // znajdź wszystkie możliwe części obrażeń
         const physReceivePart = parts.find(p => p.startsWith("-dmgd=") || p.startsWith("-dmg="));
         const poisonReceivePart = parts.find(p => p.startsWith("-dmgo="));
-        const fireReceivePart = parts.find(p => p.startsWith("+dmgf="));
-        const coldReceivePart = parts.find(p => p.startsWith("+dmgc="));
-        const shockReceivePart = parts.find(p => p.startsWith("+dmgl="));
+        const fireReceivePart = parts.find(p => p.startsWith("-dmgf="));
+        const coldReceivePart = parts.find(p => p.startsWith("-dmgc="));
+        const shockReceivePart = parts.find(p => p.startsWith("-dmgl="));
+        const thirdAttReceivePart = parts.find(p => p.startsWith("-thirdatt="));
 
         // jeżeli jest jakikolwiek debuff obrażeń, budujemy wpis w logu
         if (physReceivePart || poisonReceivePart || fireReceivePart || coldReceivePart || shockReceivePart) {
@@ -572,6 +666,12 @@ window.parseBattleLogs = function (logs, fightersById, battleStartText) {
                 fragments.push(`<span class="blysk">-${esc(val)}</span>`);
             }
 
+            // trzeci cios
+            if (thirdAttReceivePart) {
+                const val = thirdAttReceivePart.split("=")[1];
+                fragments.push(`<span class="Dd">-${esc(val)}</span>`);
+            }
+
             // łączymy wszystkie fragmenty spacją
             const totalDamageHtml = fragments.join(" ");
 
@@ -593,10 +693,23 @@ window.parseBattleLogs = function (logs, fightersById, battleStartText) {
             const hp0 = parts[0].split("=")[1] || "0";
             cls = "card-heal";
             card.push(`<p class="log-line" data-raw="${esc(line)}">
-                                Przywrócono ${esc(heal)} pkt życia <b>${tgt.Name}</b>(<b>${hp0}%</b>)
+                                Przywrócono ${esc(heal)} punktów życia <b>${tgt.Name}</b>(<b>${hp0}%</b>)
                                </p>`);
             flush();
         }
+        // dotyk anioła +hp
+        const da_heal = parts.find(p => p.startsWith("legbon_holytouch_heal="));
+        if (da_heal) {
+            const heal = da_heal.split("=")[1];
+            const tgt = getF(parts[0].split("=")[0]);
+            const hp0 = parts[0].split("=")[1] || "0";
+            cls = "card-heal";
+            card.push(`<p class="log-line hloytouch_line" data-raw="${esc(line)}">
+                                &nbspDotyk anioła: uleczono <span class="text-white">${esc(heal)}</span> punktów życia <span class="text-white"><b>${tgt.Name}</b>(<b>${hp0}%</b>)</span>
+                               </p>`);
+            flush();
+        }
+
         const poi = parts.find(p => p.startsWith("poison="));
         const inj_dmg = parts.find(p => p.startsWith("injure="));
         const light_dmg = parts.find(p => p.startsWith("light="));
@@ -618,7 +731,7 @@ window.parseBattleLogs = function (logs, fightersById, battleStartText) {
                 const [dmgI, pctI] = inj_dmg.split("=")[1].split(",");
                 card.push(`
                   <p class="log-line effect-injure" data-raw="${esc(line)}">
-                    ${tgt.Name}: ${dmgI},${pctI} obrażeń po zranieniu.
+                    ${tgt.Name}: ${dmgI} obrażeń po zranieniu.
                   </p>
                 `);
             }
@@ -748,128 +861,14 @@ window.parseBattleLogs = function (logs, fightersById, battleStartText) {
     return out;
 };
 
-// Funkcja esc nie jest już potrzebna poza scope'em, ale jeśli jest używana gdzie indziej, to może zostać.
 function esc(s) {
     return s.replace(/[&<>"']/g, c => ({
         '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
     })[c]);
 }
-
-//function parseBattleLogs(logs, fighters, battleStartText) {
-//    const stats = {};
-//    fighters.forEach(f => {
-//        stats[f.Name] = {
-//            turns: 0,
-//            crit: 0,
-//            vcrit: 0,
-//            touch: 0,
-//            buff: 0,
-//            miss: 0,
-//            block: 0,
-//            parry: 0,
-//            counter: 0,
-//            heal: 0,
-//            deep: 0
-//        };
-//    });
-
-//    const containerLines = [];
-
-//    // Dodaj na start BattleStart - pogrubione i wyraźne
-//    if (battleStartText) {
-//        containerLines.push(`<div class="battle-start">${escapeHtml(battleStartText)}</div>`);
-//    }
-
-//    // Funkcja do escapowania HTML (prosta)
-//    function escapeHtml(text) {
-//        return text.replace(/[&<>"']/g, m => ({
-//            '&': '&amp;',
-//            '<': '&lt;',
-//            '>': '&gt;',
-//            '"': '&quot;',
-//            "'": '&#39;'
-//        })[m]);
-//    }
-
-//    // Kolory dla żywiołów (klasy)
-//    const elementClasses = {
-//        ogien: 'element-fire',       // czerwony
-//        trucizna: 'element-poison',  // zielony
-//        fizyczne: 'element-phys',    // biały
-//        zimno: 'element-ice',        // niebieski
-//        blyskawice: 'element-lightning' // żółty
-//    };
-
-//    // Mapowanie keywordów na elementy
-//    function getElementClass(text) {
-//        if (/ogień|płonąca|grom z nieba|tarczę ognia/i.test(text)) return elementClasses.ogien;
-//        if (/trucizna|zatruty|klątwa/i.test(text)) return elementClasses.trucizna;
-//        if (/fizyczne|cios|atak/i.test(text)) return elementClasses.fizyczne;
-//        if (/zimno|lodowa|mrozu|zamrożenie/i.test(text)) return elementClasses.zimno;
-//        if (/błyskawic|grom|piorun/i.test(text)) return elementClasses.blyskawice;
-//        return '';
-//    }
-
-//    logs.forEach(text => {
-//        if (!text) return;
-
-//        // Aktualizuj statystyki
-//        fighters.forEach(f => {
-//            if (text.includes(f.Name)) stats[f.Name].turns++;
-//        });
-//        fighters.forEach(f => {
-//            if (/bardzo krytycz/i.test(text) && text.includes(f.Name)) stats[f.Name].vcrit++;
-//            else if (/cios krytycz/i.test(text) && text.includes(f.Name)) stats[f.Name].crit++;
-//            if (/Dotyk anioła/i.test(text) && text.includes(f.Name)) stats[f.Name].touch++;
-//            if (/(emanuje|wykonuje|rzuci|aura)/i.test(text) && text.includes(f.Name)) stats[f.Name].buff++;
-//            if (/unik|miss|nie traf/i.test(text) && text.includes(f.Name)) stats[f.Name].miss++;
-//            if (/Blok/i.test(text) && text.includes(f.Name)) stats[f.Name].block++;
-//            if (/Parowanie/i.test(text) && text.includes(f.Name)) stats[f.Name].parry++;
-//            if (/Kontr/i.test(text) && text.includes(f.Name)) stats[f.Name].counter++;
-//            if (/Przywrócono|zregenerowano/i.test(text) && text.includes(f.Name)) stats[f.Name].heal++;
-//            if (/Głebok[ea] rani?/i.test(text) && text.includes(f.Name)) stats[f.Name].deep++;
-//        });
-
-//        // Podział na czas i treść (jeśli jest)
-//        const m = text.match(/^\[(.*?)\]\s*(.*)$/);
-//        let timePart = '', textPart = text;
-//        if (m) {
-//            timePart = `<span class="log-time">[${escapeHtml(m[1])}]</span> `;
-//            textPart = m[2];
-//        }
-
-//        // Zamiana + na <br>+
-//        textPart = escapeHtml(textPart).replace(/\+/g, '<br>+');
-
-//        // Dodaj klasy specjalne
-//        let cls = 'log-info';
-
-//        if (/bardzo krytycz/i.test(textPart)) cls = 'log-damage';
-//        else if (/cios krytycz/i.test(textPart)) cls = 'log-damage';
-//        else if (/Przywrócono|zregenerowano/i.test(textPart)) cls = 'log-heal';
-//        else if (/(emanuje|wykonuje|rzuci|aura)/i.test(textPart)) cls = 'log-buff';
-//        else if (/unik|miss|nie traf/i.test(textPart)) cls = 'log-miss';
-
-//        // Dodaj kolor dla elementu jeśli pasuje
-//        const elementCls = getElementClass(textPart);
-//        if (elementCls) cls += ` ${elementCls}`;
-
-//        // Tury oznacz kolorem zależnie od drużyny
-//        fighters.forEach(f => {
-//            if (text.includes(f.Name) && text.includes('tura')) {
-//                cls += f.Team === 1 ? ' team-1-turn' : f.Team === 2 ? ' team-2-turn' : '';
-//            }
-//        });
-
-//        containerLines.push(`<div class="log-line ${cls}">${timePart}${textPart}</div>`);
-//    });
-
-//    return { stats, html: containerLines.join('') };
-//}
 function formatLogLine(line, fightersById) {
     if (!line) return "";
 
-    // Jeśli linia to tekstowa wiadomość np. "0;0;txt=Firexus - utrata tury"
     if (line.includes(";txt=")) {
         const txt = line.split(";txt=")[1];
         return `<div class="log-txt">${txt}</div>`;
@@ -878,7 +877,6 @@ function formatLogLine(line, fightersById) {
     const parts = line.split(";");
     if (parts.length < 2) return line;
 
-    // Przypuśćmy, że pierwsze dwa elementy to attacker=hp i target=hp
     const [atkPart, tgtPart] = parts;
 
     // Funkcja pomocnicza do rozbicia id i hp

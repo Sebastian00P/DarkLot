@@ -54,3 +54,49 @@
     text-overflow: ellipsis;
     text-wrap: wrap;
 }
+
+.delete-btn{
+    cursor: pointer;
+    color: red;
+    margin-top: 10px;
+}
+
+.favorite-btn {
+    cursor: pointer;
+    color: white;
+    margin-top: 10px;
+}
+
+.share-btn {
+    cursor: pointer;
+    color: white;
+    margin-top: 10px;
+}
+
+@keyframes slide-out {
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+@keyframes slide-in {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* klasy sterujące */
+.battle-card.exit {
+    animation: slide-out 0.3s ease-in-out forwards;
+}
+
+.battle-card.enter {
+    animation: slide-in 0.3s ease-in-out forwards;
+}
