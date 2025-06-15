@@ -19,7 +19,29 @@
         };
     }
 }
+<form method="get" class="filters d-flex align-items-center mb-4">
+    <label class="custom-checkbox blue me-3">
+        <input type="checkbox"
+               name="filterHeroic"
+               value="true"
+        @(Model.FilterHeroic ? "checked" : "") />
+        <span class="checkmark"></span>
+    </label>
+
+    <label class="custom-checkbox red me-3">
+        <input type="checkbox"
+               name="filterLegendary"
+               value="true"
+        @(Model.FilterLegendary ? "checked" : "") />
+        <span class="checkmark"></span>
+    </label>
+
+    <button type="submit" class="search-btn ms-auto">
+        <i class="material-icons">search</i>
+    </button>
+</form>
 <div class="container-fluid p-4">
+    
     @foreach (var loot in Model.Loots)
     {
         <div class="row align-items-center mb-3 p-2" style="background: #23272e; border-radius: 8px;">
@@ -91,79 +113,124 @@
         </div>
     }
     @{
-        int currentPage = Model.CurrentPage;
-        int totalPages = Model.TotalPages;
+        var fh = Model.FilterHeroic;
+        var fl = Model.FilterLegendary;
+        var cp = Model.CurrentPage;
+        var tp = Model.TotalPages;
     }
-    @if (totalPages > 1)
+
+    @if (tp > 1)
     {
         <nav class="mb-3">
             <ul class="pagination justify-content-center">
+
                 <!-- Poprzednia -->
-                <li class="page-item @(currentPage == 1 ? "disabled" : "")">
-                    <a class="page-link" href="?page=@(currentPage - 1)">«</a>
+                <li class="page-item @(cp == 1 ? "disabled" : "")">
+                    <a class="page-link"
+                       asp-action="Index"
+                       asp-route-page="@(cp - 1)"
+                       asp-route-filterHeroic="@(fh)"
+                       asp-route-filterLegendary="@(fl)">
+                        «
+                    </a>
                 </li>
 
                 <!-- Zawsze pierwsza -->
-                <li class="page-item @(currentPage == 1 ? "active" : "")">
-                    <a class="page-link" href="?page=1">1</a>
+                <li class="page-item @(cp == 1 ? "active" : "")">
+                    <a class="page-link"
+                       asp-action="Index"
+                       asp-route-page="1"
+                       asp-route-filterHeroic="@(fh)"
+                       asp-route-filterLegendary="@(fl)">
+                        1
+                    </a>
                 </li>
 
-                @if (currentPage <= 3)
+                @* Strony 2–n-1 *@
+                @if (cp <= 3)
                 {
-                    // Jeśli jesteś na 1-3, pokaż strony 2, 3 i 4
-                    for (int i = 2; i <= Math.Min(4, totalPages - 1); i++)
+                    @for (int i = 2; i <= Math.Min(4, tp - 1); i++)
                     {
-                        <li class="page-item @(currentPage == i ? "active" : "")">
-                            <a class="page-link" href="?page=@i">@i</a>
+                        <li class="page-item @(cp == i ? "active" : "")">
+                            <a class="page-link"
+                               asp-action="Index"
+                               asp-route-page="@i"
+                               asp-route-filterHeroic="@(fh)"
+                               asp-route-filterLegendary="@(fl)">
+                                @i
+                            </a>
                         </li>
                     }
-                    if (totalPages > 5)
+                    @if (tp > 5)
                     {
-                        <li class="page-item disabled"><span class="page-link">...</span></li>
+                        <li class="page-item disabled"><span class="page-link">…</span></li>
                     }
                 }
-                else if (currentPage >= totalPages - 2)
+                else if (cp >= tp - 2)
                 {
-                    if (totalPages > 5)
+                    @if (tp > 5)
                     {
-                        <li class="page-item disabled"><span class="page-link">...</span></li>
+                        <li class="page-item disabled"><span class="page-link">…</span></li>
                     }
-                    // Jeśli jesteś na końcu, pokaż trzy ostatnie (oprócz ostatniej)
-                    for (int i = totalPages - 3; i < totalPages; i++)
+                    @for (int i = tp - 3; i < tp; i++)
                     {
                         if (i > 1)
                         {
-                            <li class="page-item @(currentPage == i ? "active" : "")">
-                                <a class="page-link" href="?page=@i">@i</a>
+                            <li class="page-item @(cp == i ? "active" : "")">
+                                <a class="page-link"
+                                   asp-action="Index"
+                                   asp-route-page="@i"
+                                   asp-route-filterHeroic="@(fh)"
+                                   asp-route-filterLegendary="@(fl)">
+                                    @i
+                                </a>
                             </li>
                         }
                     }
                 }
                 else
                 {
-                // Jesteś gdzieś w środku
-                    <li class="page-item disabled"><span class="page-link">...</span></li>
-                    for (int i = currentPage - 1; i <= currentPage + 1; i++)
+                    <li class="page-item disabled"><span class="page-link">…</span></li>
+                    @for (int i = cp - 1; i <= cp + 1; i++)
                     {
-                        if (i > 1 && i < totalPages)
+                        if (i > 1 && i < tp)
                         {
-                            <li class="page-item @(currentPage == i ? "active" : "")">
-                                <a class="page-link" href="?page=@i">@i</a>
+                            <li class="page-item @(cp == i ? "active" : "")">
+                                <a class="page-link"
+                                   asp-action="Index"
+                                   asp-route-page="@i"
+                                   asp-route-filterHeroic="@(fh)"
+                                   asp-route-filterLegendary="@(fl)">
+                                    @i
+                                </a>
                             </li>
                         }
                     }
-                    <li class="page-item disabled"><span class="page-link">...</span></li>
+                    <li class="page-item disabled"><span class="page-link">…</span></li>
                 }
 
-                @* Zawsze ostatnia *@
-                <li class="page-item @(currentPage == totalPages ? "active" : "")">
-                    <a class="page-link" href="?page=@totalPages">@totalPages</a>
+                <!-- Zawsze ostatnia -->
+                <li class="page-item @(cp == tp ? "active" : "")">
+                    <a class="page-link"
+                       asp-action="Index"
+                       asp-route-page="@(tp)"
+                       asp-route-filterHeroic="@(fh)"
+                       asp-route-filterLegendary="@(fl)">
+                        @tp
+                    </a>
                 </li>
 
                 <!-- Następna -->
-                <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
-                    <a class="page-link" href="?page=@(currentPage + 1)">»</a>
+                <li class="page-item @(cp == tp ? "disabled" : "")">
+                    <a class="page-link"
+                       asp-action="Index"
+                       asp-route-page="@(cp + 1)"
+                       asp-route-filterHeroic="@(fh)"
+                       asp-route-filterLegendary="@(fl)">
+                        »
+                    </a>
                 </li>
+
             </ul>
         </nav>
     }

@@ -19,10 +19,21 @@ namespace DarkLot.Controllers
             _lootlogService = lootlogService;
         }
 
-        public async Task<IActionResult> Index(int page = 1)
+        public async Task<IActionResult> Index(
+            int page = 1,
+            bool filterHeroic = false,
+            bool filterLegendary = false)
         {
-            int pageSize = 10;
-            var vm = await _lootlogService.GetLootsPageAsync(page, pageSize);
+            const int pageSize = 10;
+
+            // Przekazujemy stany checkboxów dalej do serwisu
+            var vm = await _lootlogService
+                .GetLootsPageAsync(page, pageSize, filterHeroic, filterLegendary);
+
+            // Zapamiętaj w VM, żeby przy renderze widoku checkboxy były w odpowiednim stanie
+            vm.FilterHeroic = filterHeroic;
+            vm.FilterLegendary = filterLegendary;
+
             return View(vm);
         }
 

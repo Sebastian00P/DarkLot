@@ -517,6 +517,16 @@ window.parseBattleLogs = function (logs, fightersById, battleStartText) {
                 `);
             }
         }
+
+        // Obniżenie odporności
+        const resdmgPart = parts.find(p => p.startsWith("+resdmg="));
+        if (resdmgPart) {
+            const v = resdmgPart.split("=")[1];
+            card.push(`<p class="log-line effect-resdmg" data-raw="${esc(resdmgPart)}">
+                +Obniżenie odporności o ${esc(v)}%
+           </p>`);
+        }
+
         const lastHeal = parts.find(p => p.startsWith("legbon_lastheal="));
         if (lastHeal) {
             const lb = mapLegbon("legbon_lastheal");
@@ -557,7 +567,8 @@ window.parseBattleLogs = function (logs, fightersById, battleStartText) {
                 <p class="${e.cls}" data-raw="-arrowblock">+${e.txt}</p>
             `);
         }
-     
+        
+
         // 6c) -evade (Unik)
         if (parts.some(p => p === "-evade")) {
             const e = mapEffect("evade");
@@ -565,14 +576,7 @@ window.parseBattleLogs = function (logs, fightersById, battleStartText) {
                 <p class="${e.cls}" data-raw="-evade">-${e.txt}</p>
             `);
         }
-        // Obniżenie odporności
-        const resdmgPart = parts.find(p => p.startsWith("+resdmg="));
-        if (resdmgPart) {
-            const v = resdmgPart.split("=")[1];
-            card.push(`<p class="log-line effect-resdmg" data-raw="${esc(resdmgPart)}">
-            +Obniżenie odporności o ${esc(v)}%
-       </p>`);
-        }
+       
 
         // Odnowienie absorpcji fizycznej
         const absorbPart = parts.find(p => p.startsWith("+absorb="));

@@ -16,20 +16,38 @@ namespace DarkLot.ApplicationServices.Lootlog
             _db = db;
         }
 
-        public async Task<LootIndexViewModel> GetLootsPageAsync(int page, int pageSize)
+        public async Task<LootIndexViewModel> GetLootsPageAsync(int page, int pageSize, bool filterHeroic, bool filterLegendary)
         {
-            var totalCount = await _db.LootItems.Where(x => !x.IsDeleted).CountAsync();
-            var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
-            if(totalPages == 0) page = 1;
-            if (page < 1) page = 1;
-            if (page > totalPages) page = totalPages;
+            var query = _db.LootItems
+                .Where(x => !x.IsDeleted);
 
-            var data = await _db.LootItems
-                .Where(x => !x.IsDeleted)
+            if (filterHeroic)
+            {
+                query = query.Where(l =>
+                    l.Items.Any(i =>
+                        i.ItemHtml.Contains("rarity=heroic") ||
+                        i.ItemHtml.Contains("rarity=legendary")
+                    )
+                );
+            }
+            else if (filterLegendary)
+            {
+                query = query.Where(l =>
+                    l.Items.Any(i =>
+                        i.ItemHtml.Contains("rarity=legendary")
+                    )
+                );
+            }
+
+            var totalCount = await query.CountAsync();
+            var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+            page = Math.Clamp(page, 1, Math.Max(1, totalPages));
+
+            var data = await query
                 .Include(l => l.Items)
                 .Include(l => l.LootUsers)
                 .OrderByDescending(l => l.CreationTime)
-                .Skip(((page - 1) < 0 ? 0 : (page - 1) * pageSize))
+                .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
 
@@ -42,7 +60,6 @@ namespace DarkLot.ApplicationServices.Lootlog
                     ClanName = l.ClanName,
                     MapName = l.MapName,
                     MobName = l.MobName,
-
                     LootUsers = l.LootUsers.Select(u => new LootUserViewModel
                     {
                         GameUserId = u.GameUserId,
@@ -51,7 +68,6 @@ namespace DarkLot.ApplicationServices.Lootlog
                         ClassAbbr = u.ClassAbbr,
                         AvatarUrl = u.AvatarUrl
                     }).ToList(),
-
                     Items = l.Items.Select(i => new LootedItemViewModel
                     {
                         ItemImgUrl = i.ItemImgUrl,
@@ -59,7 +75,9 @@ namespace DarkLot.ApplicationServices.Lootlog
                     }).ToList()
                 }).ToList(),
                 CurrentPage = page,
-                TotalPages = totalPages
+                TotalPages = totalPages,
+                FilterHeroic = filterHeroic,
+                FilterLegendary = filterLegendary
             };
 
             return vm;

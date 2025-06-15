@@ -1,8 +1,8 @@
 ﻿// ==UserScript==
 // @name          DarkFights + DarkLog
 // @namespace     http://tampermonkey.net/
-// @version       2025-06-13.10 // Guard z opóźnieniem przeciw duplikatom + pełne UI
-// @description   Warriors, RAWLOG + lootlog: jedno miejsce, jeden patch, brak konfliktów, pełny RAWLOG, natychmiastowa wysyłka walki
+// @version       2025-06-14.05
+// @description   Warriors, RAWLOG + lootlog: pełny RAWLOG, PvP-only walki, fallback live/parsing, natychmiastowa wysyłka
 // @author        Dark-Sad
 // @match         https://lelwani.margonem.pl/*
 // @match         http://*.margonem.pl/
@@ -17,20 +17,15 @@
     const API_URL_BATTLE = 'https://localhost:7238/api/Battle/addBattle';
     const API_URL_LOOT = 'https://localhost:7238/api/lootlog/add';
     const professionMap = { m: 'Mag', p: 'Paladyn', t: 'Tropiciel', w: 'Wojownik', b: 'Tancerz Ostrzy', h: 'Łowca' };
+    const DUPLICATE_DELAY = 5000;
 
-    // === guard: opóźnienie między wysyłkami walk ===
-    const DUPLICATE_DELAY = 5000;  // ms
     let lastBattleSentTime = 0;
-
-    // --- Stan walki ---
     let warriorsAtStart = [];
-    let lastKnownWarriors = [];
     let battleProcessed = false;
     let startHandled = false;
     let battleStartText = '';
     let accumulatedLogs = [];
 
-    // --- Stan lootu ---
     window._dl_teamParsedFW = null;
     window._dl_lastWarriorsListTurn = null;
     window._dl_sentItemHids = window._dl_sentItemHids || new Set();
@@ -38,64 +33,43 @@
 
     function log(...a) { console.log('[DF+DL]', ...a); }
     function warn(...a) { console.warn('[DF+DL][WARN]', ...a); }
+    function dbg(...a) { console.debug('[DF+DL][DEBUG]', ...a); }
+    function getBestName(o) { return o && typeof o.name === 'string' ? o.name : ''; }
 
-    function getBestName(o) {
-        if (!o || typeof o !== 'object') return '';
-        return typeof o.name === 'string' ? o.name : '';
-    }
-
+    // --- capture live warriorsList ---
     function captureWarriors(debug = false) {
-        // 1) live
         const live = window.Engine?.battle?.warriorsList
             ? Object.values(window.Engine.battle.warriorsList)
             : [];
-        if (live.length) {
-            warriorsAtStart = live.map(f => ({
+        if (!live.length) return false;
+
+        window._dl_lastWarriorsListTurn = {};
+        for (const [id, obj] of Object.entries(window.Engine.battle.warriorsList)) {
+            window._dl_lastWarriorsListTurn[id] = obj;
+        }
+
+        warriorsAtStart = live.map(f => {
+            const isMob = f.npc === 1 || (typeof f.npc !== 'number' && f.id < 0);
+            return {
                 FighterId: String(f.id),
                 Name: getBestName(f),
-                Profession: f.id > 0
-                    ? (professionMap[String(f.prof).toLowerCase()] || `Nieznana(${f.prof})`)
-                    : (f.prof ? `Mob(${f.prof})` : 'Mob'),
+                Profession: isMob
+                    ? (f.prof ? `Mob(${f.prof})` : 'Mob')
+                    : (professionMap[String(f.prof).toLowerCase()] || `Nieznana(${f.prof})`),
                 Team: f.team || 0,
-                Level: f.lvl || 0
-            }));
-            log(debug ? '[DEBUG] Warriors captured (live)' : '✅ Warriors captured:', warriorsAtStart);
-            return true;
-        }
-        // 2) lastKnownWarriors
-        if (lastKnownWarriors.length) {
-            warriorsAtStart = lastKnownWarriors.slice();
-            log(debug ? '[DEBUG] Warriors captured (lastKnownWarriors)' : '✅ Warriors captured:', warriorsAtStart);
-            return true;
-        }
-        // 3) parsed.f.w
-        if (window._dl_teamParsedFW) {
-            const parsedList = Object.values(window._dl_teamParsedFW)
-                .filter(f => f.originalId != null && typeof f.name === 'string');
-            if (parsedList.length) {
-                warriorsAtStart = parsedList.map(f => ({
-                    FighterId: String(f.originalId),
-                    Name: f.name,
-                    Profession: f.prof
-                        ? (professionMap[String(f.prof).toLowerCase()] || `Nieznana(${f.prof})`)
-                        : 'Mob',
-                    Team: f.team || 0,
-                    Level: f.lvl || 0
-                }));
-                log(debug ? '[DEBUG] Warriors captured (parsed.f.w)' : '✅ Warriors captured:', warriorsAtStart);
-                return true;
-            }
-        }
-        if (debug) log('[DEBUG] warriorsList EMPTY at captureWarriors');
-        return false;
+                Level: f.lvl || 0,
+                IsMob: isMob
+            };
+        });
+        log(debug ? '[DEBUG] Warriors captured (live)' : '✅ Warriors captured:', warriorsAtStart);
+        return true;
     }
 
     function resetDLCache() {
-        window._dl_teamParsedFW = null;
         window._dl_lastWarriorsListTurn = null;
         window._dl_sentItemHids = new Set();
         sentLootEvents.clear();
-        log('[DL][DEBUG] Loot cache zresetowany');
+        dbg('Loot cache reset');
     }
 
     function buildBattleDto() {
@@ -103,53 +77,83 @@
             FighterId: f.FighterId,
             Name: f.Name,
             Profession: f.Profession,
-            Team: f.Team
+            Team: f.Team,
+            Level: f.Level,
+            IsMob: f.IsMob
         }));
-        log('[DEBUG] buildBattleDto fighters:', fighters);
+        dbg('buildBattleDto fighters:', fighters);
         return {
-            BattleStart: battleStartText,
+            BattleStart: generateBattleStartText(fighters),
             Fighters: fighters,
             Logs: accumulatedLogs,
             ServerName: (location.hostname.match(/^([\w\d]+)\.margonem\.pl$/) || [])[1] || ''
         };
     }
 
-    function buildLootDto(items, lootCache = {}) {
-        const source = typeof lootCache.source === 'string' ? lootCache.source : '';
+    function generateBattleStartText(fighters) {
+        const t1 = fighters.filter(x => x.Team === 1),
+            t2 = fighters.filter(x => x.Team === 2);
+        const fmt = team => team.map(x => {
+            const abbr = Object.fromEntries(Object.entries(professionMap).map(([k, v]) => [v, k]))[x.Profession] || '';
+            return `${x.Name} (${x.Level}${abbr})`;
+        }).join(', ');
+        return `Rozpoczęła się walka pomiędzy ${fmt(t1)} a ${fmt(t2)}`;
+    }
+
+    // --- build loot DTO ---
+    function buildLootDto(items, { party = {}, owners = {}, npcs = [] } = {}) {
+        const cached = window._dl_lastWarriorsListTurn || {};
+        const parsedFW = window._dl_teamParsedFW || {};
+
+        const participants = {
+            ...party,
+            ...owners,
+            ...Object.fromEntries(
+                Object.entries(parsedFW).map(([k, v]) => [k, {
+                    name: v.name, lvl: v.lvl, prof: v.prof, icon: v.icon
+                }])
+            ),
+            ...cached
+        };
+        dbg('Merged participants:', participants);
+
         const mobParts = [];
         const lootUsers = [];
-        let participants = {};
 
-        if (source.toLowerCase().includes('fight') && Engine.battle?.warriorsList && Object.keys(Engine.battle.warriorsList).length) {
-            participants = { ...Engine.battle.warriorsList };
-        } else {
-            participants = { ...(window._dl_lastWarriorsListTurn || {}), ...(window._dl_teamParsedFW || {}) };
-        }
-
-        Object.keys(participants).forEach(k => {
-            const id = +k;
-            if (isNaN(id)) return;
-            const f = participants[k];
-            const name = getBestName(f);
+        // players
+        Object.entries(participants).forEach(([key, p]) => {
+            const id = Number(key);
+            if (isNaN(id) || id < 0) return;
+            const name = p.nick || p.name;
             if (!name) return;
-            if (id < 0) {
-                mobParts.push(`${name}(${f.lvl || ''}${f.prof || ''})`);
-            } else {
-                lootUsers.push({
-                    GameUserId: String(id),
-                    Nick: name,
-                    Level: f.lvl || 0,
-                    ClassAbbr: f.prof || '',
-                    AvatarUrl: f.icon ? window.CFG.a_opath + f.icon.replace(/^\//, '') : ''
-                });
+            const lvl = p.lvl || 0, prof = p.prof || '';
+            const icon = p.icon ? window.CFG.a_opath + p.icon.replace(/^\//, '') : '';
+            lootUsers.push({
+                GameUserId: String(id),
+                Nick: name,
+                Level: lvl,
+                ClassAbbr: prof,
+                AvatarUrl: icon
+            });
+        });
+
+        // mobs via npcs_del
+        npcs.forEach(npc => {
+            const entry = Object.values(parsedFW).find(f => f.originalId === npc.id);
+            if (entry) {
+                const lvl = entry.lvl || 0, prof = entry.prof || '';
+                mobParts.push(`${entry.name}(${lvl}${prof})`);
             }
         });
+
+        dbg('Built lootUsers:', lootUsers);
+        dbg('Built mobName:', mobParts.join('\n'));
 
         return {
             creationTime: new Date().toISOString(),
             serverName: (location.hostname.match(/^([\w\d]+)\.margonem\.pl$/) || [])[1] || '',
-            clanName: (() => { try { const c = Engine.hero.d.clan; return typeof c === 'object' ? c.name : c; } catch { return ''; } })(),
-            mapName: (() => { try { return Engine.map.d.name; } catch { return ''; } })(),
+            clanName: (() => { try { const c = Engine.hero.d.clan; return typeof c === 'object' ? c.name : c } catch { return '' } })(),
+            mapName: (() => { try { return Engine.map.d.name } catch { return '' } })(),
             mobName: mobParts.join('\n'),
             isActive: true,
             isDeleted: false,
@@ -160,19 +164,18 @@
 
     function sendLootToServer(dto) {
         fetch(API_URL_LOOT, {
-            method: 'POST',
-            credentials: 'include',
+            method: 'POST', credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dto)
         })
-            .then(r => r.json())
-            .then(res => res.status === 'ok' ? log('[DL] Loot sent') : console.error('[DL] Error', res))
-            .catch(err => console.error('[DL] Conn error', err));
+            .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
+            .then(res => res.status === 'ok' ? log('[DL] Loot sent') : console.error('[DL] API error', res))
+            .catch(err => warn('[DL] sendLootToServer failed', err));
     }
 
-    // --- Patch Engine.communication.successData ---
-    (function patchCommunication() {
-        if (!window.Engine?.communication || window.Engine.communication._dfdl_patched) return;
+    // --- patch communication ---
+    (function () {
+        if (!window.Engine?.communication || Engine.communication._dfdl_patched) return;
         const orig = Engine.communication.successData;
 
         Engine.communication.successData = function (response) {
@@ -180,82 +183,99 @@
             try { parsed = JSON.parse(response); }
             catch { return orig.apply(this, arguments); }
 
+            // parsed.f.w
             if (parsed.f?.w) {
                 window._dl_teamParsedFW = parsed.f.w;
-                log('[DEBUG] parsed.f.w', parsed.f.w);
+                dbg('parsed.f.w', parsed.f.w);
             }
 
-            // Loot
+            // LOOT
             if (parsed.loot && parsed.ev != null && parsed.item) {
                 const lootId = parsed.ev;
                 if (!sentLootEvents.has(lootId)) {
                     const items = Object.values(parsed.item)
                         .filter(it => !window._dl_sentItemHids.has(it.hid) && it.loc === 'l')
-                        .map(it => { window._dl_sentItemHids.add(it.hid); return { itemHtml: JSON.stringify(it), ItemImgUrl: window.CFG.a_ipath + it.icon }; });
-                    const dtoLoot = buildLootDto(items, { items: parsed.item, source: parsed.loot.source });
-                    if (dtoLoot.items.length && String(parsed.loot.source).toLowerCase().includes('fight')) {
-                        log('[DL] Wysyłam loot z walki do serwera');
+                        .map(it => {
+                            window._dl_sentItemHids.add(it.hid);
+                            return { itemHtml: JSON.stringify(it), ItemImgUrl: window.CFG.a_ipath + it.icon };
+                        });
+                    const partyMembers = parsed.party?.members || {};
+                    const owners = parsed.loot?.owners || {};
+                    const npcs = parsed.npcs_del || [];
+
+                    dbg('party.members:', partyMembers);
+                    dbg('owners:', owners);
+                    dbg('npcs_del:', npcs);
+
+                    const dtoLoot = buildLootDto(items, { party: partyMembers, owners, npcs });
+                    if (dtoLoot.items.length) {
+                        log('[DL] Sending loot DTO');
                         sendLootToServer(dtoLoot);
                         sentLootEvents.add(lootId);
                     }
                 }
             }
 
-            // Logs
+            // RAWLOG
             if (parsed.f?.m && Array.isArray(parsed.f.m)) {
                 accumulatedLogs.push(...parsed.f.m.filter(t => typeof t === 'string'));
             }
 
-            // Koniec walki
-            if (parsed.f?.m && parsed.f.m.some(line => typeof line === 'string' && line.includes('winner='))) {
+            // BATTLE END
+            const isBattleEnd = parsed.f?.m?.some(l => typeof l === 'string' && l.includes('winner='));
+            if (isBattleEnd) {
                 const result = orig.apply(this, arguments);
 
+                // capture live or fallback parsedFW
                 captureWarriors();
-                if (!warriorsAtStart.length) {
-                    log('[DEBUG] warriorsAtStart pusty, ponowna próba captureWarriors');
-                    captureWarriors();
+                if (!warriorsAtStart.length && window._dl_teamParsedFW) {
+                    warriorsAtStart = Object.values(window._dl_teamParsedFW).map(f => {
+                        const isMob = f.npc === 1;
+                        return {
+                            FighterId: String(f.originalId),
+                            Name: f.name,
+                            Profession: isMob
+                                ? (f.prof ? `Mob(${f.prof})` : 'Mob')
+                                : (professionMap[String(f.prof).toLowerCase()] || `Nieznana(${f.prof})`),
+                            Team: f.team || 0,
+                            Level: f.lvl || 0,
+                            IsMob: isMob
+                        };
+                    });
+                    dbg('fallback Warriors from parsedFW:', warriorsAtStart);
                 }
 
-                if (!battleProcessed) {
+                if (warriorsAtStart.length) {
                     const dto = buildBattleDto();
-                    const fighters = dto.Fighters || [];
-
-                    // Guardy
-                    if (!fighters.length || !battleStartText || fighters.some(f => Number(f.FighterId) < 0)) {
-                        battleProcessed = true;
-                        startHandled = false;
-                        warriorsAtStart = [];
-                        battleStartText = '';
-                        accumulatedLogs = [];
-                        return result;
-                    }
-
-                    // ==== Delay-guard przed duplikatami ====
-                    const now = Date.now();
-                    if (now - lastBattleSentTime < DUPLICATE_DELAY) {
-                        log('[BATTLE] zbyt szybka powtórka, pomijam wysyłkę');
+                    const players = new Set(dto.Fighters.filter(f => !f.IsMob).map(f => f.Team));
+                    if (dto.Fighters.length && battleStartText && players.size >= 2) {
+                        const now = Date.now();
+                        if (now - lastBattleSentTime >= DUPLICATE_DELAY) {
+                            lastBattleSentTime = now;
+                            log('[BATTLE] Sending DTO:', dto);
+                            fetch(API_URL_BATTLE, {
+                                method: 'POST', credentials: 'include',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(dto)
+                            })
+                                .then(r => log('[BATTLE] status', r.status))
+                                .catch(err => warn('[BATTLE] error', err));
+                        } else {
+                            log('[BATTLE] duplicate skipped');
+                        }
                     } else {
-                        lastBattleSentTime = now;
-                        log('[DEBUG] Battle DTO:', dto);
-                        fetch(API_URL_BATTLE, {
-                            method: 'POST',
-                            credentials: 'include',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(dto)
-                        })
-                            .then(r => log('[DEBUG] Battle fetch status:', r.status))
-                            .catch(err => warn('[BATTLE] conn err', err));
+                        log('[BATTLE] skipping PvE or invalid data');
                     }
-
-                    // reset stanu
-                    battleProcessed = true;
-                    startHandled = false;
-                    warriorsAtStart = [];
-                    lastKnownWarriors = [];
-                    battleStartText = '';
-                    accumulatedLogs = [];
-                    log('[BATTLE] stan po walce wyczyszczony');
+                } else {
+                    log('[BATTLE] no warriorsAtStart, skipping');
                 }
+
+                // reset
+                battleProcessed = true;
+                startHandled = false;
+                warriorsAtStart = [];
+                battleStartText = '';
+                accumulatedLogs = [];
 
                 return result;
             }
@@ -266,50 +286,25 @@
         Engine.communication._dfdl_patched = true;
     })();
 
-    // --- Patch Engine.battle.updateData ---
-    (function patchUpdateData() {
-        if (!window.Engine?.battle || window.Engine.battle._dfdl_patchedTurn) return;
-        const orig = Engine.battle.updateData;
-        Engine.battle.updateData = function (data) {
-            const res = orig.apply(this, arguments);
-            if (this.warriorsList && Object.keys(this.warriorsList).length) {
-                window._dl_lastWarriorsListTurn = { ...this.warriorsList };
-                lastKnownWarriors = Object.values(this.warriorsList).map(f => ({
-                    FighterId: String(f.id),
-                    Name: getBestName(f),
-                    Profession: f.id > 0
-                        ? (professionMap[String(f.prof).toLowerCase()] || `Nieznana(${f.prof})`)
-                        : (f.prof ? `Mob(${f.prof})` : 'Mob'),
-                    Team: f.team || 0,
-                    Level: f.lvl || 0
-                }));
-                log('[DEBUG] lastKnownWarriors updated:', lastKnownWarriors);
-            }
-            return res;
-        };
-        Engine.battle._dfdl_patchedTurn = true;
-    })();
-
-    // --- Obserwator startu walki ---
+    // --- observer for battle start ---
     new MutationObserver(records => {
-        records.forEach(rec => rec.addedNodes.forEach(node => {
-            if (node.nodeType !== 1 || !node.classList.contains('battle-msg')) return;
+        for (const rec of records) for (const node of rec.addedNodes) {
+            if (node.nodeType !== 1 || !node.classList.contains('battle-msg')) continue;
             const text = node.innerText.trim();
             if (!startHandled && text.startsWith('Rozpoczęła się walka')) {
                 startHandled = true;
                 battleProcessed = false;
                 battleStartText = text;
                 warriorsAtStart = [];
-                lastKnownWarriors = [];
                 accumulatedLogs = [];
                 resetDLCache();
                 log('🔔 Battle START:', text);
                 captureWarriors(true);
             }
-        }));
+        }
     }).observe(document.body, { childList: true, subtree: true });
 
-    // --- UI button & window ---
+    // --- UI button ---
     const btn = document.createElement('button');
     btn.id = 'dl-lootlog-btn';
     btn.innerHTML = '<b style="font-size:22px;letter-spacing:2px;">DL</b>';
@@ -330,18 +325,21 @@
         if (document.getElementById('dl-lootlog-window')) return;
         const win = document.createElement('div');
         win.id = 'dl-lootlog-window';
-        win.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#181c22;color:white;border:2px solid #18a8ff;border-radius:18px;z-index:10001;padding:38px 28px 24px 28px;box-shadow:0 4px 32px #000b;';
+        win.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);'
+            + 'background:#181c22;color:white;border:2px solid #18a8ff;border-radius:18px;'
+            + 'z-index:10001;padding:38px 28px 24px 28px;box-shadow:0 4px 32px #000b;';
         win.innerHTML = `
       <div style="display:flex;align-items:center;gap:16px;">
-        <span style="font-size:30px;width:38px;height:38px;border-radius:50%;background:#23272e;border:2px solid #18a8ff;text-align:center;line-height:36px;box-shadow:0 0 16px #31c6ff55;">
-          <b style="font-size:22px;letter-spacing:2px;color:#18a8ff;">DL</b>
-        </span>
-        <span style="font-size:20px;">Lootlog</span>
-      </div>
-      <div id="dl-status" style="margin:18px 0;">Sprawdzanie sesji...</div>
-      <button id="dl-session-btn" style="display:none;margin-right:10px;padding:7px 18px;font-size:16px;background:#0056d6;color:white;border:none;border-radius:7px;cursor:pointer;">Sprawdź sesję</button>
-      <button id="dl-close-btn" style="position:absolute;top:10px;right:18px;font-size:18px;background:none;color:#bbb;border:none;cursor:pointer;">×</button>
-    `;
+        <span style="font-size:30px;width:38px;height:38px;border-radius:50%;`
+            + `background:#23272e;border:2px solid #18a8ff;text-align:center;line-height:36px;`
+            + `box-shadow:0 0 16px #31c6ff55;"><b style="font-size:22px;letter-spacing:2px;`
+            + `color:#18a8ff;">DL</b></span><span style="font-size:20px;">Lootlog</span>`
+            + `</div><div id="dl-status" style="margin:18px 0;">Sprawdzanie sesji...</div>`
+            + `<button id="dl-session-btn" style="display:none;margin-right:10px;`
+            + `padding:7px 18px;font-size:16px;background:#0056d6;color:white;border:none;`
+            + `border-radius:7px;cursor:pointer;">Sprawdź sesję</button>`
+            + `<button id="dl-close-btn" style="position:absolute;top:10px;right:18px;`
+            + `font-size:18px;background:none;color:#bbb;border:none;cursor:pointer;">×</button>`;
         document.body.appendChild(win);
         win.querySelector('#dl-close-btn').onclick = () => win.remove();
         win.querySelector('#dl-session-btn').onclick = checkSession;
@@ -349,18 +347,20 @@
     }
 
     function checkSession() {
-        const status = document.getElementById('dl-status');
-        const sessBtn = document.getElementById('dl-session-btn');
+        const status = document.getElementById('dl-status'),
+            btnEl = document.getElementById('dl-session-btn');
         if (status) status.textContent = 'Sprawdzanie sesji...';
         fetch('https://localhost:7238/api/lootlog/check', { credentials: 'include' })
             .then(r => r.json())
             .then(r => {
                 if (r.status === 'ok') {
                     status.innerHTML = '<span style="color:#24e000;font-weight:bold;">Jesteś zalogowany!</span>';
-                    sessBtn.style.display = 'none';
+                    btnEl.style.display = 'none';
                 } else {
-                    status.innerHTML = '<span style="color:#ff5555;font-weight:bold;">Nie jesteś zalogowany!</span><br><a href="https://localhost:7238/Identity/Account/Login" target="_blank" style="color:#18a8ff;">Kliknij, aby się zalogować</a>';
-                    sessBtn.style.display = 'inline-block';
+                    status.innerHTML = '<span style="color:#ff5555;font-weight:bold;">Nie jesteś zalogowany!</span>'
+                        + '<br><a href="https://localhost:7238/Identity/Account/Login" target="_blank"'
+                        + ' style="color:#18a8ff;">Kliknij, aby się zalogować</a>';
+                    btnEl.style.display = 'inline-block';
                 }
             })
             .catch(() => { if (status) status.innerHTML = '<span style="color:#ff5555;">Błąd połączenia!</span>'; });

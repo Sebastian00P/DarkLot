@@ -82,6 +82,7 @@ namespace DarkLot.Controllers
             return View(model);
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> SharedBattles(int page = 1)
         {
             const int pageSize = 10;
