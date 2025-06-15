@@ -29,7 +29,7 @@ namespace DarkLot.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            if (!dto.LootUsers.Any())
+            if (!dto.LootUsers.Any() || string.IsNullOrEmpty(dto.MobName))
                 return Ok(new { status = "ok" });
             var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(userId))
