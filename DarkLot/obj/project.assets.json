@@ -11739,19 +11739,21 @@
   },
   "packageFolders": {
     "C:\\Users\\Admin\\.nuget\\packages\\": {},
-    "E:\\visual\\visua\\NuGetPackages": {}
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\DarkLot.csproj",
+      "projectUniqueName": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\DarkLot.csproj",
       "projectName": "DarkLot",
-      "projectPath": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\DarkLot.csproj",
+      "projectPath": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\DarkLot.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Admin\\Desktop\\DarkLot\\DarkLot\\DarkLot\\obj\\",
+      "outputPath": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "E:\\visual\\visua\\NuGetPackages"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
         "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -11781,7 +11783,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.200"
     },
     "frameworks": {
       "net7.0": {
@@ -11833,7 +11836,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }

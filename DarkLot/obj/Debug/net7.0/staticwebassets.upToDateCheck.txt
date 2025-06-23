@@ -5,7 +5,9 @@ wwwroot\css\lootlog\lootlog.css
 wwwroot\css\site.css
 wwwroot\favicon.ico
 wwwroot\js\Battle\fightLogsParser.js
+wwwroot\js\FightView\Favorite.js
 wwwroot\js\FightView\Index.js
+wwwroot\js\FightView\Shared.js
 wwwroot\js\Home\Index.js
 wwwroot\js\site.js
 wwwroot\lib\bootstrap\dist\css\bootstrap.css

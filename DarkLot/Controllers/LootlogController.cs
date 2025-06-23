@@ -21,7 +21,7 @@ namespace DarkLot.Controllers
         [Route("api/lootlog/check")]
         public IActionResult Check()
         {
-            return Json(new { status = "ok", message = "Działa" });
+            return Json(new { status = "ok", message = "ok" });
         }
 
         [HttpPost("api/lootlog/add")]

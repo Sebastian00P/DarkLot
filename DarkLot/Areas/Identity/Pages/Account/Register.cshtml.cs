@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace DarkLot.Areas.Identity.Pages.Account
@@ -119,6 +120,13 @@ namespace DarkLot.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
                 user.NickName = Input.NickName;
+                user.CreationTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time"));
+                var nickAvailable = await _userManager.Users.FirstOrDefaultAsync(u => u.NickName == Input.NickName);
+                if (nickAvailable != null)
+                {
+                    ModelState.AddModelError(string.Empty, "Nick is already taken.");
+                    return Page();
+                }
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);

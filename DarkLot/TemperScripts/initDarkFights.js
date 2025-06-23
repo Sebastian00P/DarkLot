@@ -1,150 +1,150 @@
 ﻿// ==UserScript==
-// @name         DarkFights RAWLOG Warriors + Positive ID Guard + Non-Empty Check (Auto-Fix)
-// @namespace    http://tampermonkey.net/
-// @version      2025-06-11.30
-// @description  Pobiera listę wojowników na starcie, wysyła RAWLOG po zakończeniu walki (z Engine, nie z DOM!), zawsze próbuje odzyskać wojowników na końcu walki.
-// @match        https://lelwani.margonem.pl/*
-// @grant        none
-// @run-at       document-idle
+// @name          DarkFights
+// @namespace     http://tampermonkey.net/
+// @version       2025-06-23.01
+// @description   PvP-only walki: pełny RAWLOG, fallback live/parsing, natychmiastowe wysyłanie fightów
+// @author        Dark-Sad
+// @match         https://lelwani.margonem.pl/*
+// @match         http://*.margonem.pl/
+// @match         https://*.margonem.pl/
+// @grant         none
+// @run-at        document-idle
 // ==/UserScript==
 
 (function () {
     'use strict';
 
-    const API_URL = 'https://localhost:7238/api/Battle/addBattle';
-    const professionMap = { m: 'Mag', p: 'Paladyn', t: 'Tropiciel', w: 'Wojownik', b: 'Tancerz Ostrzy', h: 'Łowca' };
+    const API_URL_BATTLE = 'https://localhost:7238/api/Battle/addBattle';
+    const DUPLICATE_DELAY = 5000;
 
+    const professionMap = {
+        m: 'Mag', p: 'Paladyn', t: 'Tropiciel',
+        w: 'Wojownik', b: 'Tancerz Ostrzy', h: 'Łowca'
+    };
+
+    let lastBattleSentTime = 0;
     let warriorsAtStart = [];
-    let battleProcessed = false;
-    let battleSessionId = null;
+    let accumulatedLogs = [];
     let startHandled = false;
+    let battleStartText = '';
 
-    const log = (...a) => console.log('DarkFights:', ...a);
-    const warn = (...a) => console.warn('DarkFights WARN:', ...a);
-
-    function getBestName(o) {
-        if (!o || typeof o !== 'object') return '';
-        let n = o.name || o.nick || o.Nick || o.Name || o.imie || o.imię || o.label || o.title || '';
-        if (!n && o.d) n = o.d.nick || o.d.name || o.d.label || '';
-        return n;
-    }
+    function log(...a) { console.log('[DF]', ...a); }
+    function warn(...a) { console.warn('[DF][WARN]', ...a); }
+    function dbg(...a) { console.debug('[DF][DEBUG]', ...a); }
+    function getBestName(o) { return o && typeof o.name === 'string' ? o.name : ''; }
 
     function captureWarriors(debug = false) {
-        const list = window.Engine?.battle?.warriorsList
-            ? Object.values(window.Engine.battle.warriorsList) : [];
-        if (!list.length) {
-            if (debug) log('[DEBUG] warriorsList EMPTY at captureWarriors');
-            return false;
-        }
-        warriorsAtStart = list.map(f => ({
-            FighterId: String(f.id),
-            Name: getBestName(f),
-            Profession: f.id > 0
-                ? (professionMap[String(f.prof).toLowerCase()] || `Nieznana(${f.prof})`)
-                : (f.prof ? `Mob(${f.prof})` : 'Mob'),
-            Team: f.team || 0,
-            Level: f.lvl || 0
-        }));
-        if (debug) log('[DEBUG] Warriors captured:', warriorsAtStart);
-        else log('✅ Warriors captured:', warriorsAtStart);
+        const live = window.Engine?.battle?.warriorsList
+            ? Object.values(window.Engine.battle.warriorsList)
+            : [];
+        if (!live.length) return false;
+
+        warriorsAtStart = live.map(f => {
+            const isMob = f.npc === 1 || (typeof f.npc !== 'number' && f.id < 0);
+            return {
+                FighterId: String(f.id),
+                Name: getBestName(f),
+                Profession: isMob
+                    ? (f.prof ? `Mob(${f.prof})` : 'Mob')
+                    : (professionMap[String(f.prof).toLowerCase()] || `Nieznana(${f.prof})`),
+                Team: f.team || 0,
+                Level: f.lvl || 0,
+                IsMob: isMob
+            };
+        });
+        log(debug ? '[DEBUG] Warriors captured (live)' : '✅ Warriors captured:', warriorsAtStart);
         return true;
     }
 
-    // Patch Engine to capture RAWLOG on battle end
-    (function patchRawLog() {
-        if (!window.Engine?.communication) {
-            setTimeout(patchRawLog, 250);
-            return;
-        }
-        if (window.__DF_rawlogPatched) return;
-        window.__DF_rawlogPatched = true;
+    function generateBattleStartText(fighters) {
+        const t1 = fighters.filter(x => x.Team === 1),
+            t2 = fighters.filter(x => x.Team === 2);
+        const fmt = team => team.map(x => {
+            const abbr = Object.fromEntries(Object.entries(professionMap).map(([k, v]) => [v, k]))[x.Profession] || '';
+            return `${x.Name} (${x.Level}${abbr})`;
+        }).join(', ');
+        return `Rozpoczęła się walka pomiędzy ${fmt(t1)} a ${fmt(t2)}`;
+    }
 
+    function buildBattleDto() {
+        const dto = {
+            BattleStart: battleStartText,
+            Fighters: warriorsAtStart,
+            Logs: accumulatedLogs,
+            ServerName: (location.hostname.match(/^([\w\d]+)\.margonem\.pl$/) || [])[1] || ''
+        };
+        dbg('Battle DTO:', dto);
+        return dto;
+    }
+
+    function sendBattle(dto) {
+        fetch(API_URL_BATTLE, {
+            method: 'POST', credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dto)
+        })
+            .then(r => log('Battle status', r.status))
+            .catch(err => warn('Battle error', err));
+    }
+
+    // patch komunikacji
+    (function () {
+        if (!window.Engine?.communication || Engine.communication._dfdl_patched) return;
         const orig = Engine.communication.successData;
         Engine.communication.successData = function (response) {
-            try {
-                const parsed = JSON.parse(response);
-                // RAWLOG + END
-                if (
-                    parsed?.f?.m && Array.isArray(parsed.f.m) &&
-                    parsed.f.m.some(line => typeof line === 'string' && line.includes("winner="))
-                ) {
-                    if (!battleProcessed) {
-                        battleProcessed = true;
+            let parsed;
+            try { parsed = JSON.parse(response); }
+            catch { return orig.apply(this, arguments); }
 
-                        // Auto-recover: always try to recapture if empty
-                        if (!warriorsAtStart.length) {
-                            log('⚠️ Warriors empty at RAWLOG time, trying to recover...');
-                            captureWarriors(true); // debug=true
-                        }
-
-                        if (!warriorsAtStart.length) {
-                            warn('Skipping send: no fighters captured');
-                        } else {
-                            // Prepare DTO
-                            const logs = parsed.f.m.filter(t => t && typeof t === "string");
-                            if (!logs.length) return warn('No logs to send');
-
-                            const dto = {
-                                BattleStart: logs[0],
-                                Fighters: warriorsAtStart,
-                                Logs: [logs.join('|')],  // RAWLOG (string!)
-                                ServerName: window.location.hostname.split('.')[0]
-                            };
-
-                            // Guard: ensure all FighterId are positive
-                            if (dto.Fighters.some(f => parseInt(f.FighterId, 10) <= 0)) {
-                                warn('Skipping send: negative FighterId detected', dto.Fighters);
-                                return;
-                            }
-
-                            log(`session ${battleSessionId}: sending RAWLOG DTO →`, dto);
-                            fetch(API_URL, {
-                                method: 'POST',
-                                credentials: 'include',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify(dto)
-                            })
-                                .then(r => r.text().then(txt => log('fetch status:', r.status, 'body:', txt)))
-                                .catch(e => console.error('Fetch error:', e));
-                        }
-                    }
-                    // Reset everything for next battle, after slight delay (to avoid race)
-                    setTimeout(() => {
-                        battleProcessed = false;
-                        warriorsAtStart = [];
-                        battleSessionId = null;
-                        startHandled = false;
-                        log('[DEBUG] Flags/sesja wyzerowane po walce');
-                    }, 1500);
-                }
-            } catch (e) {
-                warn('[EXCEPTION in RAWLOG PATCH]', e);
+            // RAWLOG
+            if (parsed.f?.m && Array.isArray(parsed.f.m)) {
+                accumulatedLogs.push(...parsed.f.m.filter(t => typeof t === 'string'));
             }
+
+            // koniec walki?
+            const isBattleEnd = parsed.f?.m?.some(l => typeof l === 'string' && l.includes('winner='));
+            if (isBattleEnd) {
+                const res = orig.apply(this, arguments);
+
+                captureWarriors();
+                if (warriorsAtStart.length && battleStartText) {
+                    const uniqueTeams = new Set(warriorsAtStart.filter(f => !f.IsMob).map(f => f.Team));
+                    if (uniqueTeams.size >= 2 && Date.now() - lastBattleSentTime >= DUPLICATE_DELAY) {
+                        lastBattleSentTime = Date.now();
+                        sendBattle(buildBattleDto());
+                    }
+                }
+
+                // reset
+                warriorsAtStart = [];
+                accumulatedLogs = [];
+                battleStartText = '';
+                startHandled = false;
+
+                return res;
+            }
+
             return orig.apply(this, arguments);
         };
+        Engine.communication._dfdl_patched = true;
     })();
 
-    // Observe battle start (as before)
-    new MutationObserver(muts => {
-        muts.forEach(m => {
-            m.addedNodes.forEach(node => {
-                if (node.nodeType !== 1 || !node.classList.contains('battle-msg')) return;
+    // obserwator początku walki
+    new MutationObserver(records => {
+        for (const rec of records) {
+            for (const node of rec.addedNodes) {
+                if (node.nodeType !== 1 || !node.classList.contains('battle-msg')) continue;
                 const text = node.innerText.trim();
                 if (!startHandled && text.startsWith('Rozpoczęła się walka')) {
                     startHandled = true;
-                    battleProcessed = false;
-                    battleSessionId = Date.now();
-                    warriorsAtStart = [];
-                    log(`🔔 Battle START (session ${battleSessionId}):`, text);
-
-                    let tries = 0;
-                    const timer = setInterval(() => {
-                        if (captureWarriors() || ++tries >= 10) clearInterval(timer);
-                    }, 100);
+                    battleStartText = text;
+                    accumulatedLogs = [];
+                    captureWarriors(true);
+                    log('🔔 Battle START:', text);
                 }
-            });
-        });
+            }
+        }
     }).observe(document.body, { childList: true, subtree: true });
 
-    log('Script loaded: RAWLOG mode (true log from Engine, not DOM) + auto-fix for warriors capturing.');
+    log('DarkFights loaded.');
 })();
