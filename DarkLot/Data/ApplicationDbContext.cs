@@ -1,4 +1,5 @@
 ﻿using DarkLot.Models.Battles;
+using DarkLot.Models.Clans;
 using DarkLot.Models.Lootlog;
 using DarkLot.Models.UserModel;
 using Microsoft.AspNetCore.Identity;
@@ -24,6 +25,9 @@ namespace DarkLot.Data
         public DbSet<Battle> Battles { get; set; }
         public DbSet<Fighter> Fighters { get; set; }
         public DbSet<BattleLogEntry> BattleLogEntries { get; set; }
+        public DbSet<Clan> Clans { get; set; }
+        public DbSet<ClanMember> ClanMembers { get; set; }
+
 
         // Dodatkowo, jeśli chcesz modelować relacje przez FluentAPI:
         protected override void OnModelCreating(ModelBuilder builder)
@@ -57,6 +61,28 @@ namespace DarkLot.Data
                 .HasOne<Battle>()
                 .WithMany(b => b.Logs)
                 .HasForeignKey(le => le.BattleId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Clan>()
+                   .HasOne(c => c.CreatorUser)
+                   .WithMany()
+                   .HasForeignKey(c => c.CreatorUserId)
+                   .OnDelete(DeleteBehavior.Restrict);
+
+            // join-entity ClanMember
+            builder.Entity<ClanMember>()
+                .HasKey(cm => new { cm.ClanId, cm.UserId });
+
+            builder.Entity<ClanMember>()
+                .HasOne(cm => cm.Clan)
+                .WithMany(c => c.ClanMembers)
+                .HasForeignKey(cm => cm.ClanId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<ClanMember>()
+                .HasOne(cm => cm.User)
+                .WithMany()
+                .HasForeignKey(cm => cm.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

@@ -2305,6 +2305,88 @@
       ]
     },
     {
+      "Route": "css/Clans/index.css",
+      "AssetFile": "css/Clans/index.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "415"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"gP8Fzi0EKAy1QLdVv0lmVDJ/NQjEb5cAN04hZ6ay9WQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 24 Jun 2025 07:19:42 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-gP8Fzi0EKAy1QLdVv0lmVDJ/NQjEb5cAN04hZ6ay9WQ="
+        }
+      ]
+    },
+    {
+      "Route": "css/Clans/index.sddjqna65n.css",
+      "AssetFile": "css/Clans/index.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "415"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"gP8Fzi0EKAy1QLdVv0lmVDJ/NQjEb5cAN04hZ6ay9WQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 24 Jun 2025 07:19:42 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "sddjqna65n"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-gP8Fzi0EKAy1QLdVv0lmVDJ/NQjEb5cAN04hZ6ay9WQ="
+        },
+        {
+          "Name": "label",
+          "Value": "css/Clans/index.css"
+        }
+      ]
+    },
+    {
       "Route": "css/FightsView/Details.0gxr0zuj3f.css",
       "AssetFile": "css/FightsView/Details.css",
       "Selectors": [],

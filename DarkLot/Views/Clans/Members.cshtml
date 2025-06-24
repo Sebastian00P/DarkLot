@@ -1,0 +1,82 @@
+﻿@model DarkLot.Models.Clans.Clan
+@using System.Security.Claims
+
+@{
+    ViewData["Title"] = $"Członkowie klanu {Model.Name}";
+    var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    bool isLeader = Model.CreatorUserId == currentUserId;
+}
+
+<h1>Członkowie klanu „@Model.Name”</h1>
+
+<div class="d-flex justify-content-between mb-3">
+    <a asp-action="Index" class="btn btn-secondary">
+        <i class="material-icons">arrow_back</i>
+    </a>
+
+    @if (isLeader)
+    {
+        <a asp-action="AddMember" asp-route-clanId="@Model.Id"
+           class="btn btn-outline-primary">
+            <i class="material-icons">person_add</i>
+            Dodaj członka
+        </a>
+    }
+</div>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Użytkownik</th>
+            <th>Rola</th>
+            <th>Dołączył</th>
+            @if (isLeader)
+            {
+                <th style="width: 200px">Akcje</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cm in Model.ClanMembers)
+        {
+            <tr>
+                <td>@cm.User.NickName</td>
+                <td>@cm.Role</td>
+                <td>@cm.JoinedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
+                @if (isLeader)
+                {
+                    <td>
+                        @* Nie pozwalamy na operacje na dowódcy *@
+                        @if (cm.UserId != Model.CreatorUserId)
+                        {
+                            <div class="d-flex">
+                                @* Formularz do edycji roli *@
+                                <form asp-action="UpdateMemberRole" method="post" class="me-2">
+                                    <input type="hidden" name="clanId" value="@Model.Id" />
+                                    <input type="hidden" name="userId" value="@cm.UserId" />
+                                    <select name="newRole" class="form-select form-select-sm d-inline-block" style="width:auto;">
+                                        <option value="User" selected>User</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-sm btn-outline-primary ms-1">
+                                        <i class="material-icons">edit</i>
+                                    </button>
+                                    @Html.AntiForgeryToken()
+                                </form>
+
+                                @* Formularz do usunięcia członka *@
+                                <form asp-action="RemoveMember" method="post">
+                                    <input type="hidden" name="clanId" value="@Model.Id" />
+                                    <input type="hidden" name="userId" value="@cm.UserId" />
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                        <i class="material-icons">delete</i>
+                                    </button>
+                                    @Html.AntiForgeryToken()
+                                </form>
+                            </div>
+                        }
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

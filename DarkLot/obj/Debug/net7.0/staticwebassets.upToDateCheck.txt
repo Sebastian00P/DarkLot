@@ -1,3 +1,4 @@
+wwwroot\css\Clans\index.css
 wwwroot\css\FightsView\Details.css
 wwwroot\css\FightsView\Index.css
 wwwroot\css\layout.css

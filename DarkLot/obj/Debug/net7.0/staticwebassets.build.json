@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "8+25D937ebVShHofBv5t1ECN3YOzVOtfkSGpKo86seY=",
+  "Hash": "vRUd3sCdMk/u+AlA4uPT6mAr0tycMspMOayT/EEyk6k=",
   "Source": "DarkLot",
   "BasePath": "_content/DarkLot",
   "Mode": "Default",
@@ -1317,6 +1317,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\DarkLot.bundle.scp.css"
+    },
+    {
+      "Identity": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\css\\Clans\\index.css",
+      "SourceId": "DarkLot",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\",
+      "BasePath": "_content/DarkLot",
+      "RelativePath": "css/Clans/index#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "sddjqna65n",
+      "Integrity": "gP8Fzi0EKAy1QLdVv0lmVDJ/NQjEb5cAN04hZ6ay9WQ=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\Clans\\index.css"
     },
     {
       "Identity": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\css\\FightsView\\Details.css",
@@ -2769,6 +2790,88 @@
     }
   ],
   "Endpoints": [
+    {
+      "Route": "css/Clans/index.css",
+      "AssetFile": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\css\\Clans\\index.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "415"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"gP8Fzi0EKAy1QLdVv0lmVDJ/NQjEb5cAN04hZ6ay9WQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 24 Jun 2025 07:19:42 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-gP8Fzi0EKAy1QLdVv0lmVDJ/NQjEb5cAN04hZ6ay9WQ="
+        }
+      ]
+    },
+    {
+      "Route": "css/Clans/index.sddjqna65n.css",
+      "AssetFile": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\css\\Clans\\index.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "415"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"gP8Fzi0EKAy1QLdVv0lmVDJ/NQjEb5cAN04hZ6ay9WQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 24 Jun 2025 07:19:42 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "sddjqna65n"
+        },
+        {
+          "Name": "label",
+          "Value": "css/Clans/index.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-gP8Fzi0EKAy1QLdVv0lmVDJ/NQjEb5cAN04hZ6ay9WQ="
+        }
+      ]
+    },
     {
       "Route": "css/FightsView/Details.0gxr0zuj3f.css",
       "AssetFile": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\css\\FightsView\\Details.css",

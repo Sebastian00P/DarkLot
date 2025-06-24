@@ -76,6 +76,22 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Admin/Desktop/DarkLog/DarkLot/DarkLot/Views/Clans/AddMember.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xhbnNcQWRkTWVtYmVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/DarkLog/DarkLot/DarkLot/Views/Clans/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xhbnNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/DarkLog/DarkLot/DarkLot/Views/Clans/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xhbnNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/DarkLog/DarkLot/DarkLot/Views/Clans/Members.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xhbnNcTWVtYmVycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Admin/Desktop/DarkLog/DarkLot/DarkLot/Views/FightView/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmlnaHRWaWV3XERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

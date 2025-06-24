@@ -1,0 +1,38 @@
+﻿@model DarkLot.ViewModeles.ClanViewModel.CreateClanViewModel
+
+@{
+    ViewData["Title"] = "Nowy klan";
+}
+
+<h1>Nowy klan</h1>
+
+<form asp-action="Create" method="post" class="mb-5">
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="LeaderUserId"></label>
+        <select asp-for="LeaderUserId" asp-items="Model.Users" class="form-control">
+            <option value="">-- wybierz dowódcę --</option>
+        </select>
+        <span asp-validation-for="LeaderUserId" class="text-danger"></span>
+    </div>
+
+    <div class="d-flex justify-content-end mt-4">
+        <button type="submit" class="btn btn-primary me-2">
+            <i class="material-icons align-middle">save</i>
+            <span class="visually-hidden">Zapisz</span>
+        </button>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="material-icons align-middle">close</i>
+            <span class="visually-hidden">Anuluj</span>
+        </a>
+    </div>
+</form>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

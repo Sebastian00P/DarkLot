@@ -1,4 +1,5 @@
-﻿using DarkLot.ApplicationServices.FightView;
+﻿using DarkLot.ApplicationServices.Clans;
+using DarkLot.ApplicationServices.FightView;
 using DarkLot.ApplicationServices.Lootlog;
 using DarkLot.ApplicationServices.Roles;
 using DarkLot.ApplicationServices.Users;
@@ -15,6 +16,7 @@ namespace DarkLot.ServiceRegistartor
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<ILootlogService, LootlogService>();
             services.AddScoped<IFightViewService, FightViewService>();
+            services.AddScoped<IClanService, ClanService>();
             return services;
         }
     }

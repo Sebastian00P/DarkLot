@@ -1,0 +1,21 @@
+﻿.btn-square {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: #1e2329;
+    border: 1px solid #3a3f47;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-square:hover {
+    background: #27303a;
+    border-color: #4ea6ff;
+}
+
+.btn-square:hover i.material-icons {
+    color: #4ea6ff;
+    transition: color 0.2s ease;
+}

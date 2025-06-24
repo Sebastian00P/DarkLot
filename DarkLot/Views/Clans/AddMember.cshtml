@@ -1,0 +1,38 @@
+﻿@model DarkLot.ViewModeles.ClanViewModel.AddMemberViewModel
+
+@{
+    ViewData["Title"] = "Dodaj członka";
+}
+
+<h1>Dodaj członka do klanu</h1>
+
+<form asp-action="AddMember" method="post" class="mb-5">
+    <input type="hidden" asp-for="ClanId" />
+
+    <div class="form-group">
+        <label asp-for="UserId"></label>
+        <select asp-for="UserId" asp-items="Model.AvailableUsers"
+                class="form-control">
+            <option value="">-- wybierz użytkownika --</option>
+        </select>
+        <span asp-validation-for="UserId" class="text-danger"></span>
+    </div>
+
+    @* Jeśli w przyszłości będą inne role, można tu dodać select dla Role *@
+
+    <div class="d-flex justify-content-end mt-4">
+        <button type="submit" class="btn btn-primary me-2">
+            <i class="material-icons">save</i>
+            <span class="visually-hidden">Dodaj</span>
+        </button>
+        <a asp-action="Members" asp-route-id="@Model.ClanId"
+           class="btn btn-secondary">
+            <i class="material-icons">close</i>
+            <span class="visually-hidden">Anuluj</span>
+        </a>
+    </div>
+</form>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
