@@ -1,0 +1,123 @@
+﻿@model DarkLot.ViewModeles.ChatViewModel.ChatIndexViewModel
+
+@{
+    ViewData["Title"] = "Czat klanowy";
+}
+<head>
+    <link rel="stylesheet" href="~/css/chat/chat.css" asp-append-version="true" />
+</head>
+<h1>Czat klanowy</h1>
+
+<div class="form-group mb-3">
+    <label for="clanSelect">Wybierz klan:</label>
+    <select id="clanSelect" class="form-control" asp-items="Model.Clans">
+        <option value="">-- wybierz --</option>
+    </select>
+</div>
+
+<div id="chatWindow" class="chatWindow p-3 mb-3" style="height:400px; overflow-y:auto;">
+    @if (Model.History != null)
+    {
+        foreach (var msg in Model.History.OrderBy(m => m.SentAt))
+        {
+            <div class="d-flex justify-content-between mb-2">
+                <div>
+                    <strong>@msg.NickName</strong>: @msg.Message
+                </div>
+                <div class="text-end" style="min-width:125px;">
+                    @msg.SentAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")
+                </div>
+            </div>
+        }
+    }
+</div>
+
+<div class="input-group">
+    <input type="text" id="messageInput" class="form-control" placeholder="Wpisz wiadomość..." autofocus />
+    <button id="sendButton" class="btn btn-primary">
+        <i class="material-icons">send</i>
+    </button>
+</div>
+
+@section Scripts {
+    <script src="~/lib/signalR/signalr.min.js"></script>
+    <script>
+        const currentUser = '@Model.CurrentUserNick';
+        const currentClan = '@Model.ActiveClanId';
+        const scrollDuration = 500; // ms
+
+        function scrollToBottom(duration) {
+            const el = document.getElementById("chatWindow");
+            const start = el.scrollTop;
+            const end = el.scrollHeight - el.clientHeight;
+            const change = end - start;
+            const startTime = performance.now();
+
+            function animate(now) {
+                const elapsed = now - startTime;
+                const frac = Math.min(elapsed / duration, 1);
+                el.scrollTop = start + change * frac;
+                if (frac < 1) requestAnimationFrame(animate);
+            }
+            requestAnimationFrame(animate);
+        }
+
+        function formatTimestamp(date) {
+            const Y = date.getFullYear();
+            const M = String(date.getMonth() + 1).padStart(2, '0');
+            const D = String(date.getDate()).padStart(2, '0');
+            const h = String(date.getHours()).padStart(2, '0');
+            const m = String(date.getMinutes()).padStart(2, '0');
+            return `${Y}-${M}-${D} ${h}:${m}`;
+        }
+
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/chatHub")
+            .build();
+
+        connection.start().then(async () => {
+            if (currentClan) {
+                await connection.invoke("JoinClan", currentClan);
+                document.getElementById("messageInput").focus();
+                scrollToBottom(scrollDuration);
+            }
+        });
+
+        connection.on("ReceiveMessage", (user, message) => {
+            const chat = document.getElementById("chatWindow");
+            const msgDiv = document.createElement("div");
+            msgDiv.className = "d-flex justify-content-between mb-2";
+
+            const left = `<div><strong>${user}</strong>: ${message}</div>`;
+            const now = new Date();
+            const ts = formatTimestamp(now);
+            const right = `<div class="text-end" style="min-width:100px;">${ts}</div>`;
+
+            msgDiv.innerHTML = left + right;
+            chat.appendChild(msgDiv);
+            scrollToBottom(scrollDuration);
+        });
+
+        document.getElementById("sendButton").addEventListener("click", async () => {
+            const input = document.getElementById("messageInput");
+            const msg = input.value.trim();
+            if (msg && currentClan) {
+                await connection.invoke("SendMessage", currentClan, currentUser, msg);
+                input.value = "";
+                input.focus();
+            }
+        });
+
+        document.getElementById("messageInput").addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                document.getElementById("sendButton").click();
+            }
+        });
+
+        document.getElementById("clanSelect").addEventListener("change", function () {
+            const newClan = this.value;
+            window.location.href = '@Url.Action("Index", "Chat")?clanId=' + encodeURIComponent(newClan);
+        });
+    </script>
+}

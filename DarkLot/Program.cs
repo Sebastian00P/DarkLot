@@ -1,4 +1,5 @@
 using DarkLot.Data;
+using DarkLot.Hubs;
 using DarkLot.Models.UserModel;
 using DarkLot.ServiceRegistartor;
 using Microsoft.AspNetCore.Identity;
@@ -48,7 +49,7 @@ namespace DarkLot
                 options.LoginPath = "/Identity/Account/Login";
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
             });
-
+            builder.Services.AddSignalR();
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
             builder.Services.AddApplicationServices();
@@ -56,6 +57,7 @@ namespace DarkLot
 
             var app = builder.Build();
             app.UseCors(corsPolicyName);
+
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -75,6 +77,9 @@ namespace DarkLot
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.MapHub<ChatHub>("/chatHub");
+
 
             app.MapControllerRoute(
                 name: "default",

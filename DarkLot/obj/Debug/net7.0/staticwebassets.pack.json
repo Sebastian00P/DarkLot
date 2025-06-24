@@ -17,6 +17,10 @@
       "PackagePath": "staticwebassets\\css\\FightsView\\Index.css"
     },
     {
+      "Id": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\css\\chat\\chat.css",
+      "PackagePath": "staticwebassets\\css\\chat\\chat.css"
+    },
+    {
       "Id": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\css\\layout.css",
       "PackagePath": "staticwebassets\\css\\layout.css"
     },
@@ -283,6 +287,10 @@
     {
       "Id": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\lib\\signalR\\signalr.min.js",
+      "PackagePath": "staticwebassets\\lib\\signalR\\signalr.min.js"
     },
     {
       "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.DarkLot.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",

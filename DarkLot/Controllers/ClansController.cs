@@ -89,15 +89,14 @@ namespace DarkLot.Controllers
         // GET: /Clans/AddMember?clanId=xxx
         public async Task<IActionResult> AddMember(string clanId)
         {
+            if (string.IsNullOrEmpty(clanId)) return BadRequest();
             var clan = await _clanService.GetClanByIdAsync(clanId);
             if (clan == null) return NotFound();
 
-            // tylko dowódca
             var current = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (clan.CreatorUserId != current) return Forbid();
 
-            var vm = await _clanService.GetAddMemberModelAsync(clanId);
-            return View(vm);
+            return View(new AddMemberViewModel { ClanId = clanId });
         }
 
         [HttpPost]
@@ -105,18 +104,27 @@ namespace DarkLot.Controllers
         public async Task<IActionResult> AddMember(AddMemberViewModel vm)
         {
             var clan = await _clanService.GetClanByIdAsync(vm.ClanId);
-            if (clan.CreatorUserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
-                return Forbid();
+            var current = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (clan.CreatorUserId != current) return Forbid();
 
             if (!ModelState.IsValid)
+                return View(vm);
+
+            try
             {
-                var refill = await _clanService.GetAddMemberModelAsync(vm.ClanId);
-                refill.UserId = vm.UserId;
-                return View(refill);
+                await _clanService.AddMemberByNicknameAsync(vm);
+                return RedirectToAction("Members", new { id = vm.ClanId });
+            }
+            catch (KeyNotFoundException)
+            {
+                ModelState.AddModelError(nameof(vm.Nickname), "Nie znaleziono użytkownika o podanym nicku.");
+            }
+            catch (InvalidOperationException ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
             }
 
-            await _clanService.AddMemberToClanAsync(vm);
-            return RedirectToAction("Members", new { id = vm.ClanId });
+            return View(vm);
         }
     }
 }

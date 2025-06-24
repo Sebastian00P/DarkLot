@@ -8,14 +8,11 @@ namespace DarkLot.ViewModeles.ClanViewModel
         [Required]
         public string ClanId { get; set; }
 
-        [Required(ErrorMessage = "Wybierz użytkownika")]
-        [Display(Name = "Użytkownik")]
-        public string UserId { get; set; }
+        [Required(ErrorMessage = "Podaj nick użytkownika")]
+        [Display(Name = "Nick użytkownika")]
+        public string Nickname { get; set; }
 
         // na razie tylko rola User
         public string Role { get; set; } = "User";
-
-        public IEnumerable<SelectListItem> AvailableUsers { get; set; }
-            = new List<SelectListItem>();
     }
 }

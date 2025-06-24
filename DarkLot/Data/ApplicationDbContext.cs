@@ -1,4 +1,5 @@
 ﻿using DarkLot.Models.Battles;
+using DarkLot.Models.ChatModel;
 using DarkLot.Models.Clans;
 using DarkLot.Models.Lootlog;
 using DarkLot.Models.UserModel;
@@ -27,6 +28,7 @@ namespace DarkLot.Data
         public DbSet<BattleLogEntry> BattleLogEntries { get; set; }
         public DbSet<Clan> Clans { get; set; }
         public DbSet<ClanMember> ClanMembers { get; set; }
+        public DbSet<ChatMessage> ChatMessages { get; set; }
 
 
         // Dodatkowo, jeśli chcesz modelować relacje przez FluentAPI:
@@ -84,6 +86,20 @@ namespace DarkLot.Data
                 .WithMany()
                 .HasForeignKey(cm => cm.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            // ChatMessage → Clan
+            builder.Entity<ChatMessage>()
+                .HasOne(cm => cm.Clan)
+                .WithMany()                // nie przechowujemy nawigacji z Clan do wiadomości
+                .HasForeignKey(cm => cm.ClanId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // ChatMessage → ApplicationUser
+            builder.Entity<ChatMessage>()
+                .HasOne(cm => cm.User)
+                .WithMany()                // nie dodajemy kolekcji ChatMessages w ApplicationUser
+                .HasForeignKey(cm => cm.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

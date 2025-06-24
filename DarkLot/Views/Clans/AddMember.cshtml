@@ -10,24 +10,19 @@
     <input type="hidden" asp-for="ClanId" />
 
     <div class="form-group">
-        <label asp-for="UserId"></label>
-        <select asp-for="UserId" asp-items="Model.AvailableUsers"
-                class="form-control">
-            <option value="">-- wybierz użytkownika --</option>
-        </select>
-        <span asp-validation-for="UserId" class="text-danger"></span>
+        <label asp-for="Nickname"></label>
+        <input asp-for="Nickname" class="form-control" placeholder="Wpisz nick użytkownika" />
+        <span asp-validation-for="Nickname" class="text-danger"></span>
     </div>
-
-    @* Jeśli w przyszłości będą inne role, można tu dodać select dla Role *@
 
     <div class="d-flex justify-content-end mt-4">
         <button type="submit" class="btn btn-primary me-2">
-            <i class="material-icons">save</i>
+            <i class="material-icons align-middle">person_add</i>
             <span class="visually-hidden">Dodaj</span>
         </button>
         <a asp-action="Members" asp-route-id="@Model.ClanId"
            class="btn btn-secondary">
-            <i class="material-icons">close</i>
+            <i class="material-icons align-middle">close</i>
             <span class="visually-hidden">Anuluj</span>
         </a>
     </div>

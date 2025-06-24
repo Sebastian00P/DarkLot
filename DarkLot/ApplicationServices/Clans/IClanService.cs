@@ -16,7 +16,8 @@ namespace DarkLot.ApplicationServices.Clans
         Task UpdateMemberRoleAsync(string clanId, string userId, string newRole);
         Task<PagedResult<Clan>> GetClansPagedAsync(int page, int pageSize);
         Task<CreateClanViewModel> GetCreateClanModelAsync();
-        Task<AddMemberViewModel> GetAddMemberModelAsync(string clanId);
-        Task AddMemberToClanAsync(AddMemberViewModel vm);
+        Task AddMemberByNicknameAsync(AddMemberViewModel vm);
+        Task<IEnumerable<Clan>> GetClansForUserAsync(string userId);
+
     }
 }

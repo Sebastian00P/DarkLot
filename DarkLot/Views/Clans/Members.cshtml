@@ -7,7 +7,7 @@
     bool isLeader = Model.CreatorUserId == currentUserId;
 }
 
-<h1>Członkowie klanu „@Model.Name”</h1>
+<h1>Członkowie klanu @Model.Name</h1>
 
 <div class="d-flex justify-content-between mb-3">
     <a asp-action="Index" class="btn btn-secondary">
@@ -19,7 +19,7 @@
         <a asp-action="AddMember" asp-route-clanId="@Model.Id"
            class="btn btn-outline-primary">
             <i class="material-icons">person_add</i>
-            Dodaj członka
+            Dodaj klanowicza
         </a>
     }
 </div>

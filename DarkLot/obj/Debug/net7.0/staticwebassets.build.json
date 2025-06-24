@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "vRUd3sCdMk/u+AlA4uPT6mAr0tycMspMOayT/EEyk6k=",
+  "Hash": "tmhIM+vdxH/GTgA5zEWSa5oVzH6IWi4JM5f0zttpmMs=",
   "Source": "DarkLot",
   "BasePath": "_content/DarkLot",
   "Mode": "Default",
@@ -1317,6 +1317,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\DarkLot.bundle.scp.css"
+    },
+    {
+      "Identity": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\css\\chat\\chat.css",
+      "SourceId": "DarkLot",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\",
+      "BasePath": "_content/DarkLot",
+      "RelativePath": "css/chat/chat#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "7lim14zq91",
+      "Integrity": "m+gSFi2zYLcuObhFJ8olWDdA2N9qGf5viHvbAnKMtpw=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\chat\\chat.css"
     },
     {
       "Identity": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\css\\Clans\\index.css",
@@ -2787,9 +2808,112 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Identity": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\lib\\signalR\\signalr.min.js",
+      "SourceId": "DarkLot",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\",
+      "BasePath": "_content/DarkLot",
+      "RelativePath": "lib/signalR/signalr.min#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "dliamw9ph9",
+      "Integrity": "X13/64q7wCy6YS2AIV7rbZjmwfgJ4RsBqIdJea1ka9o=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\lib\\signalR\\signalr.min.js"
     }
   ],
   "Endpoints": [
+    {
+      "Route": "css/chat/chat.7lim14zq91.css",
+      "AssetFile": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\css\\chat\\chat.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "103"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"m+gSFi2zYLcuObhFJ8olWDdA2N9qGf5viHvbAnKMtpw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 24 Jun 2025 12:08:40 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "7lim14zq91"
+        },
+        {
+          "Name": "label",
+          "Value": "css/chat/chat.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-m+gSFi2zYLcuObhFJ8olWDdA2N9qGf5viHvbAnKMtpw="
+        }
+      ]
+    },
+    {
+      "Route": "css/chat/chat.css",
+      "AssetFile": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\css\\chat\\chat.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "103"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"m+gSFi2zYLcuObhFJ8olWDdA2N9qGf5viHvbAnKMtpw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 24 Jun 2025 12:08:40 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-m+gSFi2zYLcuObhFJ8olWDdA2N9qGf5viHvbAnKMtpw="
+        }
+      ]
+    },
     {
       "Route": "css/Clans/index.css",
       "AssetFile": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\css\\Clans\\index.css",
@@ -10911,6 +11035,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-16aFlqtpsG9RyieKZUUUjkJpqTgcJtWXwT312I4Iz1s="
+        }
+      ]
+    },
+    {
+      "Route": "lib/signalR/signalr.min.dliamw9ph9.js",
+      "AssetFile": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\lib\\signalR\\signalr.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "43394"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"X13/64q7wCy6YS2AIV7rbZjmwfgJ4RsBqIdJea1ka9o=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 24 Jun 2025 11:47:23 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "dliamw9ph9"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/signalR/signalr.min.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-X13/64q7wCy6YS2AIV7rbZjmwfgJ4RsBqIdJea1ka9o="
+        }
+      ]
+    },
+    {
+      "Route": "lib/signalR/signalr.min.js",
+      "AssetFile": "C:\\Users\\Admin\\Desktop\\DarkLog\\DarkLot\\DarkLot\\wwwroot\\lib\\signalR\\signalr.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "43394"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"X13/64q7wCy6YS2AIV7rbZjmwfgJ4RsBqIdJea1ka9o=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 24 Jun 2025 11:47:23 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-X13/64q7wCy6YS2AIV7rbZjmwfgJ4RsBqIdJea1ka9o="
         }
       ]
     }

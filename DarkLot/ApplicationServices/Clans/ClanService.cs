@@ -202,39 +202,43 @@ namespace DarkLot.ApplicationServices.Clans
             return vm;
         }
 
-        public async Task<AddMemberViewModel> GetAddMemberModelAsync(string clanId)
+        public async Task AddMemberByNicknameAsync(AddMemberViewModel vm)
         {
-            var allUsers = await _userManager.Users.ToListAsync();
-            var taken = await _context.ClanMembers
-                .Where(cm => cm.ClanId == clanId)
-                .Select(cm => cm.UserId)
-                .ToListAsync();
+            var user = await _userManager.Users
+                .SingleOrDefaultAsync(u => u.NickName == vm.Nickname);
 
-            return new AddMemberViewModel
-            {
-                ClanId = clanId,
-                AvailableUsers = allUsers
-                    .Where(u => !taken.Contains(u.Id))
-                    .Select(u => new SelectListItem
-                    {
-                        Value = u.Id,
-                        Text = u.NickName
-                    })
-                    .ToList()
-            };
-        }
+            if (user == null)
+                throw new KeyNotFoundException($"Użytkownik o nicku '{vm.Nickname}' nie znaleziono.");
 
-        public async Task AddMemberToClanAsync(AddMemberViewModel vm)
-        {
+            bool exists = await _context.ClanMembers
+                .AnyAsync(cm => cm.ClanId == vm.ClanId && cm.UserId == user.Id);
+
+            if (exists)
+                throw new InvalidOperationException("Ten użytkownik jest już członkiem klanu.");
+
             var membership = new ClanMember
             {
                 ClanId = vm.ClanId,
-                UserId = vm.UserId,
+                UserId = user.Id,
                 Role = vm.Role,
                 JoinedAt = DateTime.UtcNow
             };
             _context.ClanMembers.Add(membership);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<Clan>> GetClansForUserAsync(string userId)
+        {
+            // pobieramy ID klanów, w których jest user
+            var clanIds = await _context.ClanMembers
+                .Where(cm => cm.UserId == userId)
+                .Select(cm => cm.ClanId)
+                .ToListAsync();
+
+            // zwracamy te klany (bez usuniętych)
+            return await _context.Clans
+                .Where(c => clanIds.Contains(c.Id) && !c.IsDeleted)
+                .ToListAsync();
         }
 
     }

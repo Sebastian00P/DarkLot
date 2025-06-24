@@ -1,5 +1,17 @@
 ﻿<Project>
   <ItemGroup>
+    <StaticWebAssetEndpoint Include="_content/DarkLot/css/chat/chat.7lim14zq91.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\chat\chat.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"7lim14zq91"},{"Name":"integrity","Value":"sha256-m\u002BgSFi2zYLcuObhFJ8olWDdA2N9qGf5viHvbAnKMtpw="},{"Name":"label","Value":"_content/DarkLot/css/chat/chat.css"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"103"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022m\u002BgSFi2zYLcuObhFJ8olWDdA2N9qGf5viHvbAnKMtpw=\u0022"},{"Name":"Last-Modified","Value":"Tue, 24 Jun 2025 12:08:40 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/DarkLot/css/chat/chat.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\chat\chat.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-m\u002BgSFi2zYLcuObhFJ8olWDdA2N9qGf5viHvbAnKMtpw="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"103"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022m\u002BgSFi2zYLcuObhFJ8olWDdA2N9qGf5viHvbAnKMtpw=\u0022"},{"Name":"Last-Modified","Value":"Tue, 24 Jun 2025 12:08:40 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/DarkLot/css/Clans/index.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\Clans\index.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
@@ -851,6 +863,18 @@
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-hjIBkvmgxQXbNXK3B9YQ3t06RwLuQSQzC/dpvuB/lMk="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1117"},{"Name":"Content-Type","Value":"text/plain"},{"Name":"ETag","Value":"\u0022hjIBkvmgxQXbNXK3B9YQ3t06RwLuQSQzC/dpvuB/lMk=\u0022"},{"Name":"Last-Modified","Value":"Fri, 06 Jun 2025 07:20:24 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/DarkLot/lib/signalR/signalr.min.dliamw9ph9.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\lib\signalR\signalr.min.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"dliamw9ph9"},{"Name":"integrity","Value":"sha256-X13/64q7wCy6YS2AIV7rbZjmwfgJ4RsBqIdJea1ka9o="},{"Name":"label","Value":"_content/DarkLot/lib/signalR/signalr.min.js"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"43394"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022X13/64q7wCy6YS2AIV7rbZjmwfgJ4RsBqIdJea1ka9o=\u0022"},{"Name":"Last-Modified","Value":"Tue, 24 Jun 2025 11:47:23 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/DarkLot/lib/signalR/signalr.min.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\lib\signalR\signalr.min.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-X13/64q7wCy6YS2AIV7rbZjmwfgJ4RsBqIdJea1ka9o="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"43394"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022X13/64q7wCy6YS2AIV7rbZjmwfgJ4RsBqIdJea1ka9o=\u0022"},{"Name":"Last-Modified","Value":"Tue, 24 Jun 2025 11:47:23 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
   </ItemGroup>
 </Project>

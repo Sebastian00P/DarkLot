@@ -2551,6 +2551,88 @@
       ]
     },
     {
+      "Route": "css/chat/chat.7lim14zq91.css",
+      "AssetFile": "css/chat/chat.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "103"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"m+gSFi2zYLcuObhFJ8olWDdA2N9qGf5viHvbAnKMtpw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 24 Jun 2025 12:08:40 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "7lim14zq91"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-m+gSFi2zYLcuObhFJ8olWDdA2N9qGf5viHvbAnKMtpw="
+        },
+        {
+          "Name": "label",
+          "Value": "css/chat/chat.css"
+        }
+      ]
+    },
+    {
+      "Route": "css/chat/chat.css",
+      "AssetFile": "css/chat/chat.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "103"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"m+gSFi2zYLcuObhFJ8olWDdA2N9qGf5viHvbAnKMtpw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 24 Jun 2025 12:08:40 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-m+gSFi2zYLcuObhFJ8olWDdA2N9qGf5viHvbAnKMtpw="
+        }
+      ]
+    },
+    {
       "Route": "css/layout.css",
       "AssetFile": "css/layout.css",
       "Selectors": [],
@@ -8041,6 +8123,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-OZVI+w57FGwS9boYCZpH1ZSpcP7pYhLu4KtIUvPlZ4I="
+        }
+      ]
+    },
+    {
+      "Route": "lib/signalR/signalr.min.dliamw9ph9.js",
+      "AssetFile": "lib/signalR/signalr.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "43394"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"X13/64q7wCy6YS2AIV7rbZjmwfgJ4RsBqIdJea1ka9o=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 24 Jun 2025 11:47:23 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "dliamw9ph9"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-X13/64q7wCy6YS2AIV7rbZjmwfgJ4RsBqIdJea1ka9o="
+        },
+        {
+          "Name": "label",
+          "Value": "lib/signalR/signalr.min.js"
+        }
+      ]
+    },
+    {
+      "Route": "lib/signalR/signalr.min.js",
+      "AssetFile": "lib/signalR/signalr.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "43394"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"X13/64q7wCy6YS2AIV7rbZjmwfgJ4RsBqIdJea1ka9o=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 24 Jun 2025 11:47:23 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-X13/64q7wCy6YS2AIV7rbZjmwfgJ4RsBqIdJea1ka9o="
         }
       ]
     }

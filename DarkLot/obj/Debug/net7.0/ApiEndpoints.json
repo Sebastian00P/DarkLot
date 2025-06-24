@@ -16,6 +16,68 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "DarkLot.Controllers.ChatApiController",
+    "Method": "PostMessage",
+    "RelativePath": "api/ChatApi",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "DarkLot.Dtos.ChatDtos.ChatMessageInputDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DarkLot.Controllers.ChatApiController",
+    "Method": "GetHistory",
+    "RelativePath": "api/ChatApi/{clanId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "clanId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DarkLot.ViewModeles.ChatViewModel.ChatMessageViewModel, DarkLot, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "DarkLot.Controllers.ChatApiController",
+    "Method": "GetUserClans",
+    "RelativePath": "api/ChatApi/clans",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DarkLot.Dtos.ChatDtos.ClanDto, DarkLot, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "DarkLot.Controllers.LootlogController",
     "Method": "Add",
     "RelativePath": "api/lootlog/add",
