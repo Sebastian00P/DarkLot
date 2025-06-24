@@ -16,7 +16,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DarkLot")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6bada995bbfb9d0d1dccbf5fa3498d1b3bf92db3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a25a1be423758e070f068e8b28e9d276b869dc60")]
 [assembly: System.Reflection.AssemblyProductAttribute("DarkLot")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DarkLot")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
