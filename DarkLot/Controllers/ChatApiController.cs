@@ -51,19 +51,15 @@ namespace DarkLot.Controllers
              || string.IsNullOrWhiteSpace(dto.Message))
                 return BadRequest("Brak clanId lub message.");
 
-            // Pobierz ID zalogowanego
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrEmpty(userId))
                 return Unauthorized();
 
-            // 1) Zapisz w bazie
             await _chatService.AddMessageAsync(dto.ClanId, userId, dto.Message);
 
-            // 2) Pobierz nick bezpośrednio z UserManager
             var user = await _userManager.FindByIdAsync(userId);
             var nick = user?.NickName ?? user?.UserName ?? "Unknown";
 
-            // 3) Wyemituj przez SignalR
             await _hubContext
                 .Clients
                 .Group(dto.ClanId)

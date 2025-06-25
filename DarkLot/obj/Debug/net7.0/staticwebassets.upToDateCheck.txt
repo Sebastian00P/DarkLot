@@ -5,6 +5,7 @@ wwwroot\css\FightsView\Index.css
 wwwroot\css\layout.css
 wwwroot\css\lootlog\lootlog.css
 wwwroot\css\site.css
+wwwroot\css\timers\timer.css
 wwwroot\favicon.ico
 wwwroot\js\Battle\fightLogsParser.js
 wwwroot\js\FightView\Favorite.js

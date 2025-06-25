@@ -342,6 +342,51 @@ namespace DarkLot.Data.Migrations
                     b.ToTable("LootedItems");
                 });
 
+            modelBuilder.Entity("DarkLot.Models.Timer.MobRespawnTimer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClanId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("KilledAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("KilledByUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MobName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MonsterType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClanId");
+
+                    b.HasIndex("KilledByUserId");
+
+                    b.ToTable("MobRespawnTimers");
+                });
+
             modelBuilder.Entity("DarkLot.Models.UserModel.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -673,6 +718,25 @@ namespace DarkLot.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("LootItem");
+                });
+
+            modelBuilder.Entity("DarkLot.Models.Timer.MobRespawnTimer", b =>
+                {
+                    b.HasOne("DarkLot.Models.Clans.Clan", "Clan")
+                        .WithMany()
+                        .HasForeignKey("ClanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DarkLot.Models.UserModel.ApplicationUser", "KilledByUser")
+                        .WithMany()
+                        .HasForeignKey("KilledByUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Clan");
+
+                    b.Navigation("KilledByUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

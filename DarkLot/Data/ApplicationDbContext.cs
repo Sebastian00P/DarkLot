@@ -2,6 +2,7 @@
 using DarkLot.Models.ChatModel;
 using DarkLot.Models.Clans;
 using DarkLot.Models.Lootlog;
+using DarkLot.Models.Timer;
 using DarkLot.Models.UserModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -29,6 +30,8 @@ namespace DarkLot.Data
         public DbSet<Clan> Clans { get; set; }
         public DbSet<ClanMember> ClanMembers { get; set; }
         public DbSet<ChatMessage> ChatMessages { get; set; }
+        public DbSet<MobRespawnTimer> MobRespawnTimers { get; set; }
+
 
 
         // Dodatkowo, jeśli chcesz modelować relacje przez FluentAPI:
@@ -90,16 +93,28 @@ namespace DarkLot.Data
             // ChatMessage → Clan
             builder.Entity<ChatMessage>()
                 .HasOne(cm => cm.Clan)
-                .WithMany()                // nie przechowujemy nawigacji z Clan do wiadomości
+                .WithMany()
                 .HasForeignKey(cm => cm.ClanId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             // ChatMessage → ApplicationUser
             builder.Entity<ChatMessage>()
                 .HasOne(cm => cm.User)
-                .WithMany()                // nie dodajemy kolekcji ChatMessages w ApplicationUser
+                .WithMany()
                 .HasForeignKey(cm => cm.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<MobRespawnTimer>()
+                .HasOne(t => t.KilledByUser)
+                .WithMany()
+                .HasForeignKey(t => t.KilledByUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<MobRespawnTimer>()
+                .HasOne(t => t.Clan)
+                .WithMany()
+                .HasForeignKey(t => t.ClanId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

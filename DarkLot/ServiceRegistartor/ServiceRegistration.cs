@@ -3,6 +3,7 @@ using DarkLot.ApplicationServices.Clans;
 using DarkLot.ApplicationServices.FightView;
 using DarkLot.ApplicationServices.Lootlog;
 using DarkLot.ApplicationServices.Roles;
+using DarkLot.ApplicationServices.Timers;
 using DarkLot.ApplicationServices.Users;
 using Microsoft.AspNetCore.Identity.UI.Services;
 
@@ -19,6 +20,7 @@ namespace DarkLot.ServiceRegistartor
             services.AddScoped<IFightViewService, FightViewService>();
             services.AddScoped<IClanService, ClanService>();
             services.AddScoped<IChatService, ChatService>();
+            services.AddScoped<ITimerService, TimerService>();
 
             return services;
         }

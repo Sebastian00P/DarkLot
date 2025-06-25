@@ -102,5 +102,21 @@
     "Order": 0,
     "Parameters": [],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DarkLot.Controllers.TimerApiController",
+    "Method": "RecordMobKill",
+    "RelativePath": "api/TimerApi/mobkill",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "DarkLot.Dtos.TimerDtos.MobKillInputDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

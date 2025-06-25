@@ -1,0 +1,121 @@
+﻿@model DarkLot.ViewModeles.TimerViewModel.TimersIndexViewModel
+
+@{
+    ViewData["Title"] = "Timery potwor\u00F3w";
+}
+<head>
+    <link rel="stylesheet" href="~/css/timers/timer.css" asp-append-version="true" />
+</head>
+<h1>Timery potworów</h1>
+
+<div class="form-group mb-4 d-flex align-items-center gap-3">
+    <div class="flex-shrink-0">
+        <label for="clanSelect">Wybierz klan:</label>
+        <select id="clanSelect" class="form-control"
+                asp-for="ActiveClanId"
+                asp-items="Model.Clans">
+            <option value="">-- wybierz klan --</option>
+        </select>
+    </div>
+    <div class="flex-grow-1">
+        <label for="mobFilter">Filtruj potwora:</label>
+        <input type="text" id="mobFilter" class="form-control" placeholder="Wpisz nazwę potwora..." />
+    </div>
+</div>
+
+<div class="list-group">
+    @foreach (var t in Model.Timers)
+    {
+        <div class="list-group-item timer d-flex justify-content-between align-items-center mb-2">
+            <div class="me-3">
+                <div><strong class="mob-name">@t.MobName</strong> (<em>@t.MonsterType</em>) lvl @t.Level</div>
+                <div class="text-muted small">
+                    Zabity: @t.KilledAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss") przez @t.KilledByNick
+                </div>
+            </div>
+            <div class="text-end">
+                <div class="respawn-timer fw-bold"
+                     data-end="@t.RespawnTime.ToString("o")"
+                     data-start="@t.KilledAt.ToString("o")">
+                    @t.Remaining
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('clanSelect')
+            .addEventListener('change', function () {
+                var clanId = this.value;
+                window.location.href =
+                    '@Url.Action("Index", "Timers")?clanId=' + encodeURIComponent(clanId);
+            });
+
+        mobFilter.addEventListener('input', function () {
+            var filter = this.value.trim().toLowerCase();
+            document.querySelectorAll('.timer').forEach(function (row) {
+                var nameEl = row.querySelector('.mob-name');
+                if (!nameEl) {
+                    row.style.display = '';
+                    return;
+                }
+                var name = nameEl.textContent.toLowerCase();
+                row.style.display = name.includes(filter) ? '' : 'none';
+            });
+        });
+
+        function getOrSetRespawnMoment(el, now, end) {
+             if (!el.dataset.respawnedAt) {
+                 if (now >= end) {
+                     el.dataset.respawnedAt = now;
+                     return now;
+                 }
+                 return null;
+             }
+             return parseInt(el.dataset.respawnedAt, 10);
+        }
+
+        function updateTimers() {
+             var now = Date.now();
+             document.querySelectorAll('.respawn-timer').forEach(function (el) {
+                 var end = new Date(el.getAttribute('data-end')).getTime();
+                 var start = new Date(el.getAttribute('data-start')).getTime();
+                 var total = end - start;
+                 var diff = end - now;
+                 var timerRow = el.closest('.timer');
+
+                 var respawnedAt = getOrSetRespawnMoment(el, now, end);
+
+                 if (diff <= 0) {
+                     if (respawnedAt && now - respawnedAt < 5000) {
+                         el.textContent = 'Odrodzony';
+                         el.style.color = 'green';
+                         if (timerRow) timerRow.style.display = '';
+                     } else {
+                         if (timerRow) timerRow.style.display = 'none';
+                     }
+                 } else {
+                     var s = Math.floor(diff / 1000) % 60;
+                     var m = Math.floor(diff / 60000) % 60;
+                     var h = Math.floor(diff / 3600000);
+                     el.textContent = (h > 0 ? h + 'h ' : '') + (m > 0 ? m + 'm ' : '') + s + 's';
+                     var pct = diff / total;
+                     if (pct <= 0.1) {
+                         el.style.color = 'red';
+                     } else if (pct <= 0.2) {
+                         el.style.color = 'orange';
+                     } else {
+                         el.style.color = '';
+                     }
+                     delete el.dataset.respawnedAt;
+                     if (timerRow) timerRow.style.display = '';
+                 }
+             });        
+        }
+
+        setInterval(updateTimers, 1000);
+        updateTimers();
+    </script>
+}

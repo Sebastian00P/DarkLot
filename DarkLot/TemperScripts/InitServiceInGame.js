@@ -84,7 +84,14 @@
                 const id = Number(key);
                 if (!isNaN(id) && id < 0) {
                     const lvl = p.lvl || 0, prof = p.prof || '';
-                    const name = p.name || p.nick || `Mob(${prof})`;
+                    let name = p.name || p.nick;
+                    if (!name) {
+                        if (parsedFW && parsedFW[key] && parsedFW[key].name) {
+                            name = parsedFW[key].name;
+                        } else {
+                            name = "";
+                        }
+                    }
                     mobParts.push(`${name}(${lvl}${prof})`);
                 }
             });
