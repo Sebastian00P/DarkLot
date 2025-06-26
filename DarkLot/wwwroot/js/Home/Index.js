@@ -95,7 +95,7 @@ function buildTooltipHtml(data) {
         curse: 'Klątwa: po otrzymaniu obrażeń nakłada klątwę na atakującego',
         lastheal: 'Ostatni ratunek: kiedy po otrzymanym ataku zostanie graczowi mniej niż 18% życia, zostaje jednorazowo uleczony do 30-50% swojego życia.',
         critred: 'Redukcja krytyków: obrażenia z ciosów krytycznych zmniejszone o X%',
-        holytouch: 'Święty dotyk: ataki mają szansę na dodatkowy efekt uzdrawiający',
+        holytouch: 'Dotyk anioła: podczas ataku 7% szansy na regenrację 6% życia przez trzy najbliższe tury',
         verycrit: 'Wielki krytyk: zwiększa szansę na cios krytyczny o X%',
         cleanse: 'Oczyszczenie: po użyciu umiejętności leczy z negatywnych efektów',
         glare: 'Oślepienie: atak ma szansę oślepić przeciwnika',

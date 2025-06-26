@@ -84,14 +84,7 @@
                 const id = Number(key);
                 if (!isNaN(id) && id < 0) {
                     const lvl = p.lvl || 0, prof = p.prof || '';
-                    let name = p.name || p.nick;
-                    if (!name) {
-                        if (parsedFW && parsedFW[key] && parsedFW[key].name) {
-                            name = parsedFW[key].name;
-                        } else {
-                            name = "";
-                        }
-                    }
+                    const name = p.name || p.nick || `Mob(${prof})`;
                     mobParts.push(`${name}(${lvl}${prof})`);
                 }
             });
@@ -144,7 +137,7 @@
                 const lootId = parsed.ev;
                 if (!sentLootEvents.has(lootId)) {
                     const items = Object.values(parsed.item)
-                        .filter(it => !window._dl_sentItemHids.has(it.hid) && it.loc === 'l')
+                        .filter(it => !window._dl_sentItemHids.has(it.hid))
                         .map(it => {
                             window._dl_sentItemHids.add(it.hid);
                             return { itemHtml: JSON.stringify(it), ItemImgUrl: window.CFG.a_ipath + it.icon };
